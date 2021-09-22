@@ -43,6 +43,18 @@ namespace WebApp.Controllers
             return View(user);
         }
 
+        // GET: Users/Login
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        // GET: Users/Register
+        public IActionResult Register()
+        {
+            return View();
+        }
+
         // GET: Users/Create
         public IActionResult Create()
         {

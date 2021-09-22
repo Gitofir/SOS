@@ -16,6 +16,7 @@ namespace WebApp.Models
 
         [StringLength(40, MinimumLength = 6)]
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
         
 
