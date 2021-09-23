@@ -1,1 +1,41 @@
-﻿
+﻿/*
+    dark blue-
+     rgb(48, 52, 129) 303481
+    light blue-
+     rgb(214, 230, 242) D6E6F2
+    very light gray-
+     rgb(245, 245, 245) F5F5F5
+    yellow-
+     rgb(255, 242, 0) FFF200
+*/
+
+/*---------------------------------------------------------*/
+/*GENERAL*/
+/*---------------------------------------------------------*/
+body {
+    font-family: 'Exo 2';
+    padding-top: 80px;
+}
+
+.nav-bg-light {
+    /*sticky Nav-bar*/
+    background-color: rgb(214, 230, 242);
+}
+
+.seprator {
+    font-size: 50px;
+    text-shadow: 0 0 3px #FFF200;
+    color: #FFF200;
+}
+
+/*--------------------------------------------------------*/
+/*  HOME PAGE  */
+/*--------------------------------------------------------*/
+.index {
+    /*Backgroung properties*/
+    background-image: url(../images/homepage/background-photo2.png);
+    background-size: cover;
+    background-attachment: fixed;
+    /*fonts*/
+    color: #F5F5F5;
+}
