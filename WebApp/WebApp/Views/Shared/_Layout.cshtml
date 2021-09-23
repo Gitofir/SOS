@@ -13,43 +13,15 @@
 </head>
 <body>
     <header>
-<<<<<<< HEAD
-        <nav class="navbar navbar-expand-md navbar-light fixed-top nav-bg-light ">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Fixed navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
-        </li>
-      </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>
 
-=======
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #e3f2fd;">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Sostocks</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-md navbar-light fixed-top nav-bg-light ">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Fixed navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <img src="~/images/stonks2edited.png" width="40" height="40"/>
+                    <img src="~/images/stonks2edited.png" width="40" height="40" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -64,20 +36,20 @@
                             <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
-                        { 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Login" asp-action="MyProfile">My Profile</a>
-                        </li>
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Login" asp-action="MyProfile">My Profile</a>
+                            </li>
                         }
                     </ul>
                 </div>
             </div>
         </nav>
->>>>>>> 44a4dfc4e2491566c29d8fbcce24cec09edf831c
-    </header>
+
+ </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
