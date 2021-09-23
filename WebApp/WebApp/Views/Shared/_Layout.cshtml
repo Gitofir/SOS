@@ -7,18 +7,21 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/StyleSheet.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #e3f2fd;">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Sostocks</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+
+        <nav class="navbar navbar-expand-md navbar-light fixed-top nav-bg-light ">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Fixed navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <img src="~/images/stonks2edited.png" width="40" height="40"/>
+                    <img src="~/images/stonks2edited.png" width="40" height="40" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -27,13 +30,26 @@
                             <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark font-weight-bolder" asp-area="" asp-controller="Home" asp-action="Register">Register Now!</a>
+                            <a class="nav-link text-dark font-weight-bolder" asp-area="" asp-controller="Users" asp-action="Register">Register Now!</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Login" asp-action="MyProfile">My Profile</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
-    </header>
+
+ </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

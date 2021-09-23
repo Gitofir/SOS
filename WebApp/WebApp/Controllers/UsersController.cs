@@ -34,13 +34,19 @@ namespace WebApp.Controllers
             }
 
             var user = await _context.User
-                .FirstOrDefaultAsync(m => m.Password == id);
+                .FirstOrDefaultAsync(m => m.Username == id);
             if (user == null)
             {
                 return NotFound();
             }
 
             return View(user);
+        }
+
+        // GET: Users/Register
+        public IActionResult Register()
+        {
+            return View();
         }
 
         // GET: Users/Create
@@ -88,7 +94,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Username,Password,Email,Creditcard,RegisterationDate")] User user)
         {
-            if (id != user.Password)
+            if (id != user.Username)
             {
                 return NotFound();
             }
@@ -102,7 +108,7 @@ namespace WebApp.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.Password))
+                    if (!UserExists(user.Username))
                     {
                         return NotFound();
                     }
@@ -125,7 +131,7 @@ namespace WebApp.Controllers
             }
 
             var user = await _context.User
-                .FirstOrDefaultAsync(m => m.Password == id);
+                .FirstOrDefaultAsync(m => m.Username == id);
             if (user == null)
             {
                 return NotFound();
@@ -147,7 +153,7 @@ namespace WebApp.Controllers
 
         private bool UserExists(string id)
         {
-            return _context.User.Any(e => e.Password == id);
+            return _context.User.Any(e => e.Username == id);
         }
     }
 }
