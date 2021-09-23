@@ -10,6 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 namespace WebApp
 {
@@ -29,6 +31,27 @@ namespace WebApp
 
             services.AddDbContext<WebAppContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("WebAppContext")));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => {
+                    options.LoginPath = "/Login";
+                    options.AccessDeniedPath = "/Denied";
+                    options.Events = new CookieAuthenticationEvents()
+                    {
+                        OnSigningIn = async context =>
+                        {
+                            var principal = context.Principal;
+                            if (principal.HasClaim(c => c.Type == ClaimTypes.NameIdentifier))
+                            {
+                                if (principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value == "bob")
+                                {
+                                    var claimsIdentity = principal.Identity as ClaimsIdentity;
+                                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
+                                }
+                            }
+                        }
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +71,7 @@ namespace WebApp
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

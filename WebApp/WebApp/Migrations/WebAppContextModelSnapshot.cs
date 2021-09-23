@@ -19,6 +19,7 @@ namespace WebApp.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+<<<<<<< HEAD
             modelBuilder.Entity("WebApp.Models.Stock", b =>
                 {
                     b.Property<int>("id")
@@ -40,11 +41,19 @@ namespace WebApp.Migrations
             modelBuilder.Entity("WebApp.Models.User", b =>
                 {
                     b.Property<string>("Password")
+=======
+            modelBuilder.Entity("WebApp.Models.User", b =>
+                {
+                    b.Property<string>("Username")
+>>>>>>> 2af468f2e417a68e4ec1c843370fe6c43f97c08a
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<int>("Creditcard")
+<<<<<<< HEAD
                         .HasMaxLength(40)
+=======
+>>>>>>> 2af468f2e417a68e4ec1c843370fe6c43f97c08a
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -52,6 +61,7 @@ namespace WebApp.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
+<<<<<<< HEAD
                     b.Property<DateTime>("RegisterationDate")
                         .HasColumnType("datetime2");
 
@@ -59,6 +69,17 @@ namespace WebApp.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Password");
+=======
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<DateTime>("RegisterationDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Username");
+>>>>>>> 2af468f2e417a68e4ec1c843370fe6c43f97c08a
 
                     b.ToTable("User");
                 });
