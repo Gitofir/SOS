@@ -1,0 +1,12 @@
+﻿@model WebApp.Models.User
+@{
+    ViewData["Title"] = "My Profile";
+}
+<br />
+<h1>User Profile</h1>
+<ul>
+    @foreach(var c in User.Claims)
+    {
+        <li>@c.Type: @c.Value</li>
+    }
+</ul>
