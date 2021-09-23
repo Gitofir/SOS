@@ -8,28 +8,26 @@ namespace WebApp.Models
 {
     public class User
     {
+        [Required(ErrorMessage = "This field is required.")]
         [StringLength(40, MinimumLength = 4)]
-        [Required]
         [Key]
         public string Username { get; set; }
-        
 
+        [Required(ErrorMessage = "This field is required.")]
         [StringLength(40, MinimumLength = 6)]
-        [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        
 
+        [Required(ErrorMessage = "This field is required.")]
         [StringLength(40, MinimumLength = 6)]
-        [Required]
         [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")]
         public string Email { get; set; }
-        
-        
+
+        [Required(ErrorMessage = "This field is required.")]
         public int Creditcard { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "This field is required.")]
         public DateTime RegisterationDate { get; set; }
 
     }
