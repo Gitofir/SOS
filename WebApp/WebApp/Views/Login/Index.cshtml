@@ -3,64 +3,42 @@
     ViewData["Title"] = "Register";
 }
 
-@*
+<h2>Login</h2>
 
-    <div id="formContent">
-        <!-- Tabs Titles -->
-        <!-- Icon -->
-        <!-- Login Form -->
-        <form class="form-horizontal" method="POST" asp-controller="Home" asp-action="Index">
-            <!-- Username Input -->
-            <input type="text" id="login" name="login" placeholder="Username">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-            <!-- Password Input -->
-            <input type="password" id="password" name="login" placeholder="Password">
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            <!-- Login Button -->
-            <input type="submit" value="Log In">
-        </form>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Log In" class="btn btn-default" />
+            </div>
+        </div>
     </div>
+}
 
-    @using (Html.BeginForm("Authorize", "Login", FormMethod.Post))
-    {
-        <table>
-            <tr>
-                <td></td>
-                <td style="text-decoration:underline">App Name</td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.LabelFor(model => model.Username)
-                </td>
-                <td>
-                    @Html.EditorFor(model => model.Username)
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>@Html.ValidationMessageFor(model => model.Username)</td>
-            </tr>
-
-            <tr>
-                <td>@Html.LabelFor(model => model.Password)</td>
-                <td>@Html.EditorFor(model => model.Password)</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>@Html.ValidationMessageFor(model => model.Password)</td>
-            </tr>
-
-            <tr>
-                <td></td>
-                <td>
-                    <input type="submit" name="name" value="Login" />
-                    <input type="reset" name="name" value="Clear" />
-                </td>
-            </tr>
-        </table>
-    }
-*@
 <br />
 
 @{

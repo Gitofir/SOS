@@ -17,10 +17,12 @@ namespace WebApp.Controllers
     public class LoginController : Controller
     {
         private readonly WebAppContext _context;
+        private readonly MyDB _db;
 
-        public LoginController(WebAppContext context)
+        public LoginController(WebAppContext context, MyDB context2)
         {
             _context = context;
+            _db = context2;
         }
 
         // GET: Login
@@ -35,8 +37,8 @@ namespace WebApp.Controllers
         {
             ViewData["ReturnUrl"] = returnUrl;
 
-            // TODO Ofir add database check
-            if (username == "bob" && password == "pizza")
+            var user = _db.Users.Where(u => u.Username.Equals(username) && u.Password.Equals(password)).FirstOrDefault();
+            if (user == null)
             {
                 var claims = new List<Claim>();
                 claims.Add(new Claim("username", username));
@@ -51,8 +53,11 @@ namespace WebApp.Controllers
                 await HttpContext.SignInAsync(claimsPrincipal);
                 return RedirectToAction("Index", "Home");
             }
-            TempData["Error"] = "Incorrect credentials";
-            return View("Index");
+            else
+            {
+                TempData["Error"] = "Incorrect credentials";
+                return View("Index");
+            }
         }
 
         public async Task<IActionResult> Logout()
