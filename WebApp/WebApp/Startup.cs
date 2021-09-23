@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using WebApp.Models;
 
 namespace WebApp
 {
@@ -30,6 +31,9 @@ namespace WebApp
             services.AddControllersWithViews();
 
             services.AddDbContext<WebAppContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("WebAppContext")));
+
+            services.AddDbContext<MyDB>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("WebAppContext")));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
