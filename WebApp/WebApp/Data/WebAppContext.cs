@@ -15,5 +15,7 @@ namespace WebApp.Data
         }
 
         public DbSet<WebApp.Models.User> User { get; set; }
+
+        public DbSet<WebApp.Models.Stock> Stock { get; set; }
     }
 }
