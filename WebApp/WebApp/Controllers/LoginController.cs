@@ -5,57 +5,71 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using WebApp.Data;
 using WebApp.Models;
+using WebApp.Data;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
-    public class UsersController : Controller
+    public class LoginController : Controller
     {
         private readonly WebAppContext _context;
 
-        public UsersController(WebAppContext context)
+        public LoginController(WebAppContext context)
         {
             _context = context;
         }
 
-        // GET: Users
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.User.ToListAsync());
-        }
-
-        // GET: Users/Details/5
-        public async Task<IActionResult> Details(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.Username == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
-        }
-
-        // GET: Users/Register
-        public IActionResult Register()
+        // GET: Login
+        [HttpGet("login")]
+        public IActionResult Index()
         {
             return View();
         }
 
-        // GET: Users/Create
-        public IActionResult Create()
+        [HttpPost("login")]
+        public async Task<IActionResult> ValidateAsync(string username, string password, string returnUrl)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+
+            // TODO Ofir add database check
+            if (username == "bob" && password == "pizza")
+            {
+                var claims = new List<Claim>();
+                claims.Add(new Claim("username", username));
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, username));
+                claims.Add(new Claim(ClaimTypes.Name, "Bob the Builder"));
+                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                // Starts the Startup authentication code
+                await HttpContext.SignInAsync(claimsPrincipal);
+                return RedirectToAction("Index", "Home");
+            }
+            TempData["Error"] = "Incorrect credentials";
+            return View("Index");
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return Redirect("/");
+        }
+
+        // GET: Login/MyProfile
+        [Authorize]
+        public IActionResult MyProfile()
         {
             return View();
         }
 
-        // POST: Users/Create
+
+        // POST: Login/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -71,7 +85,7 @@ namespace WebApp.Controllers
             return View(user);
         }
 
-        // GET: Users/Edit/5
+        // GET: Login/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -87,7 +101,7 @@ namespace WebApp.Controllers
             return View(user);
         }
 
-        // POST: Users/Edit/5
+        // POST: Login/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -122,7 +136,7 @@ namespace WebApp.Controllers
             return View(user);
         }
 
-        // GET: Users/Delete/5
+        // GET: Login/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -140,7 +154,7 @@ namespace WebApp.Controllers
             return View(user);
         }
 
-        // POST: Users/Delete/5
+        // POST: Login/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
