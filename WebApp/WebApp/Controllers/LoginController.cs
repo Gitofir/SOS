@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
 using WebApp.Data;
@@ -11,18 +10,17 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApp.Controllers
 {
     public class LoginController : Controller
     {
         private readonly WebAppContext _context;
-        private readonly MyDB _db;
 
-        public LoginController(WebAppContext context, MyDB context2)
+        public LoginController(WebAppContext context)
         {
             _context = context;
-            _db = context2;
         }
 
         // GET: Login
@@ -33,31 +31,39 @@ namespace WebApp.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> ValidateAsync(string username, string password, string returnUrl)
+        public async Task<ActionResult> LoginAsync(User given_user)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-
-            var user = _db.Users.Where(u => u.Username.Equals(username) && u.Password.Equals(password)).FirstOrDefault();
-            if (user == null)
+            // OFIR DEBUG CHECK What this shit is
+            if (ModelState.IsValid || true)
             {
-                var claims = new List<Claim>();
-                claims.Add(new Claim("username", username));
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, username));
-                claims.Add(new Claim(ClaimTypes.Name, "Bob the Builder"));
-                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                var user = _context.User.Where(u => u.Username.Equals(given_user.Username) && u.Password.Equals(given_user.Password)).FirstOrDefault();
+                var is_admin = _context.User.Where(u => u.Username.Equals(given_user.Username) && u.Admin == true).FirstOrDefault();
+                if (user != null)
+                {
+                    var claims = new List<Claim>();
+                    claims.Add(new Claim("username", given_user.Username));
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, given_user.Username));
 
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                    if (is_admin != null)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                    }
 
-                // Starts the Startup authentication code
-                await HttpContext.SignInAsync(claimsPrincipal);
-                return RedirectToAction("Index", "Home");
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                    // Starts the Startup authentication code
+                    await HttpContext.SignInAsync(claimsPrincipal);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["Error"] = "Incorrect credentials";
+                    return View("Index");
+                }
             }
-            else
-            {
-                TempData["Error"] = "Incorrect credentials";
-                return View("Index");
-            }
+            TempData["Error"] = "Incorrect credentials";
+            return View("Index");
         }
 
         public async Task<IActionResult> Logout()

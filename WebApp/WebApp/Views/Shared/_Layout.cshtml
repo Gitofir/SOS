@@ -32,9 +32,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark font-weight-bolder" asp-area="" asp-controller="Users" asp-action="Register">Register Now!</a>
                         </li>
+                        @if (User.Identity.IsAuthenticated == false)
+                        {
                         <li class="nav-item">
                             <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
                         </li>
+                        }
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
@@ -44,11 +47,27 @@
                                 <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Login" asp-action="MyProfile">My Profile</a>
                             </li>
                         }
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Users" asp-action="Index">User Managment</a>
-                            </li>
+
+                        @{
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                var isAdmin = false;
+                                var claims = User.Claims.ToList();
+                                foreach (var c in claims)
+                                {
+                                    if (c.Value == "Admin")
+                                    {
+                                        isAdmin = true;
+                                    }
+                                }
+
+                                if (isAdmin == true)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Users" asp-action="Index">User Managment</a>
+                                    </li>
+                                }
+                            }
                         }
                     </ul>
                 </div>
