@@ -8,12 +8,17 @@ using System.Threading.Tasks;
 namespace WebApp.Models
 {
     public class MyDB : DbContext
-    { 
-
+    {
         public MyDB(DbContextOptions<MyDB> options)
       : base(options)
         { }
 
-    public DbSet<User> Users { get; set; }
+        public MyDB()
+        {
+
+        }
+
+        public DbSet<User> Users { get; set; }
     }
+
 }
