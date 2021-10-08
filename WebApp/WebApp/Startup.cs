@@ -40,21 +40,7 @@ namespace WebApp
                 .AddCookie(options => {
                     options.LoginPath = "/Login";
                     options.AccessDeniedPath = "/Denied";
-                    options.Events = new CookieAuthenticationEvents()
-                    {
-                        OnSigningIn = async context =>
-                        {
-                            var principal = context.Principal;
-                            if (principal.HasClaim(c => c.Type == ClaimTypes.NameIdentifier))
-                            {
-                                if (principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value == "bob")
-                                {
-                                    var claimsIdentity = principal.Identity as ClaimsIdentity;
-                                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
-                                }
-                            }
-                        }
-                    };
+                    options.Events = new CookieAuthenticationEvents();
                 });
 
             // For session managment
