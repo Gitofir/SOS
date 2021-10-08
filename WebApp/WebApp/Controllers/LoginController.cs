@@ -33,37 +33,31 @@ namespace WebApp.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> LoginAsync(User given_user)
         {
-            // OFIR DEBUG CHECK What this shit is
-            if (ModelState.IsValid || true)
+            var user = _context.User.Where(u => u.Username.Equals(given_user.Username) && u.Password.Equals(given_user.Password)).FirstOrDefault();
+            var is_admin = _context.User.Where(u => u.Username.Equals(given_user.Username) && u.Admin == true).FirstOrDefault();
+            if (user != null)
             {
-                var user = _context.User.Where(u => u.Username.Equals(given_user.Username) && u.Password.Equals(given_user.Password)).FirstOrDefault();
-                var is_admin = _context.User.Where(u => u.Username.Equals(given_user.Username) && u.Admin == true).FirstOrDefault();
-                if (user != null)
+                var claims = new List<Claim>();
+                claims.Add(new Claim("username", given_user.Username));
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, given_user.Username));
+
+                if (is_admin != null)
                 {
-                    var claims = new List<Claim>();
-                    claims.Add(new Claim("username", given_user.Username));
-                    claims.Add(new Claim(ClaimTypes.NameIdentifier, given_user.Username));
-
-                    if (is_admin != null)
-                    {
-                        claims.Add(new Claim(ClaimTypes.Role, "Admin"));
-                    }
-
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-                    // Starts the Startup authentication code
-                    await HttpContext.SignInAsync(claimsPrincipal);
-                    return RedirectToAction("Index", "Home");
+                    claims.Add(new Claim(ClaimTypes.Role, "Admin"));
                 }
-                else
-                {
-                    TempData["Error"] = "Incorrect credentials";
-                    return View("Index");
-                }
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                // Starts the Startup authentication code
+                await HttpContext.SignInAsync(claimsPrincipal);
+                return RedirectToAction("Index", "Home");
             }
-            TempData["Error"] = "Incorrect credentials";
-            return View("Index");
+            else
+            {
+                TempData["Error"] = "Incorrect credentials";
+                return View("Index");
+            }
         }
 
         public async Task<IActionResult> Logout()
