@@ -154,12 +154,6 @@
   ],
   "logs": [
     {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\Ofir\\Source\\Repos\\SOS\\WebApp\\WebApp\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'expectedPackageFiles', line 155, position 0."
-    },
-    {
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,

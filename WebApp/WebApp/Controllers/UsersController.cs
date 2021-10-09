@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -23,12 +24,27 @@ namespace WebApp.Controllers
         // GET: Users
         // Ofir TODO authorize admins only
         [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _context.User.ToListAsync());
         }
 
+        // Ofir Ajax Test
+        [HttpPost]
+        public int Calculate(int number1, int number2)
+        {
+            return number1 + number2;
+        }
+        [HttpPost]
+        public User ShowUser(int number1, int number2)
+        {
+            var user = _context.User.FirstOrDefaultAsync();
+            return user;
+        }
+
         // GET: Users/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -46,6 +62,8 @@ namespace WebApp.Controllers
             return View(user);
         }
 
+
+
         // GET: Users/Register
         public IActionResult Register()
         {
@@ -53,6 +71,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Users/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -63,6 +82,7 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Username,Password,Email,Creditcard,RegisterationDate,Admin")] User user)
         {
             if (ModelState.IsValid)
@@ -75,6 +95,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Users/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -95,6 +116,7 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(string id, [Bind("Username,Password,Email,Creditcard,RegisterationDate,Admin")] User user)
         {
             if (id != user.Username)
@@ -126,6 +148,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Users/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -146,6 +169,7 @@ namespace WebApp.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var user = await _context.User.FindAsync(id);
@@ -154,6 +178,7 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         private bool UserExists(string id)
         {
             return _context.User.Any(e => e.Username == id);
