@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,8 @@ namespace WebApp.Controllers
         }
 
         // GET: Users
+        // Ofir TODO authorize admins only
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.User.ToListAsync());
@@ -60,7 +63,7 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Username,Password,Email,Creditcard,RegisterationDate")] User user)
+        public async Task<IActionResult> Create([Bind("Username,Password,Email,Creditcard,RegisterationDate,Admin")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +95,7 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Username,Password,Email,Creditcard,RegisterationDate")] User user)
+        public async Task<IActionResult> Edit(string id, [Bind("Username,Password,Email,Creditcard,RegisterationDate,Admin")] User user)
         {
             if (id != user.Username)
             {
