@@ -88,6 +88,19 @@ namespace WebApp.Controllers
             return View(user);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateFromRegistration([Bind("Username,Password,Email,Creditcard,RegisterationDate,Admin")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(user);
+        }
+
         // GET: Users/Edit/5
         [Authorize]
         public async Task<IActionResult> Edit(string id)
