@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApp.Data;
+using WebApp.Models;
 
-namespace WebApp.Migrations
+namespace WebApp.Migrations.MyDBMigrations
 {
-    [DbContext(typeof(WebAppContext))]
-    [Migration("20210923133645_Initial")]
-    partial class Initial
+    [DbContext(typeof(MyDB))]
+    [Migration("20211016141316_NewMyDB")]
+    partial class NewMyDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,12 +23,14 @@ namespace WebApp.Migrations
 
             modelBuilder.Entity("WebApp.Models.User", b =>
                 {
-                    b.Property<string>("Password")
+                    b.Property<string>("Username")
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
+                    b.Property<bool>("Admin")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Creditcard")
-                        .HasMaxLength(40)
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -36,15 +38,17 @@ namespace WebApp.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
                     b.Property<DateTime>("RegisterationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Username")
-                        .HasColumnType("int");
+                    b.HasKey("Username");
 
-                    b.HasKey("Password");
-
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

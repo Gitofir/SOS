@@ -7931,25 +7931,30 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ofirs\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\stav9\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+      "projectUniqueName": "C:\\Users\\stav9\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
       "projectName": "WebApp",
-      "projectPath": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
-      "packagesPath": "C:\\Users\\ofirs\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\obj\\",
+      "projectPath": "C:\\Users\\stav9\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+      "packagesPath": "C:\\Users\\stav9\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\stav9\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\ofirs\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\stav9\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -8029,7 +8034,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   },
