@@ -11,11 +11,11 @@
 
         $.ajax({
             type: "POST",
-            url: "@Url.Action("ShowUser")",
+            url: "@Url.Action("Calculate")",
             data: { number1: val1, number2: val2 },
             dataType: "text",
             success: function(msg) {
-                document.getElementById("spanMsg").textContent = JSON.stringify(msg);
+                document.getElementById("spanMsg").textContent = JSON.stringify("Sum is " + msg);
             },
             error: function (req, status, error) {
                 document.getElementById("spanMsg").textContent = error;
