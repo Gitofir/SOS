@@ -36,6 +36,15 @@ namespace WebApp.Controllers
         {
             return number1 + number2;
         }
+<<<<<<< HEAD
+=======
+        [HttpPost]
+        //public User ShowUser(int number1, int number2)
+        //{
+        //    var user = _context.User.FirstOrDefaultAsync();
+        //    return user;
+        //}
+>>>>>>> bcbb657a4bef3e81df98fbbc34bdb4b683c7ec3d
 
         // GET: Users/Details/5
         [Authorize]
