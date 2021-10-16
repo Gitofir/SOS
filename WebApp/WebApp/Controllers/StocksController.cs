@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using WebApp.Models;
+using System.Net;
+using System.Text.Json;
+
 
 namespace WebApp.Controllers
 {
@@ -22,6 +25,14 @@ namespace WebApp.Controllers
         // GET: Stocks
         public async Task<IActionResult> Index()
         {
+            string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo";
+            Uri queryUri = new Uri(QUERY_URL);
+
+            using (WebClient client = new WebClient())
+            {
+                dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
+
+            }
             return View(await _context.Stock.ToListAsync());
         }
 

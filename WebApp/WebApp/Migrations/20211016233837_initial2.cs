@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApp.Migrations
 {
-    public partial class initial1 : Migration
+    public partial class initial2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,9 +11,9 @@ namespace WebApp.Migrations
                 name: "Stock",
                 columns: table => new
                 {
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    price = table.Column<float>(type: "float", nullable: true),
+                    name = table.Column<string>(type: "nvarchar(40)", nullable: false),
+                        
+                    price = table.Column<float>(type: "float", nullable: false),
                     change = table.Column<float>(type: "float", nullable: false)
                 },
                 constraints: table =>
