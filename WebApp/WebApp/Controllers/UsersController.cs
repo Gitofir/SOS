@@ -37,11 +37,11 @@ namespace WebApp.Controllers
             return number1 + number2;
         }
         [HttpPost]
-        public User ShowUser(int number1, int number2)
-        {
-            var user = _context.User.FirstOrDefaultAsync();
-            return user;
-        }
+        //public User ShowUser(int number1, int number2)
+        //{
+        //    var user = _context.User.FirstOrDefaultAsync();
+        //    return user;
+        //}
 
         // GET: Users/Details/5
         [Authorize]
