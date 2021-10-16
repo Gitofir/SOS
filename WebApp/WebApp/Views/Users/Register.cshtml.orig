@@ -3,6 +3,13 @@
 @{
     ViewData["Title"] = "Register";
 }
+<body class="registration">
+    <br />
+    <form class="form-horizontal" method="POST" asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <fieldset>
+
+<<<<<<< HEAD
 <br />
 <form class="form-horizontal" method="POST" asp-action="CreateFromRegistration">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -14,6 +21,7 @@
             <div class="controls">
                 <span asp-validation-for="Username" class="text-danger"></span>
                 <input asp-for="Username" type="text" id="username" name="username" placeholder="" class="input-xlarge" />
+=======
             <!-- Username -->
             <div class="control-group">
                 <label class="control-label" for="username">Username</label>
@@ -21,6 +29,7 @@
                     <span asp-validation-for="Username" class="text-danger"></span>
                     <input asp-for="Username" type="text" id="username" name="username" placeholder="" class="input-xlarge form-control" />
                 </div>
+>>>>>>> 42477254d5f84719b471b1ae89a29c9235f31e91
             </div>
 
             <!-- Email -->
@@ -70,7 +79,10 @@
                     <span asp-validation-for="RegisterationDate" class="text-danger"></span>
                 </div>
             </div>
+
+
             <br />
+
             <div class="control-group">
                 <!-- Button -->
                 <div class="controls">
@@ -79,4 +91,5 @@
             </div>
 
         </fieldset>
-</form>
+    </form>
+</body>
