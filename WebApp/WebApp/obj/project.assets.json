@@ -7890,26 +7890,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Ofir\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\USER\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ofir\\Source\\Repos\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+      "projectUniqueName": "C:\\Users\\USER\\Desktop\\לימודים\\שנה ב\\סמסטר 3\\פיתוח אפליקציות\\SOS\\WebApp\\WebApp\\WebApp.csproj",
       "projectName": "WebApp",
-      "projectPath": "C:\\Users\\Ofir\\Source\\Repos\\SOS\\WebApp\\WebApp\\WebApp.csproj",
-      "packagesPath": "C:\\Users\\Ofir\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ofir\\Source\\Repos\\SOS\\WebApp\\WebApp\\obj\\",
+      "projectPath": "C:\\Users\\USER\\Desktop\\לימודים\\שנה ב\\סמסטר 3\\פיתוח אפליקציות\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+      "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\USER\\Desktop\\לימודים\\שנה ב\\סמסטר 3\\פיתוח אפליקציות\\SOS\\WebApp\\WebApp\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Ofir\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7990,7 +7983,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
       }
     }
   },
