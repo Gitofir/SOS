@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using WebApp.Models;
-using System.Net;
-using System.Text.Json;
 
 namespace WebApp.Controllers
 {
@@ -24,21 +22,11 @@ namespace WebApp.Controllers
         // GET: Stocks
         public async Task<IActionResult> Index()
         {
-            string QUERY_URL = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tesco&apikey=37JRG0QTCSA80XTE";
-            Uri queryUri = new Uri(QUERY_URL);
-            using (WebClient client = new WebClient())
-            {
-                dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
-                _context.Stock.Add(json_data[1], json_data[2] );
-            }
-
-
             return View(await _context.Stock.ToListAsync());
-
         }
 
         // GET: Stocks/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -46,7 +34,7 @@ namespace WebApp.Controllers
             }
 
             var stock = await _context.Stock
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.name == id);
             if (stock == null)
             {
                 return NotFound();
@@ -66,7 +54,7 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,name,price")] Stock stock)
+        public async Task<IActionResult> Create([Bind("name,price,change")] Stock stock)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +66,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -98,9 +86,9 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,name,price")] Stock stock)
+        public async Task<IActionResult> Edit(string id, [Bind("name,price,change")] Stock stock)
         {
-            if (id != stock.Id)
+            if (id != stock.name)
             {
                 return NotFound();
             }
@@ -114,7 +102,7 @@ namespace WebApp.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StockExists(stock.Id))
+                    if (!StockExists(stock.name))
                     {
                         return NotFound();
                     }
@@ -129,7 +117,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -137,7 +125,7 @@ namespace WebApp.Controllers
             }
 
             var stock = await _context.Stock
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.name == id);
             if (stock == null)
             {
                 return NotFound();
@@ -149,7 +137,7 @@ namespace WebApp.Controllers
         // POST: Stocks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var stock = await _context.Stock.FindAsync(id);
             _context.Stock.Remove(stock);
@@ -157,9 +145,9 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StockExists(int id)
+        private bool StockExists(string id)
         {
-            return _context.Stock.Any(e => e.Id == id);
+            return _context.Stock.Any(e => e.name == id);
         }
     }
 }

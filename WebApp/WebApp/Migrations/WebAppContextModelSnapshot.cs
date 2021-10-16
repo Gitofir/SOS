@@ -16,49 +16,25 @@ namespace WebApp.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-<<<<<<< HEAD
             modelBuilder.Entity("WebApp.Models.Stock", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<float>("change")
+                        .HasColumnType("real");
 
                     b.Property<float>("price")
                         .HasColumnType("real");
 
-                    b.HasKey("Id");
+                    b.HasKey("name");
 
                     b.ToTable("Stock");
                 });
 
-||||||| c6b3783
-=======
-            modelBuilder.Entity("WebApp.Models.Stock", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("price")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Stock");
-                });
-
->>>>>>> 42477254d5f84719b471b1ae89a29c9235f31e91
             modelBuilder.Entity("WebApp.Models.User", b =>
                 {
                     b.Property<string>("Username")

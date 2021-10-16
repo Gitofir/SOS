@@ -26,7 +26,6 @@ namespace WebApp.Models
         [Required(ErrorMessage = "This field is required.")]
         public int Creditcard { get; set; }
 
-
         [Required(ErrorMessage = "This field is required.")]
         public DateTime RegisterationDate { get; set; }
 
