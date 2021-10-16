@@ -3,77 +3,79 @@
 @{
     ViewData["Title"] = "Register";
 }
+<body class="registration">
+    <br />
+    <form class="form-horizontal" method="POST" asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <fieldset>
 
-<br />
-<form class="form-horizontal" method="POST" asp-action="Create">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <fieldset>
-
-        <!-- Username -->
-        <div class="control-group">
-            <label class="control-label" for="username">Username</label>
-            <div class="controls">
-                <span asp-validation-for="Username" class="text-danger"></span>
-                <input asp-for="Username" type="text" id="username" name="username" placeholder="" class="input-xlarge" />
+            <!-- Username -->
+            <div class="control-group">
+                <label class="control-label" for="username">Username</label>
+                <div class="controls">
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                    <input asp-for="Username" type="text" id="username" name="username" placeholder="" class="input-xlarge form-control" />
+                </div>
             </div>
-        </div>
 
-        <!-- Email -->
-        <div class="control-group">
-            <label class="control-label" for="email">Email</label>
-            <div class="controls">
-                <span asp-validation-for="Email" class="text-danger"></span>
-                <input asp-for="Email" class="form-control" />
-                <p class="help-block">Please provide your E-mail</p>
+            <!-- Email -->
+            <div class="control-group">
+                <label class="control-label" for="email">Email</label>
+                <div class="controls">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <input asp-for="Email" class="form-control" />
+                    <p class="help-block">Please provide your E-mail</p>
+                </div>
             </div>
-        </div>
 
-        <!-- Password -->
-        <div class="control-group">
-            <label class="control-label" for="password">Password</label>
-            <div class="controls">
-                <span asp-validation-for="Password" class="text-danger"></span>
-                <input asp-for="Password" type="password" id="password" name="password" placeholder="" class="input-xlarge" />
-                <p class="help-block">Password should be at least 6 characters</p>
+            <!-- Password -->
+            <div class="control-group">
+                <label class="control-label" for="password">Password</label>
+                <div class="controls">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <input asp-for="Password" type="password" id="password" name="password" placeholder="" class="input-xlarge form-control" />
+                    <p class="help-block">Password should be at least 6 characters</p>
+                </div>
             </div>
-        </div>
 
-        <!-- Credit Card -->
-        <div class="control-group">
-            <label class="control-label" for="password">Credit Card Number</label>
-            <div class="controls">
-                <span asp-validation-for="Creditcard" class="text-danger"></span>
-                <input asp-for="Creditcard" type="password" id="creditcard" name="creditcard" placeholder="" class="input-xlarge" />
+            <!-- Credit Card -->
+            <div class="control-group">
+                <label class="control-label" for="password">Credit Card Number</label>
+                <div class="controls">
+                    <span asp-validation-for="Creditcard" class="text-danger"></span>
+                    <input asp-for="Creditcard" type="password" id="creditcard" name="creditcard" placeholder="" class="input-xlarge form-control" />
+                </div>
             </div>
-        </div>
 
-        <!-- Admin -->
-        <div class="control-group">
-            <label class="control-label" for="admin">Is Admin?</label>
-            <div class="controls">
-                <input asp-for="Admin" class="form-select" />
-                <span asp-validation-for="Admin" class="text-danger"></span>
+            <!-- Admin -->
+            <div class="control-group">
+                <label class="control-label" for="admin">Is Admin?</label>
+                <div class="controls mb-3 form-check form-switch">
+                    <input asp-for="Admin" class="form-select form-check-input" type="checkbox" />
+
+                    <span asp-validation-for="Admin" class="text-danger"></span>
+                </div>
             </div>
-        </div>
 
-        <!-- Registration Date -->
-        <div class="control-group">
-            <label class="control-label" for="password">Registration Date</label>
-            <div class="controls">
-                <input asp-for="RegisterationDate" class="form-control" />
-                <span asp-validation-for="RegisterationDate" class="text-danger"></span>
+            <!-- Birth Date -->
+            <div class="control-group">
+                <label class="control-label" for="password">Registration Date</label>
+                <div class="controls">
+                    <input asp-for="RegisterationDate" class="form-control" />
+                    <span asp-validation-for="RegisterationDate" class="text-danger"></span>
+                </div>
             </div>
-        </div>
 
 
-        <br />
+            <br />
 
-        <div class="control-group">
-            <!-- Button -->
-            <div class="controls">
-                <input type="submit" value="Register" class="btn btn-primary" />
+            <div class="control-group">
+                <!-- Button -->
+                <div class="controls">
+                    <input type="submit" value="Register" class="btn btn-primary" />
+                </div>
             </div>
-        </div>
 
-    </fieldset>
-</form>
+        </fieldset>
+    </form>
+</body>
