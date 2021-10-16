@@ -40,22 +40,18 @@ namespace WebApp
                 .AddCookie(options => {
                     options.LoginPath = "/Login";
                     options.AccessDeniedPath = "/Denied";
-                    options.Events = new CookieAuthenticationEvents()
-                    {
-                        OnSigningIn = async context =>
-                        {
-                            var principal = context.Principal;
-                            if (principal.HasClaim(c => c.Type == ClaimTypes.NameIdentifier))
-                            {
-                                if (principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value == "bob")
-                                {
-                                    var claimsIdentity = principal.Identity as ClaimsIdentity;
-                                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
-                                }
-                            }
-                        }
-                    };
+                    options.Events = new CookieAuthenticationEvents();
                 });
+
+            // For session managment
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            services.AddMvc(options => options.EnableEndpointRouting = false);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +73,12 @@ namespace WebApp
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            // For session managment, must come before UseEndpoints
+            app.UseCookiePolicy();
+            app.UseSession();
+            app.UseMvc();
+            app.UseCookiePolicy();
 
             app.UseEndpoints(endpoints =>
             {

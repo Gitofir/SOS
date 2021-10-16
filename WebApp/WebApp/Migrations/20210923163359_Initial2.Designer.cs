@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApp.Data;
 
 namespace WebApp.Migrations
 {
     [DbContext(typeof(WebAppContext))]
-    partial class WebAppContextModelSnapshot : ModelSnapshot
+    [Migration("20210923163359_Initial2")]
+    partial class Initial2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,27 +21,6 @@ namespace WebApp.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-<<<<<<< HEAD
-            modelBuilder.Entity("WebApp.Models.Stock", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("price")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Stock");
-                });
-
-||||||| c6b3783
-=======
             modelBuilder.Entity("WebApp.Models.Stock", b =>
                 {
                     b.Property<int>("id")
@@ -58,15 +39,11 @@ namespace WebApp.Migrations
                     b.ToTable("Stock");
                 });
 
->>>>>>> 42477254d5f84719b471b1ae89a29c9235f31e91
             modelBuilder.Entity("WebApp.Models.User", b =>
                 {
-                    b.Property<string>("Username")
+                    b.Property<string>("Password")
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
-
-                    b.Property<bool>("Admin")
-                        .HasColumnType("bit");
 
                     b.Property<int>("Creditcard")
                         .HasMaxLength(40)
@@ -85,15 +62,6 @@ namespace WebApp.Migrations
 
                     b.HasKey("Password");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<DateTime>("RegisterationDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Username");
                     b.ToTable("User");
                 });
 #pragma warning restore 612, 618
