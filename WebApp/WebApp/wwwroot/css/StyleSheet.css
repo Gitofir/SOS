@@ -93,3 +93,15 @@ h3 {
         text-decoration: none;
         text-shadow: 0 0 2px #303481;
     }
+
+.small-lable {
+    font-size: 10px;
+}
+
+    .registration {
+    align-content: center;
+    }
+
+.form-control{
+    align-items: center;
+}
