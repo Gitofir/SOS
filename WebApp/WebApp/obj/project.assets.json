@@ -7939,11 +7939,27 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\stav9\\Source\\Repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+||||||| 4247725
+      "projectUniqueName": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+=======
+      "projectUniqueName": "C:\\Users\\stav9\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+>>>>>>> master
       "projectName": "WebApp",
+<<<<<<< HEAD
       "projectPath": "C:\\Users\\stav9\\Source\\Repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
       "packagesPath": "C:\\Users\\stav9\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\stav9\\Source\\Repos\\Gitofir\\SOS\\WebApp\\WebApp\\obj\\",
+||||||| 4247725
+      "projectPath": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+      "packagesPath": "C:\\Users\\ofirs\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\obj\\",
+=======
+      "projectPath": "C:\\Users\\stav9\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+      "packagesPath": "C:\\Users\\stav9\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\stav9\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\obj\\",
+>>>>>>> master
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

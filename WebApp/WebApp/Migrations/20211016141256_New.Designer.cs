@@ -10,8 +10,8 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(WebAppContext))]
-    [Migration("20210923163359_Initial2")]
-    partial class Initial2
+    [Migration("20211016141256_New")]
+    partial class New
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,12 +41,14 @@ namespace WebApp.Migrations
 
             modelBuilder.Entity("WebApp.Models.User", b =>
                 {
-                    b.Property<string>("Password")
+                    b.Property<string>("Username")
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
+                    b.Property<bool>("Admin")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Creditcard")
-                        .HasMaxLength(40)
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -54,13 +56,15 @@ namespace WebApp.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
                     b.Property<DateTime>("RegisterationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Username")
-                        .HasColumnType("int");
-
-                    b.HasKey("Password");
+                    b.HasKey("Username");
 
                     b.ToTable("User");
                 });
