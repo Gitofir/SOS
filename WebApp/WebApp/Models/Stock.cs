@@ -12,9 +12,9 @@ namespace WebApp.Models
         [Required]
         public string name { get; set; }
 
-        public float price { get; set; }
+        public double price { get; set; }
 
-        public float change { get; set; }
+        public double change { get; set; }
 
     }
 }

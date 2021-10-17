@@ -25,7 +25,7 @@ namespace WebApp.Controllers
         // GET: Stocks
         public async Task<IActionResult> Index()
         {
-            string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo";
+            string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=H4XBAHBR";
             Uri queryUri = new Uri(QUERY_URL);
 
             using (WebClient client = new WebClient())
