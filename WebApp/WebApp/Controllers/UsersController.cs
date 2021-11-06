@@ -30,13 +30,6 @@ namespace WebApp.Controllers
             return View(await _context.User.ToListAsync());
         }
 
-        // Ofir Ajax Test
-        [HttpPost]
-        public int Calculate(int number1, int number2)
-        {
-            return number1 + number2;
-        }
-
         // GET: Users/Details/5
         [Authorize]
         public async Task<IActionResult> Details(string id)
@@ -55,8 +48,6 @@ namespace WebApp.Controllers
 
             return View(user);
         }
-
-
 
         // GET: Users/Register
         public IActionResult Register()
@@ -102,6 +93,34 @@ namespace WebApp.Controllers
             }
             return View(user);
         }
+
+        //// DOESNT WORK - OFIR DEBUG
+        //[HttpPost]
+        //public async Task<IActionResult> StockToUser(string username, string stock_name)
+        //{
+        //    // If stock exists and user exists, add to user
+        //    var stock = await _context.Stock.FirstOrDefaultAsync(m => m.name == stock_name);
+        //    var user = await _context.User.FirstOrDefaultAsync(m => m.Username == username);
+
+        //    // Stock or user doesn't exis
+        //    if (stock == null || username == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    // Add stock it to user
+        //    if (user.Stocks == null)
+        //    {
+        //        user.Stocks = new List<Stock>();
+        //        user.Stocks.Add(stock);
+        //    }
+        //    else
+        //    {
+        //     user.Stocks.Add(stock);
+        //    }
+
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         // GET: Users/Edit/5
         [Authorize]
