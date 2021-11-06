@@ -9,6 +9,7 @@ using WebApp.Data;
 using WebApp.Models;
 using System.Net;
 using System.Text.Json;
+using System.Threading;
 
 
 namespace WebApp.Controllers
@@ -25,12 +26,44 @@ namespace WebApp.Controllers
         // GET: Stocks
         public async Task<IActionResult> Index()
         {
-            string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=H4XBAHBR";
-            Uri queryUri = new Uri(QUERY_URL);
-
             using (WebClient client = new WebClient())
             {
-                dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
+                var companies = new List<string>()
+                    {
+                        "IBM",
+                        "TSCO.LON",
+                        "300135.SHZ",
+                        "BA",
+                        "BAB"
+                    };
+                for (int i = 0; i < companies.Count; i++)
+                {
+                    string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + companies[i] + "&apikey=H4XBAHBR";
+                    Uri queryUri = new Uri(QUERY_URL);
+                    //List<SecurityData> prices = client.DownloadString(queryUri).FromCsv<List<SecurityData>>();
+                    dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
+                    dynamic jsi = json_data["Global Quote"];
+
+                    string d = jsi.GetRawText();
+                    Dictionary<string, string> dic = JsonSerializer.Deserialize<Dictionary<string, string>>(d);
+                    string s_name = dic["01. symbol"];
+                    double s_price = Convert.ToDouble(dic["05. price"]);
+                    double s_change = Convert.ToDouble(dic["09. change"]);
+
+                    var s = new Stock { name = s_name, price = s_price, change = s_change };
+                    var stock = _context.Stock.Where(u => u.name == s_name).FirstOrDefault();
+                    if (stock == null)
+                    {
+                        _context.Stock.Add(s);
+                    }
+                    else
+                    {
+                        stock.price = s_price;
+                        stock.change = s_change;
+                    }
+                    _context.SaveChanges();
+                    //Thread.Sleep(5000);
+                }
 
             }
             return View(await _context.Stock.ToListAsync());
