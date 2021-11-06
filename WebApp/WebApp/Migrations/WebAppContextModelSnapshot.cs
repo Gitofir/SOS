@@ -47,21 +47,12 @@ namespace WebApp.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("Creditcard")
-                        .HasMaxLength(40)
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
-
-                    b.Property<DateTime>("RegisterationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Username")
-                        .HasColumnType("int");
-
-                    b.HasKey("Password");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -72,6 +63,7 @@ namespace WebApp.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Username");
+
                     b.ToTable("User");
                 });
 #pragma warning restore 612, 618

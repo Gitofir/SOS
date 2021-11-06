@@ -10,8 +10,8 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(WebAppContext))]
-    [Migration("20210923133645_Initial")]
-    partial class Initial
+    [Migration("20211106121823_Kahlon")]
+    partial class Kahlon
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,14 +21,34 @@ namespace WebApp.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("WebApp.Models.Stock", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("price")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Stock");
+                });
+
             modelBuilder.Entity("WebApp.Models.User", b =>
                 {
-                    b.Property<string>("Password")
+                    b.Property<string>("Username")
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
+                    b.Property<bool>("Admin")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Creditcard")
-                        .HasMaxLength(40)
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -36,13 +56,15 @@ namespace WebApp.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
                     b.Property<DateTime>("RegisterationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Username")
-                        .HasColumnType("int");
-
-                    b.HasKey("Password");
+                    b.HasKey("Username");
 
                     b.ToTable("User");
                 });

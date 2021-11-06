@@ -33,9 +33,6 @@ namespace WebApp
             services.AddDbContext<WebAppContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("WebAppContext")));
 
-            services.AddDbContext<MyDB>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("WebAppContext")));
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => {
                     options.LoginPath = "/Login";
