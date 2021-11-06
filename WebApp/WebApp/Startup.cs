@@ -13,6 +13,7 @@ using WebApp.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using WebApp.Models;
+using WebApp.Services;
 
 namespace WebApp
 {
@@ -35,6 +36,7 @@ namespace WebApp
 
             services.AddDbContext<MyDB>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("WebAppContext")));
+            services.AddScoped<IStockService,StockService>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => {
