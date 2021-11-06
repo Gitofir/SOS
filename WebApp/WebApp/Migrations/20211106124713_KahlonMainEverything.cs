@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApp.Migrations
 {
-    public partial class Kahlon : Migration
+    public partial class KahlonMainEverything : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,14 +11,13 @@ namespace WebApp.Migrations
                 name: "Stock",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    price = table.Column<int>(type: "int", nullable: false)
+                    name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    price = table.Column<double>(type: "float", nullable: false),
+                    change = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stock", x => x.id);
+                    table.PrimaryKey("PK_Stock", x => x.name);
                 });
 
             migrationBuilder.CreateTable(
