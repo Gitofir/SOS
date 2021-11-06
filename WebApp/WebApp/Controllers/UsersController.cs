@@ -78,7 +78,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Username,Password,Email,Creditcard,RegisterationDate,Admin")] User user)
+        public async Task<IActionResult> Create([Bind("Username,Password,Email,Creditcard,Birthdate,Admin")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -91,10 +91,11 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateFromRegistration([Bind("Username,Password,Email,Creditcard,RegisterationDate,Admin")] User user)
+        public async Task<IActionResult> CreateFromRegistration([Bind("Username,Password,Email,Creditcard,Birthdate,Admin")] User user)
         {
             if (ModelState.IsValid)
             {
+                user.Admin = false;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -125,7 +126,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(string id, [Bind("Username,Password,Email,Creditcard,RegisterationDate,Admin")] User user)
+        public async Task<IActionResult> Edit(string id, [Bind("Username,Password,Email,Creditcard,Birthdate,Admin")] User user)
         {
             if (id != user.Username)
             {

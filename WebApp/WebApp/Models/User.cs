@@ -27,9 +27,11 @@ namespace WebApp.Models
         public int Creditcard { get; set; }
 
         [Required(ErrorMessage = "This field is required.")]
-        public DateTime RegisterationDate { get; set; }
+        public DateTime Birthdate { get; set; }
 
         [Required(ErrorMessage = "This field is required.")]
         public bool Admin { get; set; }
+
+        public ICollection<Stock> Stocks { get; set; }
     }
 }

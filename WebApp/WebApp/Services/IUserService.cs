@@ -6,5 +6,7 @@ namespace WebApp.Services
     public interface IUserService
     {
         Task<User> GetUser(string username);
+        Task UpdateUserStocks(string username, string stockName, int numOfStocks);
+
     }
 }

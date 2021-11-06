@@ -33,9 +33,12 @@
                         <li class="nav-item">
                             <a class="nav-link  font-weight-normal" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @if (User.Identity.IsAuthenticated == false)
+                        {
                         <li class="nav-item">
                             <a class="nav-link  font-weight-bolder" asp-area="" asp-controller="Users" asp-action="Register">Register Now!</a>
                         </li>
+                        }
                         @if (User.Identity.IsAuthenticated == false)
                         {
                         <li class="nav-item">
@@ -51,7 +54,6 @@
                                 <a class="nav-link text-dark font-weight-normal " asp-area="" asp-controller="Login" asp-action="MyProfile">My Profile</a>
                             </li>
                         }
-
                         @{
                             if (User.Identity.IsAuthenticated)
                             {

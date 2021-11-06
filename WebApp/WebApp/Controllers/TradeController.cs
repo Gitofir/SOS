@@ -16,6 +16,7 @@ namespace WebApp.Controllers
     {
         private readonly WebAppContext _context;
         private readonly IStockService _stockService;
+        private readonly IUserService _userService;
 
         public TradeController(WebAppContext context, IStockService stockService)
         {
@@ -31,10 +32,11 @@ namespace WebApp.Controllers
             return View(await _context.Stock.ToListAsync());
         }
 
-        public async Task<IActionResult> Buy(string name)
+        public async Task<IActionResult> Buy(string name, int numOfStocks)
         {
             var username = User.FindFirst("username").Value;
-            
+            User user = _userService.GetUser();
+            return View("Index");
         }
 
         // GET: Trade/Details/5

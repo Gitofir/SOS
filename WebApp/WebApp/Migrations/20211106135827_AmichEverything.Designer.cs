@@ -3,21 +3,39 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApp.Models;
+using WebApp.Data;
 
-namespace WebApp.Migrations.MyDBMigrations
+namespace WebApp.Migrations
 {
-    [DbContext(typeof(MyDB))]
-    partial class MyDBModelSnapshot : ModelSnapshot
+    [DbContext(typeof(WebAppContext))]
+    [Migration("20211106135827_AmichEverything")]
+    partial class AmichEverything
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("WebApp.Models.Stock", b =>
+                {
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("change")
+                        .HasColumnType("float");
+
+                    b.Property<double>("price")
+                        .HasColumnType("float");
+
+                    b.HasKey("name");
+
+                    b.ToTable("Stock");
+                });
 
             modelBuilder.Entity("WebApp.Models.User", b =>
                 {
@@ -27,6 +45,9 @@ namespace WebApp.Migrations.MyDBMigrations
 
                     b.Property<bool>("Admin")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("Birthdate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Creditcard")
                         .HasColumnType("int");
@@ -41,12 +62,9 @@ namespace WebApp.Migrations.MyDBMigrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<DateTime>("RegisterationDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Username");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 #pragma warning restore 612, 618
         }

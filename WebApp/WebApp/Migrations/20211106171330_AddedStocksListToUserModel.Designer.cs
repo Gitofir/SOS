@@ -10,8 +10,8 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(WebAppContext))]
-    [Migration("20211016222123_New2")]
-    partial class New2
+    [Migration("20211106171330_AddedStocksListToUserModel")]
+    partial class AddedStocksListToUserModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,13 +26,18 @@ namespace WebApp.Migrations
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<float>("change")
-                        .HasColumnType("real");
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(40)");
 
-                    b.Property<float>("price")
-                        .HasColumnType("real");
+                    b.Property<double>("change")
+                        .HasColumnType("float");
+
+                    b.Property<double>("price")
+                        .HasColumnType("float");
 
                     b.HasKey("name");
+
+                    b.HasIndex("Username");
 
                     b.ToTable("Stock");
                 });
@@ -45,6 +50,9 @@ namespace WebApp.Migrations
 
                     b.Property<bool>("Admin")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("Birthdate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Creditcard")
                         .HasColumnType("int");
@@ -59,12 +67,21 @@ namespace WebApp.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<DateTime>("RegisterationDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Username");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("WebApp.Models.Stock", b =>
+                {
+                    b.HasOne("WebApp.Models.User", null)
+                        .WithMany("Stocks")
+                        .HasForeignKey("Username");
+                });
+
+            modelBuilder.Entity("WebApp.Models.User", b =>
+                {
+                    b.Navigation("Stocks");
                 });
 #pragma warning restore 612, 618
         }

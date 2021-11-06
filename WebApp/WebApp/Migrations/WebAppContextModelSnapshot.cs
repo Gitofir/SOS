@@ -24,6 +24,9 @@ namespace WebApp.Migrations
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(40)");
+
                     b.Property<double>("change")
                         .HasColumnType("float");
 
@@ -31,6 +34,8 @@ namespace WebApp.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("name");
+
+                    b.HasIndex("Username");
 
                     b.ToTable("Stock");
                 });
@@ -43,6 +48,9 @@ namespace WebApp.Migrations
 
                     b.Property<bool>("Admin")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("Birthdate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Creditcard")
                         .HasColumnType("int");
@@ -57,12 +65,21 @@ namespace WebApp.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<DateTime>("RegisterationDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Username");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("WebApp.Models.Stock", b =>
+                {
+                    b.HasOne("WebApp.Models.User", null)
+                        .WithMany("Stocks")
+                        .HasForeignKey("Username");
+                });
+
+            modelBuilder.Entity("WebApp.Models.User", b =>
+                {
+                    b.Navigation("Stocks");
                 });
 #pragma warning restore 612, 618
         }

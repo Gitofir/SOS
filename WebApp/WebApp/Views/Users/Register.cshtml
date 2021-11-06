@@ -8,6 +8,7 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <fieldset>
 
+<<<<<<< HEAD
             <!-- Username -->
             <div class="control-group">
                 <label class="control-label" for="username">Username</label>
@@ -15,62 +16,101 @@
                     <span asp-validation-for="Username" class="text-danger"></span>
                     <input asp-for="Username" type="text" id="username" name="username" placeholder="" class="input-xlarge form-control" />
                 </div>
-            </div>
-
-            <!-- Email -->
+||||||| merged common ancestors
+        <!-- Username -->
+        <div class="control-group">
+            <label class="control-label" for="username">Username</label>
+            <div class="controls">
+                <span asp-validation-for="Username" class="text-danger"></span>
+                <input asp-for="Username" type="text" id="username" name="username" placeholder="" class="input-xlarge" />
+            <!-- Username -->
             <div class="control-group">
-                <label class="control-label" for="email">Email</label>
+                <label class="control-label" for="username">Username</label>
                 <div class="controls">
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                    <input asp-for="Email" class="form-control" />
-                    <p class="help-block">Please provide your E-mail</p>
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                    <input asp-for="Username" type="text" id="username" name="username" placeholder="" class="input-xlarge form-control" />
                 </div>
+=======
+        <!-- Username -->
+        <div class="control-group">
+            <label class="control-label" for="username">Username</label>
+            <div class="controls">
+                <span asp-validation-for="Username" class="text-danger"></span>
+                <input asp-for="Username" type="text" id="username" name="username" placeholder="" class="input-xlarge form-control" />
+>>>>>>> 59a0f8fb539db6a185e38b2fc858fa6ef267f6d1
             </div>
+        </div>
 
-            <!-- Password -->
-            <div class="control-group">
-                <label class="control-label" for="password">Password</label>
-                <div class="controls">
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                    <input asp-for="Password" type="password" id="password" name="password" placeholder="" class="input-xlarge form-control" />
-                    <p class="help-block">Password should be at least 6 characters</p>
-                </div>
+        <!-- Email -->
+        <div class="control-group">
+            <label class="control-label" for="email">Email</label>
+            <div class="controls">
+                <span asp-validation-for="Email" class="text-danger"></span>
+                <input asp-for="Email" class="form-control" />
+                <p class="help-block">Please provide your E-mail</p>
             </div>
+        </div>
 
-            <!-- Credit Card -->
-            <div class="control-group">
-                <label class="control-label" for="password">Credit Card Number</label>
-                <div class="controls">
-                    <span asp-validation-for="Creditcard" class="text-danger"></span>
-                    <input asp-for="Creditcard" type="password" id="creditcard" name="creditcard" placeholder="" class="input-xlarge form-control" />
-                </div>
+        <!-- Password -->
+        <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <input asp-for="Password" type="password" id="password" name="password" placeholder="" class="input-xlarge form-control" />
+                <p class="help-block">Password should be at least 6 characters</p>
             </div>
+        </div>
 
-            <!-- Admin -->
-            <div class="control-group">
-                <label class="control-label" for="admin">Is Admin?</label>
-                <div class="controls mb-3 form-check form-switch">
-                    <input asp-for="Admin" class="form-select form-check-input" type="checkbox" />
-
-                    <span asp-validation-for="Admin" class="text-danger"></span>
-                </div>
+        <!-- Credit Card -->
+        <div class="control-group">
+            <label class="control-label" for="password">Credit Card Number</label>
+            <div class="controls">
+                <span asp-validation-for="Creditcard" class="text-danger"></span>
+                <input asp-for="Creditcard" type="password" id="creditcard" name="creditcard" placeholder="" class="input-xlarge form-control" />
             </div>
+        </div>
 
-            <!-- Birth Date -->
-            <div class="control-group">
-                <label class="control-label" for="password">Registration Date</label>
-                <div class="controls">
-                    <input asp-for="RegisterationDate" class="form-control" />
-                    <span asp-validation-for="RegisterationDate" class="text-danger"></span>
-                </div>
-            </div>
-            <br />
-            <div class="control-group">
-                <!-- Button -->
-                <div class="controls">
-                    <input type="submit" value="Register" class="btn btn-primary" />
-                </div>
-            </div>
+        @{
+            if (User.Identity.IsAuthenticated)
+            {
+                var isAdmin = false;
+                var claims = User.Claims.ToList();
+                foreach (var c in claims)
+                {
+                    if (c.Value == "Admin")
+                    {
+                        isAdmin = true;
+                    }
+                }
 
-        </fieldset>
+                if (isAdmin == true)
+                {
+                    <!-- Admin -->
+                    <div class="control-group">
+                        <label class="control-label" for="admin">Is Admin?</label>
+                        <div class="controls mb-3 form-check form-switch">
+                            <input asp-for="Admin" class="form-select form-check-input" type="checkbox" />
+                            <span asp-validation-for="Admin" class="text-danger"></span>
+                        </div>
+                    </div>
+                }
+            }
+        }
+        <!-- Birth Date -->
+        <div class="control-group">
+            <label class="control-label" for="password">Birthdate</label>
+            <div class="controls">
+                <input asp-for="Birthdate" class="form-control" />
+                <span asp-validation-for="Birthdate" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="control-group">
+            <!-- Button -->
+            <div class="controls">
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </div>
+        </div>
+
+    </fieldset>
 </form>
