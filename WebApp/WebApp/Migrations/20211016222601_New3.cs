@@ -2,7 +2,7 @@
 
 namespace WebApp.Migrations
 {
-    public partial class ChangedUserPasswordToDatatypePassword : Migration
+    public partial class New3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

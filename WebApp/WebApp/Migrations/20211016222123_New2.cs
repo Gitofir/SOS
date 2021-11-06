@@ -2,7 +2,7 @@
 
 namespace WebApp.Migrations
 {
-    public partial class ofirlaptop : Migration
+    public partial class New2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

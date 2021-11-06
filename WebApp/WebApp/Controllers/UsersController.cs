@@ -65,6 +65,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Users/Create
+        [HttpGet]
         [Authorize]
         public IActionResult Create()
         {

@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApp.Data;
+using WebApp.Models;
 
-namespace WebApp.Migrations
+namespace WebApp.Migrations.MyDBMigrations
 {
-    [DbContext(typeof(WebAppContext))]
-    [Migration("20210923161758_try")]
-    partial class @try
+    [DbContext(typeof(MyDB))]
+    [Migration("20211016141316_NewMyDB")]
+    partial class NewMyDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,7 +48,7 @@ namespace WebApp.Migrations
 
                     b.HasKey("Username");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

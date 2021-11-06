@@ -10,22 +10,41 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(WebAppContext))]
-    [Migration("20210923093940_ofirlaptop")]
-    partial class ofirlaptop
+    [Migration("20211017072320_initial3")]
+    partial class initial3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("WebApp.Models.Stock", b =>
+                {
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("change")
+                        .HasColumnType("float");
+
+                    b.Property<double>("price")
+                        .HasColumnType("float");
+
+                    b.HasKey("name");
+
+                    b.ToTable("Stock");
+                });
 
             modelBuilder.Entity("WebApp.Models.User", b =>
                 {
                     b.Property<string>("Username")
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
+
+                    b.Property<bool>("Admin")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Creditcard")
                         .HasColumnType("int");
