@@ -10,29 +10,31 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(WebAppContext))]
-    [Migration("20211016233837_initial2")]
-    partial class initial2
+    [Migration("20211106121823_Kahlon")]
+    partial class Kahlon
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.11")
+                .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("WebApp.Models.Stock", b =>
                 {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<string>("name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("change")
-                        .HasColumnType("real");
+                    b.Property<int>("price")
+                        .HasColumnType("int");
 
-                    b.Property<float>("price")
-                        .HasColumnType("real");
-
-                    b.HasKey("name");
+                    b.HasKey("id");
 
                     b.ToTable("Stock");
                 });
