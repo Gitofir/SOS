@@ -40,7 +40,7 @@
 <h1>User Managment</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="normal-link font-weight-bold ">Create New User</a>
 </p>
 <table class="table">
     <thead>
@@ -89,9 +89,9 @@
                     @Html.DisplayFor(modelItem => item.Admin)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Username">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Username">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Username">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Username" class="normal-link">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Username" class="normal-link">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Username" class="normal-link">Delete</a>
                 </td>
             </tr>
         }
