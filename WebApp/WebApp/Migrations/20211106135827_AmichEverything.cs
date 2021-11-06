@@ -3,13 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApp.Migrations
 {
-<<<<<<< HEAD:WebApp/WebApp/Migrations/20211106121823_Kahlon.cs
-    public partial class Kahlon : Migration
-||||||| 4247725:WebApp/WebApp/Migrations/MyDBMigrations/20210923202702_Added MyDB for real.cs
-    public partial class AddedMyDBforreal : Migration
-=======
-    public partial class NewMyDB : Migration
->>>>>>> 43ccee9b9a4a7f0c97acb7dc92160f9fd4641e56:WebApp/WebApp/Migrations/20211016141316_NewMyDB.cs
+    public partial class AmichEverything : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,14 +11,13 @@ namespace WebApp.Migrations
                 name: "Stock",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    price = table.Column<int>(type: "int", nullable: false)
+                    name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    price = table.Column<double>(type: "float", nullable: false),
+                    change = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stock", x => x.id);
+                    table.PrimaryKey("PK_Stock", x => x.name);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,7 +28,7 @@ namespace WebApp.Migrations
                     Password = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Creditcard = table.Column<int>(type: "int", nullable: false),
-                    RegisterationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Birthdate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Admin = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

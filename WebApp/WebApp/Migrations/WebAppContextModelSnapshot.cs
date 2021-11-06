@@ -44,6 +44,9 @@ namespace WebApp.Migrations
                     b.Property<bool>("Admin")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("Birthdate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Creditcard")
                         .HasColumnType("int");
 
@@ -56,9 +59,6 @@ namespace WebApp.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
-
-                    b.Property<DateTime>("RegisterationDate")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Username");
 
