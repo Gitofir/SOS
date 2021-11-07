@@ -45,18 +45,6 @@
         </dd>
     </dl>
 </div>
-@foreach (var item in Model.Stocks ?? Enumerable.Empty<Stock>())
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(m => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(m => item.price)
-        </td>
-    </tr>
-
-}
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Username">Edit</a> |
     <a asp-action="Index">Back to List</a>
