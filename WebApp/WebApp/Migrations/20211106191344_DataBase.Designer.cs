@@ -10,8 +10,8 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(WebAppContext))]
-    [Migration("20211106171330_AddedStocksListToUserModel")]
-    partial class AddedStocksListToUserModel
+    [Migration("20211106191344_DataBase")]
+    partial class DataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -75,13 +75,13 @@ namespace WebApp.Migrations
             modelBuilder.Entity("WebApp.Models.Stock", b =>
                 {
                     b.HasOne("WebApp.Models.User", null)
-                        .WithMany("Stocks")
+                        .WithMany("StocksList")
                         .HasForeignKey("Username");
                 });
 
             modelBuilder.Entity("WebApp.Models.User", b =>
                 {
-                    b.Navigation("Stocks");
+                    b.Navigation("StocksList");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,11 +6,3 @@ build_property.ProjectTypeGuids =
 build_property.PublishSingleFile = 
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
-<<<<<<< HEAD
-||||||| merged common ancestors
-build_property.RootNamespace = WebApp
-build_property.ProjectDir = C:\Users\ofirs\source\repos\Gitofir\SOS\WebApp\WebApp\
-=======
-build_property.RootNamespace = WebApp
-build_property.ProjectDir = C:\Users\Ofir\source\repos\SOS\WebApp\WebApp\
->>>>>>> 59a0f8fb539db6a185e38b2fc858fa6ef267f6d1

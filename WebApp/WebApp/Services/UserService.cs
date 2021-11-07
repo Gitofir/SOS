@@ -17,8 +17,6 @@ namespace WebApp.Services
             _context = context;
         }
 
-        //public async Task<IActionResult> Details(string id)
-
         public async Task<User> GetUser(string username)
         {
             User user = await _context.User.FirstOrDefaultAsync(u => u.Username == username);
@@ -28,7 +26,16 @@ namespace WebApp.Services
         public async Task UpdateUserStocks(string username, string stockName, int numOfStocks)
         {
             User user = await _context.User.FirstOrDefaultAsync(u => u.Username == username);
-            //user.Stocks.Append
+            //var s = user.StocksList.FirstOrDefault(stockName);
+            /*
+            if (s == null)
+            {
+                user.StocksList.Add(stockName);
+            }
+            //user.StocksList
+            //user.Stocks.Append()
+            _context.SaveChanges();
+            */
         }
     }
 }

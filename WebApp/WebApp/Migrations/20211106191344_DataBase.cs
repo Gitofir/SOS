@@ -3,23 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApp.Migrations
 {
-    public partial class AmichEverything : Migration
+    public partial class DataBase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Stock",
-                columns: table => new
-                {
-                    name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    price = table.Column<double>(type: "float", nullable: false),
-                    change = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Stock", x => x.name);
-                });
-
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
@@ -35,6 +22,31 @@ namespace WebApp.Migrations
                 {
                     table.PrimaryKey("PK_User", x => x.Username);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Stock",
+                columns: table => new
+                {
+                    name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    price = table.Column<double>(type: "float", nullable: false),
+                    change = table.Column<double>(type: "float", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(40)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stock", x => x.name);
+                    table.ForeignKey(
+                        name: "FK_Stock_User_Username",
+                        column: x => x.Username,
+                        principalTable: "User",
+                        principalColumn: "Username",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Stock_Username",
+                table: "Stock",
+                column: "Username");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

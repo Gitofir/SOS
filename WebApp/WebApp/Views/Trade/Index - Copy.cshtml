@@ -30,10 +30,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.change)
             </td>
+        </tr>
+        <tr>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.name">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.name">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.name">Delete</a>
+                <a asp-action="Buy" asp-route-id="@item.name">Buy</a> |
+                <a asp-action="Sell" asp-route-id="@item.name">Sell</a> |
             </td>
         </tr>
 }

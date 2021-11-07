@@ -10,18 +10,23 @@ using WebApp.Models;
 using System.Net;
 using System.Text.Json;
 using System.Threading;
-
+using WebApp.Services;
 
 namespace WebApp.Controllers
 {
     public class StocksController : Controller
     {
         private readonly WebAppContext _context;
+        private readonly IStockService _stockService;
+        private readonly IUserService _userService;
 
-        public StocksController(WebAppContext context)
+        public StocksController(WebAppContext context, IStockService stockService, IUserService userService)
         {
             _context = context;
+            _stockService = stockService;
+            _userService = userService;
         }
+    
 
         // GET: Stocks
         public async Task<IActionResult> Index()
@@ -51,17 +56,15 @@ namespace WebApp.Controllers
                     double s_change = Convert.ToDouble(dic["09. change"]);
 
                     var s = new Stock { name = s_name, price = s_price, change = s_change };
-                    var stock = _context.Stock.Where(u => u.name == s_name).FirstOrDefault();
+                    var stock = await _stockService.GetStock(s_name);
                     if (stock == null)
                     {
-                        _context.Stock.Add(s);
+                        await _stockService.AddStock(s);
                     }
                     else
                     {
-                        stock.price = s_price;
-                        stock.change = s_change;
+                        await _stockService.UpdateStockDetails(s_name, s_price, s_change);
                     }
-                    _context.SaveChanges();
                     //Thread.Sleep(5000);
                 }
 

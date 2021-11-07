@@ -15,6 +15,5 @@ namespace WebApp.Models
         public double price { get; set; }
 
         public double change { get; set; }
-
     }
 }
