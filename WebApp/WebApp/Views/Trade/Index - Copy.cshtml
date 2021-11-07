@@ -1,4 +1,4 @@
-@model IEnumerable<WebApp.Models.Stock>
+﻿@model IEnumerable<WebApp.Models.Stock>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,9 +13,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.price)
             </th>
             <th>
@@ -28,18 +25,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.price)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.change)
             </td>
+        </tr>
+        <tr>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.name">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.name">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.name">Delete</a>
+                <a asp-action="Buy" asp-route-id="@item.name">Buy</a> |
+                <a asp-action="Sell" asp-route-id="@item.name">Sell</a> |
             </td>
         </tr>
 }

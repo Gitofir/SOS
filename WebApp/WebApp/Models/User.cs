@@ -32,6 +32,6 @@ namespace WebApp.Models
         [Required(ErrorMessage = "This field is required.")]
         public bool Admin { get; set; }
 
-        public ICollection<Stock> Stocks { get; set; }
+        public ICollection<string> StocksList { get; set; }
     }
 }
