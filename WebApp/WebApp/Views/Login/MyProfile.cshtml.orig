@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+﻿@model WebApp.Models.User
+@{
+    ViewData["Title"] = "My Profile";
+}
+<br />
+<h1>User Profile</h1>
+<ul>
+    @foreach(var c in User.Claims)
+    {
+        <li>@c.Type: @c.Value</li>
+    }
+</ul>
+||||||| 55ccd38
+=======
 ﻿@model WebApp.Models.User
 @{
     ViewData["Title"] = "My Profile";
@@ -46,3 +61,4 @@
 <button type="button" onclick="loadXMLDoc()">Hot stocks &#128293</button>
 <br />
 <table id="demo"></table>
+>>>>>>> 3a7376ebed44f88d2c5e2b2065e3db626afe674a

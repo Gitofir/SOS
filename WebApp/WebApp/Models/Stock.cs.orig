@@ -1,26 +1,6 @@
 <<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WebApp.Models
-{
-    public class Stock
-    {
-        public int Id { get; set; }
-        public string name { get; set; }
-        public float price { get; set; }
-
-       // [DataType(DataType.Date)]
-       // public DateTime ReleaseDate { get; set; }
-    }
-}
-||||||| c6b3783
-=======
-﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,4 +13,26 @@ namespace WebApp.Models
         public int price { get; set; }
     }
 }
->>>>>>> 42477254d5f84719b471b1ae89a29c9235f31e91
+||||||| 55ccd38
+=======
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace WebApp.Models
+{
+    public class Stock
+    {
+        [Key]
+        [Required]
+        public string name { get; set; }
+
+        public double price { get; set; }
+
+        public double change { get; set; }
+
+    }
+}
+>>>>>>> 3a7376ebed44f88d2c5e2b2065e3db626afe674a
