@@ -8,3 +8,16 @@ build_property.IncludeAllContentForSelfExtract =
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = WebApp
 build_property.ProjectDir = C:\Users\USER\Desktop\לימודים\שנה ב\סמסטר 3\פיתוח אפליקציות\SOS\WebApp\WebApp\
+||||||| 55ccd38
+=======
+is_global = true
+build_property.TargetFramework = net5.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.PublishSingleFile = 
+build_property.IncludeAllContentForSelfExtract = 
+build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
+build_property.RootNamespace = WebApp
+build_property.ProjectDir = C:\Users\Ofir\source\repos\SOS\WebApp\WebApp\
+>>>>>>> 3a7376ebed44f88d2c5e2b2065e3db626afe674a

@@ -1,37 +1,17 @@
+<<<<<<< HEAD
 ﻿@model WebApp.Models.User
 
 @{
     ViewData["Title"] = "Register";
 }
-<<<<<<< HEAD
 
 <h2>Register</h2>
 <hr />
-
-<body class="registration">
-    <br />
-    <form class="form-horizontal myform" method="POST" asp-action="Create">
+<body>
+    <form class="form-horizontal" method="POST" asp-action="CreateFromRegistration">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <fieldset>
-||||||| bcbb657
-<body class="registration">
-    <br />
-    <form class="form-horizontal" method="POST" asp-action="Create">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <fieldset>
-=======
-<br />
-<form class="form-horizontal" method="POST" asp-action="CreateFromRegistration">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <fieldset>
->>>>>>> f0d830af2f3b4e40316ef938bafeee12c77dd93c
 
-        <!-- Username -->
-        <div class="control-group">
-            <label class="control-label" for="username">Username</label>
-            <div class="controls">
-                <span asp-validation-for="Username" class="text-danger"></span>
-                <input asp-for="Username" type="text" id="username" name="username" placeholder="" class="input-xlarge" />
             <!-- Username -->
             <div class="control-group">
                 <label class="control-label" for="username">Username</label>
@@ -40,6 +20,10 @@
                     <input asp-for="Username" type="text" id="username" name="username" placeholder="" class="input-xlarge form-control" />
                 </div>
             </div>
+
+            <aside>
+                <p>Already own an account?  <a class=" font-weight-bold" asp-area="" asp-controller="Login" asp-action="Index">Log In!</a></p>
+            </aside>
 
             <!-- Email -->
             <div class="control-group">
@@ -89,12 +73,116 @@
                 </div>
             </div>
             <br />
+
+
+            <!-- Canvas -->
+
+            <canvas id="canvas" ></canvas>
+            <script src="~/js/site.js"></script>
+
+            <!-- Button -->
             <div class="control-group">
-                <!-- Button -->
                 <div class="controls">
-                    <input type="submit" value="Register" class="btn btn-primary" />
+                    <input type="submit" value="Register" class="btn btn-dark" />
                 </div>
             </div>
 
         </fieldset>
+    </form>
+    
+</body>
+||||||| 55ccd38
+=======
+﻿@model WebApp.Models.User
+
+@{
+    ViewData["Title"] = "Register";
+}
+<br />
+<form class="form-horizontal" method="POST" asp-action="CreateFromRegistration">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <fieldset>
+
+        <!-- Username -->
+        <div class="control-group">
+            <label class="control-label" for="username">Username</label>
+            <div class="controls">
+                <span asp-validation-for="Username" class="text-danger"></span>
+                <input asp-for="Username" type="text" id="username" name="username" placeholder="" class="input-xlarge form-control" />
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="control-group">
+            <label class="control-label" for="email">Email</label>
+            <div class="controls">
+                <span asp-validation-for="Email" class="text-danger"></span>
+                <input asp-for="Email" class="form-control" />
+                <p class="help-block">Please provide your E-mail</p>
+            </div>
+        </div>
+
+        <!-- Password -->
+        <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <input asp-for="Password" type="password" id="password" name="password" placeholder="" class="input-xlarge form-control" />
+                <p class="help-block">Password should be at least 6 characters</p>
+            </div>
+        </div>
+
+        <!-- Credit Card -->
+        <div class="control-group">
+            <label class="control-label" for="password">Credit Card Number</label>
+            <div class="controls">
+                <span asp-validation-for="Creditcard" class="text-danger"></span>
+                <input asp-for="Creditcard" type="password" id="creditcard" name="creditcard" placeholder="" class="input-xlarge form-control" />
+            </div>
+        </div>
+
+        @{
+            if (User.Identity.IsAuthenticated)
+            {
+                var isAdmin = false;
+                var claims = User.Claims.ToList();
+                foreach (var c in claims)
+                {
+                    if (c.Value == "Admin")
+                    {
+                        isAdmin = true;
+                    }
+                }
+
+                if (isAdmin == true)
+                {
+                    <!-- Admin -->
+                    <div class="control-group">
+                        <label class="control-label" for="admin">Is Admin?</label>
+                        <div class="controls mb-3 form-check form-switch">
+                            <input asp-for="Admin" class="form-select form-check-input" type="checkbox" />
+                            <span asp-validation-for="Admin" class="text-danger"></span>
+                        </div>
+                    </div>
+                }
+            }
+        }
+        <!-- Birth Date -->
+        <div class="control-group">
+            <label class="control-label" for="password">Birthdate</label>
+            <div class="controls">
+                <input asp-for="Birthdate" class="form-control" />
+                <span asp-validation-for="Birthdate" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="control-group">
+            <!-- Button -->
+            <div class="controls">
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </div>
+        </div>
+
+    </fieldset>
 </form>
+>>>>>>> 3a7376ebed44f88d2c5e2b2065e3db626afe674a
