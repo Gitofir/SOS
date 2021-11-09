@@ -23,10 +23,14 @@ namespace WebApp.Services
             return user;
         }
 
-        public async Task UpdateUserStocks(string username, string stockName, int numOfStocks)
+        public async Task UpdateUserStocks(string username, string stockName, int numOfStocks, double price)
         {
             User user = await _context.User.FirstOrDefaultAsync(u => u.Username == username);
-            //var s = user.StocksList.FirstOrDefault(stockName);
+            var stock = user.StocksList.FirstOrDefault(s => s.Symbol == stockName);
+            if (stock != null)
+            {
+                //stock.
+            }
             /*
             if (s == null)
             {

@@ -10,8 +10,8 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(WebAppContext))]
-    [Migration("20211106191344_DataBase")]
-    partial class DataBase
+    [Migration("20211109112142_newTables")]
+    partial class newTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,21 +21,52 @@ namespace WebApp.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("IndexStock", b =>
+                {
+                    b.Property<string>("IndicesName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("StocksSymbol")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("IndicesName", "StocksSymbol");
+
+                    b.HasIndex("StocksSymbol");
+
+                    b.ToTable("IndexStock");
+                });
+
+            modelBuilder.Entity("WebApp.Models.Index", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Index");
+                });
+
             modelBuilder.Entity("WebApp.Models.Stock", b =>
                 {
-                    b.Property<string>("name")
+                    b.Property<string>("Symbol")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Change")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<double>("change")
-                        .HasColumnType("float");
-
-                    b.Property<double>("price")
-                        .HasColumnType("float");
-
-                    b.HasKey("name");
+                    b.HasKey("Symbol");
 
                     b.HasIndex("Username");
 
@@ -70,6 +101,21 @@ namespace WebApp.Migrations
                     b.HasKey("Username");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("IndexStock", b =>
+                {
+                    b.HasOne("WebApp.Models.Index", null)
+                        .WithMany()
+                        .HasForeignKey("IndicesName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApp.Models.Stock", null)
+                        .WithMany()
+                        .HasForeignKey("StocksSymbol")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WebApp.Models.Stock", b =>

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using WebApp.Models;
-using System.Net;
-using System.Text.Json;
-using System.Threading;
 using WebApp.Services;
 
 namespace WebApp.Controllers
@@ -25,63 +25,104 @@ namespace WebApp.Controllers
             _context = context;
             _stockService = stockService;
             _userService = userService;
+
         }
-    
 
         // GET: Stocks
         public async Task<IActionResult> Index()
         {
+
             using (WebClient client = new WebClient())
             {
-                var companies = new List<string>()
-                    {
-                        "IBM",
-                        "TSCO.LON",
-                        "300135.SHZ",
-                        "BA",
-                        "BAB"
-                    };
-                for (int i = 0; i < companies.Count; i++)
+                /*
+                var Initializing = new List<List<string>>();
+                Initializing.Add(new List<string> { "IBM", "Technology" });
+                Initializing.Add(new List<string> { "Teva", "Parmaceutical" });
+                Initializing.Add(new List<string> { "UAL", "Airline" });
+                Initializing.Add(new List<string> { "ELALF", "Airline" });
+                Initializing.Add(new List<string> { "PFE", "Parmaceutical" });
+                Initializing.Add(new List<string> { "MSFT", "Technology" });
+                Initializing.Add(new List<string> { "M1RN34.SAO", "Parmaceutical" });
+                Initializing.Add(new List<string> { "GOOGL", "Technology" });
+                Initializing.Add(new List<string> { "TSLA", "Vehicle manufacturer" });
+                Initializing.Add(new List<string> { "BMWYY", "Vehicle manufacturer" });
+
+                foreach (var ls in Initializing)
                 {
-                    string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + companies[i] + "&apikey=H4XBAHBR";
+
+                    await _stockService.AddStock(new Stock { Symbol = ls[0], Name = "", Price = 1, Change = 1, Category = ls[1] });
+                };*/
+
+
+                var symbols = new List<string>()
+                {
+                        "IBM",
+                        "MSFT",
+                        "Teva",
+                        "UAL",
+                        "ELALF",
+                        "M1RN34.SAO",
+                        "PFE",
+                        "TSLA",
+                        "GOOGL",
+                        "BMWYY"
+                    };
+                for (int i = 0; i < symbols.Count; i++)
+                {
+                    string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbols[i] + "&apikey=H4XBAHBR";
+                    string QUERY_URL2 = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + symbols[i] + "&apikey=H4XBAHBR";
+
                     Uri queryUri = new Uri(QUERY_URL);
+                    Uri queryUri2 = new Uri(QUERY_URL2);
                     //List<SecurityData> prices = client.DownloadString(queryUri).FromCsv<List<SecurityData>>();
                     dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
-                    dynamic jsi = json_data["Global Quote"];
+                    dynamic json_data2 = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri2));
 
-                    string d = jsi.GetRawText();
-                    Dictionary<string, string> dic = JsonSerializer.Deserialize<Dictionary<string, string>>(d);
-                    string s_name = dic["01. symbol"];
+                    dynamic jsi = json_data["Global Quote"];
+                    dynamic jsi2 = json_data2["bestMatches"];
+
+                    //Type try = jsi2.GetType();
+
+                    string data = jsi.GetRawText();
+                    Dictionary<string, string> dic = JsonSerializer.Deserialize<Dictionary<string, string>>(data);
+                    string data2 = jsi2.GetRawText();
+                    var results = JsonSerializer.Deserialize<List<dynamic>>(data2);
+                    Dictionary<string, string> result = JsonSerializer.Deserialize<Dictionary<string, string>>(results[0].GetRawText());
+                    string s_symbol = dic["01. symbol"];
+                    string s_name = result["2. name"];
                     double s_price = Convert.ToDouble(dic["05. price"]);
                     double s_change = Convert.ToDouble(dic["09. change"]);
+                    string s_category = result["3. type"];
 
-                    var s = new Stock { name = s_name, price = s_price, change = s_change };
-                    var stock = await _stockService.GetStock(s_name);
+                    var s = new Stock { Symbol = s_symbol, Name = s_name, Price = s_price, Change = s_change, Category = s_category };
+                    var stock = await _stockService.GetStock(s_symbol);
                     if (stock == null)
                     {
                         await _stockService.AddStock(s);
                     }
                     else
                     {
-                        await _stockService.UpdateStockDetails(s_name, s_price, s_change);
+                        await _stockService.UpdateStockDetails(s_symbol, s_name, s_price, s_change, s_category);
                     }
-                    //Thread.Sleep(5000);
+                    Thread.Sleep(1000);
                 }
 
+            
+        
             }
             return View(await _context.Stock.ToListAsync());
         }
 
         // GET: Stocks/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string symbol)
         {
-            if (id == null)
+            if (symbol == null)
             {
                 return NotFound();
             }
 
             var stock = await _context.Stock
-                .FirstOrDefaultAsync(m => m.name == id);
+                .FirstOrDefaultAsync(m => m.Symbol == symbol);
             if (stock == null)
             {
                 return NotFound();
@@ -101,7 +142,7 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("name,price,change")] Stock stock)
+        public async Task<IActionResult> Create([Bind("Symbol,Name,Price,Change,Category")] Stock stock)
         {
             if (ModelState.IsValid)
             {
@@ -113,14 +154,14 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string symbol)
         {
-            if (id == null)
+            if (symbol == null)
             {
                 return NotFound();
             }
 
-            var stock = await _context.Stock.FindAsync(id);
+            var stock = await _context.Stock.FindAsync(symbol);
             if (stock == null)
             {
                 return NotFound();
@@ -133,9 +174,9 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("name,price,change")] Stock stock)
+        public async Task<IActionResult> Edit(string symbol, [Bind("Symbol,Name,Price,Change,Category")] Stock stock)
         {
-            if (id != stock.name)
+            if (symbol != stock.Symbol)
             {
                 return NotFound();
             }
@@ -149,7 +190,7 @@ namespace WebApp.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StockExists(stock.name))
+                    if (!StockExists(stock.Symbol))
                     {
                         return NotFound();
                     }
@@ -164,15 +205,15 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string symbol)
         {
-            if (id == null)
+            if (symbol == null)
             {
                 return NotFound();
             }
 
             var stock = await _context.Stock
-                .FirstOrDefaultAsync(m => m.name == id);
+                .FirstOrDefaultAsync(m => m.Symbol == symbol);
             if (stock == null)
             {
                 return NotFound();
@@ -184,17 +225,17 @@ namespace WebApp.Controllers
         // POST: Stocks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(string symbol)
         {
-            var stock = await _context.Stock.FindAsync(id);
+            var stock = await _context.Stock.FindAsync(symbol);
             _context.Stock.Remove(stock);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StockExists(string id)
+        private bool StockExists(string symbol)
         {
-            return _context.Stock.Any(e => e.name == id);
+            return _context.Stock.Any(e => e.Symbol == symbol);
         }
     }
 }
