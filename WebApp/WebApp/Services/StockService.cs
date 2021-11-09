@@ -31,13 +31,12 @@ namespace WebApp.Services
             return stock;
         }
 
-        public async Task UpdateStockDetails(string sSymbol, string sName, double sPrice, double sChange, string sCategory)
+        public async Task UpdateStockDetails(string sSymbol, string sName, double sPrice, double sChange)
         {
             Stock stock = await _context.Stock.FirstOrDefaultAsync(s => s.Symbol == sSymbol);
             stock.Name = sName;
             stock.Price = sPrice;
             stock.Change = sChange;
-            stock.Category = sCategory;
             await _context.SaveChangesAsync();
         }
     }

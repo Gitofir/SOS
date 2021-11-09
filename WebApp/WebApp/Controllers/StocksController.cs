@@ -34,7 +34,7 @@ namespace WebApp.Controllers
 
             using (WebClient client = new WebClient())
             {
-                /*
+               /*
                 var Initializing = new List<List<string>>();
                 Initializing.Add(new List<string> { "IBM", "Technology" });
                 Initializing.Add(new List<string> { "Teva", "Parmaceutical" });
@@ -54,7 +54,7 @@ namespace WebApp.Controllers
                 };*/
 
 
-                var symbols = new List<string>()
+                var symbol1s = new List<string>()
                 {
                         "IBM",
                         "MSFT",
@@ -67,7 +67,11 @@ namespace WebApp.Controllers
                         "GOOGL",
                         "BMWYY"
                     };
-                for (int i = 0; i < symbols.Count; i++)
+
+                var symbols = (from s in _context.Stock select s.Symbol).ToList();
+
+
+                for (int i = 9; i < 10; i++)
                 {
                     string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbols[i] + "&apikey=H4XBAHBR";
                     string QUERY_URL2 = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + symbols[i] + "&apikey=H4XBAHBR";
@@ -92,19 +96,15 @@ namespace WebApp.Controllers
                     string s_name = result["2. name"];
                     double s_price = Convert.ToDouble(dic["05. price"]);
                     double s_change = Convert.ToDouble(dic["09. change"]);
-                    string s_category = result["3. type"];
 
-                    var s = new Stock { Symbol = s_symbol, Name = s_name, Price = s_price, Change = s_change, Category = s_category };
+                    //var s = new Stock { Symbol = s_symbol, Name = s_name, Price = s_price, Change = s_change, Category = s_category };
                     var stock = await _stockService.GetStock(s_symbol);
-                    if (stock == null)
+                    if (stock != null)
                     {
-                        await _stockService.AddStock(s);
-                    }
-                    else
-                    {
-                        await _stockService.UpdateStockDetails(s_symbol, s_name, s_price, s_change, s_category);
+                        await _stockService.UpdateStockDetails(s_symbol, s_name, s_price, s_change);
                     }
                     Thread.Sleep(1000);
+                
                 }
 
             
