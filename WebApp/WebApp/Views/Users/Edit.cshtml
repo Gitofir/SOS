@@ -45,14 +45,14 @@
             </div>
 
             @*Show and edit stocks of user*@
-            <!--@foreach (var item in Model.Stocks ?? Enumerable.Empty<Stock>())
+            <!--@foreach (var item in Model.OwnedStocks )
             {
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="@item.name" />
+                <input type="hidden" asp-for="@item.Key" />
                 <div class="form-group">
-                    <label asp-for="@item.name" class="control-label"></label>
-                    <input asp-for="@item.name" class="form-control" />
-                    <span asp-validation-for="@item.name" class="text-danger"></span>
+                    <label asp-for="@item.Key" class="control-label"></label>
+                    <input asp-for="@item.Key" class="form-control" />
+                    <span asp-validation-for="@item.Key" class="text-danger"></span>
                 </div>
             }-->
 

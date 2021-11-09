@@ -45,14 +45,14 @@
         </dd>
     </dl>
 </div>
-@foreach (var item in Model.Stocks ?? Enumerable.Empty<Stock>())
+@foreach (var item in Model.OwnedStocks )
 {
     <tr>
         <td>
-            @Html.DisplayFor(m => item.name)
+            @Html.DisplayFor(m => item.Key)
         </td>
         <td>
-            @Html.DisplayFor(m => item.price)
+            @Html.DisplayFor(m => item.Value)
         </td>
     </tr>
 
