@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApp.Migrations
 {
-    public partial class ALL : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +12,8 @@ namespace WebApp.Migrations
                 columns: table => new
                 {
                     CardNum = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CVV = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CardHolder = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CVV = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    CardHolder = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

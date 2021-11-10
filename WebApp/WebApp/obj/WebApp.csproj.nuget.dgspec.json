@@ -1,24 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj": {}
+    "C:\\Users\\stav9\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj": {
+    "C:\\Users\\stav9\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+        "projectUniqueName": "C:\\Users\\stav9\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
         "projectName": "WebApp",
-        "projectPath": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
-        "packagesPath": "C:\\Users\\ofirs\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\obj\\",
+        "projectPath": "C:\\Users\\stav9\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+        "packagesPath": "C:\\Users\\stav9\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\stav9\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\ofirs\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\stav9\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -99,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
