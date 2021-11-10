@@ -24,14 +24,12 @@ namespace WebApp.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "This field is required.")]
-        public int Creditcard { get; set; }
-
-        [Required(ErrorMessage = "This field is required.")]
         public DateTime Birthdate { get; set; }
 
         [Required(ErrorMessage = "This field is required.")]
         public bool Admin { get; set; }
 
-        public ICollection<Stock> Stocks { get; set; }
+        public CreditCard CreditCard { get; set; }
+        public ICollection<Stock> OwnedStocks { get; set; }
     }
 }

@@ -21,29 +21,27 @@
         <nav class="navbar navbar-expand-md navbar-light fixed-top nav-bg-light ">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">  </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between" id="navbarCollapse">
                     <img src="~/images/stonks2edited.png" width="40" height="40" />
                     <ul class="navbar-nav flex-grow-1 my-nav-prop">
                         <li class="nav-item">
                             <a class="nav-link font-weight-normal" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link  font-weight-normal" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
                         @if (User.Identity.IsAuthenticated == false)
                         {
-                        <li class="nav-item">
-                            <a class="nav-link  font-weight-bolder" asp-area="" asp-controller="Users" asp-action="Register">Register Now!</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link  font-weight-bolder" asp-area="" asp-controller="Users" asp-action="Register">Register Now!</a>
+                            </li>
                         }
                         @if (User.Identity.IsAuthenticated == false)
                         {
-                        <li class="nav-item">
-                            <a class="nav-link  font-weight-normal" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link  font-weight-normal" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                            </li>
                         }
                         @if (User.Identity.IsAuthenticated)
                         {
@@ -72,13 +70,15 @@
                                     <li class="nav-item">
                                         <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Users" asp-action="Index">User Managment</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Stocks" asp-action="Index">Stocks Managment</a>
+                                    </li>
                                 }
                             }
                         }
                     </ul>
                 </div>
             </div>
-        </nav>
 
     </header>
     <div class="container">

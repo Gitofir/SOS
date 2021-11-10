@@ -14,11 +14,6 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Username" />
             <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
@@ -29,33 +24,15 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Creditcard" class="control-label"></label>
-                <input asp-for="Creditcard" class="form-control" />
-                <span asp-validation-for="Creditcard" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Birthdate" class="control-label"></label>
                 <input asp-for="Birthdate" class="form-control" />
                 <span asp-validation-for="Birthdate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Admin" class="control-label"></label>
-                <input asp-for="Admin" class="form-control" />
-                <span asp-validation-for="Admin" class="text-danger"></span>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Admin" /> @Html.DisplayNameFor(model => model.Admin)
+                </label>
             </div>
-
-            @*Show and edit stocks of user*@
-            <!--@foreach (var item in Model.Stocks ?? Enumerable.Empty<Stock>())
-            {
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="@item.name" />
-                <div class="form-group">
-                    <label asp-for="@item.name" class="control-label"></label>
-                    <input asp-for="@item.name" class="form-control" />
-                    <span asp-validation-for="@item.name" class="text-danger"></span>
-                </div>
-            }-->
-
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -64,7 +41,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to users list</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

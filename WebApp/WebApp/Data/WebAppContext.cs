@@ -17,5 +17,11 @@ namespace WebApp.Data
         public DbSet<WebApp.Models.User> User { get; set; }
 
         public DbSet<WebApp.Models.Stock> Stock { get; set; }
+
+        public DbSet<WebApp.Models.MarketIndex> Index { get; set; }
+
+        public DbSet<WebApp.Models.Order> Order { get; set; }
+
+        public DbSet<WebApp.Models.CreditCard> CreditCard { get; set; }
     }
 }
