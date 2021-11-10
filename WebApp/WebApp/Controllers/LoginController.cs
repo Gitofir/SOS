@@ -108,7 +108,7 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             TempData["Message"] = "Input Error";
-            return View(creditcard);
+            return View("MyProfile");
         }
 
         // GET: Login/Edit/5
