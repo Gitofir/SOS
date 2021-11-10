@@ -6,5 +6,11 @@ build_property.ProjectTypeGuids =
 build_property.PublishSingleFile = 
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
+<<<<<<< HEAD
 build_property.RootNamespace = WebApp
 build_property.ProjectDir = c:\users\stav9\source\repos\gitofir\sos\webapp\WebApp\
+||||||| e2e5592
+=======
+build_property.RootNamespace = WebApp
+build_property.ProjectDir = C:\Users\ofirs\source\repos\Gitofir\SOS\WebApp\WebApp\
+>>>>>>> 0c0500d9afdddb6d4f8c35ee26765918c1a70a10
