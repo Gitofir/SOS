@@ -1,13 +1,26 @@
 ﻿@model IEnumerable<WebApp.Models.User>
 
-@{ ViewData["Title"] = "Index"; }
+@{ ViewData["Title"] = "Search User"; }
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-<h1>User Managment</h1>
+<br />
+<h2>Search User</h2>
+
+@using (Html.BeginForm("Search", "Users", FormMethod.Post))
+{
+    @Html.AntiForgeryToken();
 
 <p>
-    <a asp-action="Create">Create New</a>
+    Name: <input type="text" name="username" />
 </p>
+<p>
+    Email: <input type="text" name="email" />
+</p>
+<p>
+    <input type="submit" value="Search user" />
+</p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -48,17 +61,10 @@
     <td>
         @Html.DisplayFor(modelItem => item.Admin)
     </td>
-    <td>
-        <a asp-action="Edit" asp-route-id="@item.Username">Edit</a> |
-        <a asp-action="Details" asp-route-id="@item.Username">Details</a> |
-        <a asp-action="Delete" asp-route-id="@item.Username">Delete</a>
-    </td>
+
 </tr>
 }
     </tbody>
 </table>
 
-<!--Aside-->
-<aside>
-    Search <a class="nav-link  font-weight-normal" asp-area="" asp-controller="Users" asp-action="Search">Search</a>
-</aside>
+<br />

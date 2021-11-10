@@ -34,28 +34,33 @@ namespace WebApp.Controllers
 
             using (WebClient client = new WebClient())
             {
-               /*
-                var Initializing = new List<List<string>>();
-                Initializing.Add(new List<string> { "IBM", "Technology" });
-                Initializing.Add(new List<string> { "Teva", "Parmaceutical" });
-                Initializing.Add(new List<string> { "UAL", "Airline" });
-                Initializing.Add(new List<string> { "ELALF", "Airline" });
-                Initializing.Add(new List<string> { "PFE", "Parmaceutical" });
-                Initializing.Add(new List<string> { "MSFT", "Technology" });
-                Initializing.Add(new List<string> { "M1RN34.SAO", "Parmaceutical" });
-                Initializing.Add(new List<string> { "GOOGL", "Technology" });
-                Initializing.Add(new List<string> { "TSLA", "Vehicle manufacturer" });
-                Initializing.Add(new List<string> { "BMWYY", "Vehicle manufacturer" });
+                if (!_context.Stock.Any())
+                {
+                    var Initializing = new List<List<string>>();
+                    Initializing.Add(new List<string> { "IBM", "Technology" });
+                    Initializing.Add(new List<string> { "Teva", "Parmaceutical" });
+                    Initializing.Add(new List<string> { "UAL", "Airline" });
+                    Initializing.Add(new List<string> { "ELALF", "Airline" });
+                    Initializing.Add(new List<string> { "PFE", "Parmaceutical" });
+                    Initializing.Add(new List<string> { "MSFT", "Technology" });
+                    Initializing.Add(new List<string> { "M1RN34.SAO", "Parmaceutical" });
+                    Initializing.Add(new List<string> { "GOOGL", "Technology" });
+                    Initializing.Add(new List<string> { "TSLA", "Vehicle manufacturer" });
+                    Initializing.Add(new List<string> { "BMWYY", "Vehicle manufacturer" });
 
-                foreach (var ls in Initializing)
+                    foreach (var ls in Initializing)
+                    {
+
+                        await _stockService.AddStock(new Stock { Symbol = ls[0], Name = "", Price = 1, Change = 1, Category = ls[1] });
+                    };
+                }
+                else
                 {
 
-                    await _stockService.AddStock(new Stock { Symbol = ls[0], Name = "", Price = 1, Change = 1, Category = ls[1] });
-                };*/
 
 
-                var symbol1s = new List<string>()
-                {
+                    /*var symbol1s = new List<string>()
+                    {
                         "IBM",
                         "MSFT",
                         "Teva",
@@ -66,45 +71,45 @@ namespace WebApp.Controllers
                         "TSLA",
                         "GOOGL",
                         "BMWYY"
-                    };
+                    };*/
 
-                var symbols = (from s in _context.Stock select s.Symbol).ToList();
+                    var symbols = (from s in _context.Stock select s.Symbol).ToList();
 
 
-                for (int i = 9; i < 10; i++)
-                {
-                    string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbols[i] + "&apikey=H4XBAHBR";
-                    string QUERY_URL2 = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + symbols[i] + "&apikey=H4XBAHBR";
-
-                    Uri queryUri = new Uri(QUERY_URL);
-                    Uri queryUri2 = new Uri(QUERY_URL2);
-                    //List<SecurityData> prices = client.DownloadString(queryUri).FromCsv<List<SecurityData>>();
-                    dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
-                    dynamic json_data2 = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri2));
-
-                    dynamic jsi = json_data["Global Quote"];
-                    dynamic jsi2 = json_data2["bestMatches"];
-
-                    //Type try = jsi2.GetType();
-
-                    string data = jsi.GetRawText();
-                    Dictionary<string, string> dic = JsonSerializer.Deserialize<Dictionary<string, string>>(data);
-                    string data2 = jsi2.GetRawText();
-                    var results = JsonSerializer.Deserialize<List<dynamic>>(data2);
-                    Dictionary<string, string> result = JsonSerializer.Deserialize<Dictionary<string, string>>(results[0].GetRawText());
-                    string s_symbol = dic["01. symbol"];
-                    string s_name = result["2. name"];
-                    double s_price = Convert.ToDouble(dic["05. price"]);
-                    double s_change = Convert.ToDouble(dic["09. change"]);
-
-                    //var s = new Stock { Symbol = s_symbol, Name = s_name, Price = s_price, Change = s_change, Category = s_category };
-                    var stock = await _stockService.GetStock(s_symbol);
-                    if (stock != null)
+                    for (int i = 6; i < 9; i++)
                     {
-                        await _stockService.UpdateStockDetails(s_symbol, s_name, s_price, s_change);
+                        string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbols[i] + "&apikey=H4XBAHBR";
+                        string QUERY_URL2 = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + symbols[i] + "&apikey=H4XBAHBR";
+
+                        Uri queryUri = new Uri(QUERY_URL);
+                        Uri queryUri2 = new Uri(QUERY_URL2);
+
+                        dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
+                        dynamic json_data2 = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri2));
+
+                        dynamic jsi = json_data["Global Quote"];
+                        dynamic jsi2 = json_data2["bestMatches"];
+
+
+                        string data = jsi.GetRawText();
+                        Dictionary<string, string> dic = JsonSerializer.Deserialize<Dictionary<string, string>>(data);
+                        string data2 = jsi2.GetRawText();
+                        var results = JsonSerializer.Deserialize<List<dynamic>>(data2);
+                        Dictionary<string, string> result = JsonSerializer.Deserialize<Dictionary<string, string>>(results[0].GetRawText());
+                        string s_symbol = dic["01. symbol"];
+                        string s_name = result["2. name"];
+                        double s_price = Convert.ToDouble(dic["05. price"]);
+                        double s_change = Convert.ToDouble(dic["09. change"]);
+
+                        //var s = new Stock { Symbol = s_symbol, Name = s_name, Price = s_price, Change = s_change, Category = s_category };
+                        var stock = await _stockService.GetStock(s_symbol);
+                        if (stock != null)
+                        {
+                            await _stockService.UpdateStockDetails(s_symbol, s_name, s_price, s_change);
+                        }
+                        Thread.Sleep(1000);
+
                     }
-                    Thread.Sleep(1000);
-                
                 }
 
             

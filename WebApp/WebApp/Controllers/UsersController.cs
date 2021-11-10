@@ -30,10 +30,44 @@ namespace WebApp.Controllers
             return View(await _context.User.ToListAsync());
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Search(string name, string email)
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Search()
         {
             return View(await _context.User.ToListAsync());
+        }
+
+        [HttpPost]
+        public IActionResult Search(string username, string email)
+        {
+            
+            // Get users and search them
+            var all_users = from u in _context.User select u;
+            var found_users = new List<User>();
+
+            // Username or Email
+            if (!String.IsNullOrEmpty(username))
+            {
+                // Remove trailing \t
+                username = username.Replace("\t", String.Empty);
+                var matched_users = all_users.Where(u => (u.Username.Contains(username)));
+                var matched_users_list = new List<User>(matched_users);
+
+                found_users = found_users.Concat(matched_users_list).ToList();
+            }
+
+            if (!String.IsNullOrEmpty(email))
+            {
+                // Remove trailing \t
+                email = email.Replace("\t", String.Empty);
+                var matched_users = all_users.Where(u => (u.Email.Contains(email)));
+                var matched_users_list = new List<User>(matched_users);
+
+                found_users = found_users.Concat(matched_users_list).ToList();
+            }
+
+            // Return found users
+            return View(found_users);
         }
 
         // GET: Users/Details/5
