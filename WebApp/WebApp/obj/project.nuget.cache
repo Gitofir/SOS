@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "mv2DUFncBrS9woQAkMBiN/0Fi2pbKy75aaCPIbc+cx5ejvFpPhL1/ymoQeHY4D1WqlBPtPQjxSEJ6hzf35zNBA==",
+  "dgSpecHash": "SC48lGJ2D7oMat6iuAZeguecf+XXQkbI+bBuNx5UJIDXgDaUL6RX+i0UCF+vVEmq3uKIpUQYdN7kn8MseWseOQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
   "expectedPackageFiles": [
@@ -150,7 +150,8 @@
     "C:\\Users\\ofirs\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\ofirs\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\ofirs\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\ofirs\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    "C:\\Users\\ofirs\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
+    "C:\\Users\\ofirs\\.nuget\\packages\\tweetsharp\\2.3.1\\tweetsharp.2.3.1.nupkg.sha512"
   ],
   "logs": [
     {
@@ -189,6 +190,16 @@
       "warningLevel": 1,
       "message": "Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.Web.Infrastructure",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'TweetSharp 2.3.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "libraryId": "TweetSharp",
       "targetGraphs": [
         "net5.0"
       ]
