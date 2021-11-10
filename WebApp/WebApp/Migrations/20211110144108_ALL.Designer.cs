@@ -10,8 +10,8 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(WebAppContext))]
-    [Migration("20211110143155_AddNewDB1")]
-    partial class AddNewDB1
+    [Migration("20211110144108_ALL")]
+    partial class ALL
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

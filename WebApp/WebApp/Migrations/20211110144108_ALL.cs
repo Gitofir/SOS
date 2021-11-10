@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApp.Migrations
 {
-    public partial class AddNewDB1 : Migration
+    public partial class ALL : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

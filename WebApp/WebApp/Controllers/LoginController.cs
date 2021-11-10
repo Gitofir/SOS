@@ -90,6 +90,26 @@ namespace WebApp.Controllers
             return View(user);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddCreditCard([Bind("CardNum,CVV,CardHolder")] CreditCard creditcard)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(creditcard);
+                await _context.SaveChangesAsync();
+
+                var claims = User.Claims.ToList();
+                var username = claims[0].Value;
+                var user = _context.User.Where(u => u.Username.Equals(username)).FirstOrDefault();
+                user.CreditCard = creditcard;
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(creditcard);
+        }
+
         // GET: Login/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
