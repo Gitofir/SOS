@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<WebApp.Models.User>
 
-@{
-    ViewData["Title"] = "Index";
-}
+@{ ViewData["Title"] = "Index"; }
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <h1>User Managment</h1>
@@ -34,49 +32,46 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Username)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Password)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Birthdate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Admin)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Username">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Username">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Username">Delete</a>
-                </td>
-            </tr>
-        }
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Username)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Password)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Email)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Birthdate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Admin)
+    </td>
+    <td>
+        <a asp-action="Edit" asp-route-id="@item.Username">Edit</a> |
+        <a asp-action="Details" asp-route-id="@item.Username">Details</a> |
+        <a asp-action="Delete" asp-route-id="@item.Username">Delete</a>
+    </td>
+</tr>
+}
     </tbody>
 </table>
 
-@*Add stock to user*@
-@*<h4>Add stock to user</h4>
-<form id="StockToUser" action="/Users/StockToUser" method="Post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-group">
-        <table cellpadding="5">
-            <tr>
-                <td>User: </td>
-                <td><input type="text" name="username" class="form-control" /></td>
-            </tr>
-            <tr>
-                <td>Stock name: </td>
-                <td><input type="text" name="stock_name" class="form-control" /></td>
-            </tr>
-        </table>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</form>*@
+<br />
+<h2>Search User</h2>
 
+@using (Html.BeginForm("Search", "Users", FormMethod.Post, new { target = "_blank" }))
+{
+    @Html.AntiForgeryToken();
 
+<p>
+    Name: @Html.TextBox("Name")
+</p>
+<p>
+    Email: @Html.TextBox("Email")
+</p>
+<p>
+    <input type="submit" value="Search user" />
+</p>
+}

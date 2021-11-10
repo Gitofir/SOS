@@ -30,6 +30,12 @@ namespace WebApp.Controllers
             return View(await _context.User.ToListAsync());
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Search(string name, string email)
+        {
+            return View(await _context.User.ToListAsync());
+        }
+
         // GET: Users/Details/5
         [Authorize]
         public async Task<IActionResult> Details(string id)
