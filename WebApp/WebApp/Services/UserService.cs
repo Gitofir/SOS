@@ -26,7 +26,7 @@ namespace WebApp.Services
         public async Task UpdateUserStocks(string username, string stockName, int numOfStocks, double price)
         {
             User user = await _context.User.FirstOrDefaultAsync(u => u.Username == username);
-            var stock = user.StocksList.FirstOrDefault(s => s.Symbol == stockName);
+            /*var stock = user.StocksList.FirstOrDefault(s => s.Symbol == stockName);
             if (stock != null)
             {
                 //stock.

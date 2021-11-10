@@ -10,53 +10,32 @@
     <h4>User</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-10">
-            @Html.DisplayFor(model => model.Username)
-        </dt>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Password)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Password)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Creditcard)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Creditcard)
-        </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Birthdate)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Birthdate)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Admin)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Admin)
         </dd>
     </dl>
 </div>
-@foreach (var item in Model.StocksList ?? Enumerable.Empty<Stock>())
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(m => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(m => item.Price)
-        </td>
-    </tr>
-
-}
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Username">Edit</a> |
     <a asp-action="Index">Back to List</a>

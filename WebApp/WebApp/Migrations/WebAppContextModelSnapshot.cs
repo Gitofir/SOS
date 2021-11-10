@@ -16,10 +16,10 @@ namespace WebApp.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.11")
+                .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("IndexStock", b =>
+            modelBuilder.Entity("MarketIndexStock", b =>
                 {
                     b.Property<string>("IndicesName")
                         .HasColumnType("nvarchar(450)");
@@ -31,10 +31,26 @@ namespace WebApp.Migrations
 
                     b.HasIndex("StocksSymbol");
 
-                    b.ToTable("IndexStock");
+                    b.ToTable("MarketIndexStock");
                 });
 
-            modelBuilder.Entity("WebApp.Models.Index", b =>
+            modelBuilder.Entity("WebApp.Models.CreditCard", b =>
+                {
+                    b.Property<string>("CardNum")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CVV")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CardHolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CardNum");
+
+                    b.ToTable("CreditCard");
+                });
+
+            modelBuilder.Entity("WebApp.Models.MarketIndex", b =>
                 {
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
@@ -42,6 +58,36 @@ namespace WebApp.Migrations
                     b.HasKey("Name");
 
                     b.ToTable("Index");
+                });
+
+            modelBuilder.Entity("WebApp.Models.Order", b =>
+                {
+                    b.Property<int>("OrderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("PricePerUnit")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Symbol")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderID");
+
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("WebApp.Models.Stock", b =>
@@ -83,8 +129,8 @@ namespace WebApp.Migrations
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Creditcard")
-                        .HasColumnType("int");
+                    b.Property<string>("CreditCardCardNum")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -98,12 +144,14 @@ namespace WebApp.Migrations
 
                     b.HasKey("Username");
 
+                    b.HasIndex("CreditCardCardNum");
+
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("IndexStock", b =>
+            modelBuilder.Entity("MarketIndexStock", b =>
                 {
-                    b.HasOne("WebApp.Models.Index", null)
+                    b.HasOne("WebApp.Models.MarketIndex", null)
                         .WithMany()
                         .HasForeignKey("IndicesName")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -119,13 +167,22 @@ namespace WebApp.Migrations
             modelBuilder.Entity("WebApp.Models.Stock", b =>
                 {
                     b.HasOne("WebApp.Models.User", null)
-                        .WithMany("StocksList")
+                        .WithMany("OwnedStocks")
                         .HasForeignKey("Username");
                 });
 
             modelBuilder.Entity("WebApp.Models.User", b =>
                 {
-                    b.Navigation("StocksList");
+                    b.HasOne("WebApp.Models.CreditCard", "CreditCard")
+                        .WithMany()
+                        .HasForeignKey("CreditCardCardNum");
+
+                    b.Navigation("CreditCard");
+                });
+
+            modelBuilder.Entity("WebApp.Models.User", b =>
+                {
+                    b.Navigation("OwnedStocks");
                 });
 #pragma warning restore 612, 618
         }

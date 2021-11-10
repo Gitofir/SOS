@@ -18,7 +18,9 @@ namespace WebApp.Models
         public double Change { get; set; }
 
         public string Category { get; set; }
+        public ICollection<MarketIndex> Indices { get; set; }
 
-        public ICollection<Index> Indices { get; set; }
+
+
     }
 }
