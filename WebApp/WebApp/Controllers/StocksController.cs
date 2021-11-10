@@ -29,37 +29,14 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string submit, Order order)
         {
-
-            using (WebClient client = new WebClient())
+            if (!_context.Stock.Any())
             {
-                if (!_context.Stock.Any())
-                {
-                    var Initializing = new List<List<string>>();
-                    Initializing.Add(new List<string> { "IBM", "Technology" });
-                    Initializing.Add(new List<string> { "Teva", "Parmaceutical" });
-                    Initializing.Add(new List<string> { "UAL", "Airline" });
-                    Initializing.Add(new List<string> { "ELALF", "Airline" });
-                    Initializing.Add(new List<string> { "PFE", "Parmaceutical" });
-                    Initializing.Add(new List<string> { "MSFT", "Technology" });
-                    Initializing.Add(new List<string> { "M1RN34.SAO", "Parmaceutical" });
-                    Initializing.Add(new List<string> { "GOOGL", "Technology" });
-                    Initializing.Add(new List<string> { "TSLA", "Vehicle manufacturer" });
-                    Initializing.Add(new List<string> { "BMWYY", "Vehicle manufacturer" });
-
-                    foreach (var ls in Initializing)
-                    {
-
-                        await _stockService.AddStock(new Stock { Symbol = ls[0], Name = "", Price = 1, Change = 1, Category = ls[1] });
-                    };
-                }
-                else
-                {
-
-
-
-                    /*var symbol1s = new List<string>()
+                IntialStockTable();
+            }
+            CallApi();
+            {/*var symbol1s = new List<string>()
                     {
                         "IBM",
                         "MSFT",
@@ -72,50 +49,96 @@ namespace WebApp.Controllers
                         "GOOGL",
                         "BMWYY"
                     };*/
-
-                    var symbols = (from s in _context.Stock select s.Symbol).ToList();
-
-
-                    for (int i = 6; i < 9; i++)
-                    {
-                        string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbols[i] + "&apikey=H4XBAHBR";
-                        string QUERY_URL2 = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + symbols[i] + "&apikey=H4XBAHBR";
-
-                        Uri queryUri = new Uri(QUERY_URL);
-                        Uri queryUri2 = new Uri(QUERY_URL2);
-
-                        dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
-                        dynamic json_data2 = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri2));
-
-                        dynamic jsi = json_data["Global Quote"];
-                        dynamic jsi2 = json_data2["bestMatches"];
-
-
-                        string data = jsi.GetRawText();
-                        Dictionary<string, string> dic = JsonSerializer.Deserialize<Dictionary<string, string>>(data);
-                        string data2 = jsi2.GetRawText();
-                        var results = JsonSerializer.Deserialize<List<dynamic>>(data2);
-                        Dictionary<string, string> result = JsonSerializer.Deserialize<Dictionary<string, string>>(results[0].GetRawText());
-                        string s_symbol = dic["01. symbol"];
-                        string s_name = result["2. name"];
-                        double s_price = Convert.ToDouble(dic["05. price"]);
-                        double s_change = Convert.ToDouble(dic["09. change"]);
-
-                        //var s = new Stock { Symbol = s_symbol, Name = s_name, Price = s_price, Change = s_change, Category = s_category };
-                        var stock = await _stockService.GetStock(s_symbol);
-                        if (stock != null)
-                        {
-                            await _stockService.UpdateStockDetails(s_symbol, s_name, s_price, s_change);
-                        }
-                        Thread.Sleep(1000);
-
-                    }
-                }
-
+                }       
             
-        
+            switch (submit)
+            {
+                case "Buy":
+                    return (Buy(order));
+                case "Sell":
+                    return (Sell(order));
             }
+            
             return View(await _context.Stock.ToListAsync());
+        }
+
+
+        public async void IntialStockTable()
+        {
+            var Initializing = new List<List<string>>();
+            Initializing.Add(new List<string> { "IBM", "Technology" });
+            Initializing.Add(new List<string> { "Teva", "Parmaceutical" });
+            Initializing.Add(new List<string> { "UAL", "Airline" });
+            Initializing.Add(new List<string> { "ELALF", "Airline" });
+            Initializing.Add(new List<string> { "PFE", "Parmaceutical" });
+            Initializing.Add(new List<string> { "MSFT", "Technology" });
+            Initializing.Add(new List<string> { "M1RN34.SAO", "Parmaceutical" });
+            Initializing.Add(new List<string> { "GOOGL", "Technology" });
+            Initializing.Add(new List<string> { "TSLA", "Vehicle manufacturer" });
+            Initializing.Add(new List<string> { "BMWYY", "Vehicle manufacturer" });
+
+            foreach (var ls in Initializing)
+            {
+                await _stockService.AddStock(new Stock { Symbol = ls[0], Name = "", Price = 1, Change = 1, Category = ls[1] });
+            };
+
+            using (WebClient client = new WebClient())
+            {
+                var symbols = (from s in _context.Stock select s.Symbol).ToList();
+
+                for (int i = 6; i < 9; i++)
+                {
+                    string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbols[i] + "&apikey=8SIHG57EBHLCEKEN";
+                    string QUERY_URL2 = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + symbols[i] + "&apikey=8SIHG57EBHLCEKEN";
+
+                    Uri queryUri = new Uri(QUERY_URL);
+                    Uri queryUri2 = new Uri(QUERY_URL2);
+
+                    dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
+                    dynamic json_data2 = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri2));
+
+                    dynamic jsi = json_data["Global Quote"];
+                    dynamic jsi2 = json_data2["bestMatches"];
+
+
+                    string data = jsi.GetRawText();
+                    Dictionary<string, string> dic = JsonSerializer.Deserialize<Dictionary<string, string>>(data);
+                    string data2 = jsi2.GetRawText();
+                    var results = JsonSerializer.Deserialize<List<dynamic>>(data2);
+                    Dictionary<string, string> result = JsonSerializer.Deserialize<Dictionary<string, string>>(results[0].GetRawText());
+                    string s_symbol = dic["01. symbol"];
+                    string s_name = result["2. name"];
+                    double s_price = Convert.ToDouble(dic["05. price"]);
+                    double s_change = Convert.ToDouble(dic["09. change"]);
+
+                    //var s = new Stock { Symbol = s_symbol, Name = s_name, Price = s_price, Change = s_change, Category = s_category };
+                    var stock = await _stockService.GetStock(s_symbol);
+                    if (stock != null)
+                    {
+                        await _stockService.UpdateStockDetails(s_symbol, s_name, s_price, s_change);
+                    }
+                    Thread.Sleep(500);
+                }
+            }
+        }
+
+        public async void CallApi()
+        {
+            
+        }
+
+        [HttpPost]
+        public ActionResult Buy(Order order)
+        {
+            
+            return RedirectToAction("Index", "Stocks");
+        }
+
+        [HttpPost]
+        public ActionResult Sell(Order order)
+        {
+
+            return RedirectToAction("Index", "Stocks");
         }
 
         // GET: Stocks/Details/5
