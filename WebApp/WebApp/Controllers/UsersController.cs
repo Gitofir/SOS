@@ -91,7 +91,8 @@ namespace WebApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            ModelState.AddModelError(string.Empty, "");
+            return View("Register");
         }
 
         // GET: Users/Edit/5
