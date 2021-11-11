@@ -87,6 +87,11 @@ namespace WebApp.Controllers
             return View(user);
         }
 
+        public ActionResult RenderStocks()
+        {
+            return PartialView("StocksView");
+        }
+
         // GET: Login/InputCC
         [Authorize]
         public IActionResult InputCC()

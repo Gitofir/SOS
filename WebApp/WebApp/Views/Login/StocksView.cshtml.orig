@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 ﻿@model WebApp.Models.User
+=======
+﻿@model WebApp.Models.CreditCard
 
+>>>>>>> d30567daf4e3a9cbfb75fd9519466325264db4b9
 @{
     ViewData["Title"] = "My Profile";
 }
@@ -72,16 +76,12 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Admin)
         </dd>
-
-        @foreach (Stock stock in Model.OwnedStocks)
-        {
-            <dt class="col-sm-2">
-                @stock.Name
-            </dt>
-            <dd class="col-sm-10">
-                @stock.Symbol
-            </dd>
-        }
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OwnedStocks) @*NOT SURE HOW TO SHOW THIS LIST CORRECTLY*@
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OwnedStocks)
+        </dd>
     </dl>
 </div>
 
@@ -89,4 +89,9 @@
 <br />
 <button type="button" onclick="loadXMLDoc()">Hot stocks &#128293</button>
 <br />
+<<<<<<< HEAD
 <table id="hotstocks"></table>
+=======
+<table id="demo"></table>
+>>>>>>> d30567daf4e3a9cbfb75fd9519466325264db4b9
+
