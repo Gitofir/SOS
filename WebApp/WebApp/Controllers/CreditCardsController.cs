@@ -31,11 +31,10 @@ namespace WebApp.Controllers
         public IActionResult Search(string number)
         {
 
-            // Get users and search them
+            // Get CCs and search them
             var all_cc = from u in _context.CreditCard select u;
             var found_cc = new List<CreditCard>();
 
-            // Username or Email
             if (!String.IsNullOrEmpty(number))
             {
                 // Remove trailing \t
@@ -46,7 +45,7 @@ namespace WebApp.Controllers
                 found_cc = found_cc.Concat(matched_cc_list).ToList();
             }
 
-            // Return found users
+            // Return found credit cards
             return View(found_cc);
         }
 
