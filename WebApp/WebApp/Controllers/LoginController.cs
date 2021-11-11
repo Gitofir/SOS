@@ -73,7 +73,6 @@ namespace WebApp.Controllers
             return View();
         }
 
-
         // POST: Login/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -95,17 +94,26 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(creditcard);
-                await _context.SaveChangesAsync();
-
                 var claims = User.Claims.ToList();
                 var username = claims[0].Value;
                 var user = _context.User.Where(u => u.Username.Equals(username)).FirstOrDefault();
+
+                // User already entered a credit card
+                if (user.CreditCard != null)
+                {
+                    return View("CCExists");
+                }
+
+                // User doesn't have a CC
+                _context.Add(creditcard);
+                await _context.SaveChangesAsync();
+
+                
                 user.CreditCard = creditcard;
 
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("/");
             }
             TempData["Message"] = "Input Error";
             return View("MyProfile");
