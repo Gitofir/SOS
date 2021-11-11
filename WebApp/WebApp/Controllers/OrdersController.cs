@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using WebApp.Models;
+using WebApp.Services;
 
 namespace WebApp.Controllers
 {
     public class OrdersController : Controller
     {
         private readonly WebAppContext _context;
+        private readonly IStockService _stockService;
+        private readonly IUserService _userService;
 
-        public OrdersController(WebAppContext context)
+        public OrdersController(WebAppContext context, IStockService stockService, IUserService userService)
         {
             _context = context;
+            _stockService = stockService;
+            _userService = userService;
         }
 
         // GET: Orders
@@ -59,6 +64,34 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(order);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(order);
+        }
+
+        // GET: Orders/Buy/5
+        public async Task<IActionResult> Buy(string symbol)
+        {
+            ViewBag.orderDate = DateTime.Now;
+            ViewBag.orderUsername = User.FindFirst("username").Value;
+            ViewBag.orderStockSymbol = symbol;
+            var stock = await _stockService.GetStock(symbol);
+            ViewBag.orderPricePerUnit = stock.Price;
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Buy(string symbol, [Bind("OrderID,Date,UserName,Symbol,Amount,PricePerUnit,Total")] Order order)
+        {
+            if (ModelState.IsValid)
+            {
+                order.Total = order.PricePerUnit * order.Amount;
+                _context.Add(order);
+                var stock = await _stockService.GetStock(symbol);
+                await _userService.AddStockToList(stock, order.UserName);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Trade</h1>
 
 @{
     if (User.Identity.IsAuthenticated)
@@ -89,14 +89,16 @@
                                     else
                                     {
                                         <td>
-                                            @using (Html.BeginForm("Buy", "Stocks", FormMethod.Post))
+                                            <a asp-action="Buy" asp-controller="Orders" asp-route-symbol="@item.Symbol">Buy</a>
+                                            @using (Html.BeginForm("Buy", "Orders", FormMethod.Post))
                                             {
-                                                @Html.AntiForgeryToken();
-                                                <input type="submit" id="btnBuy" class="btn-buy" name="submit" value="Buy" />
-                                                <input type="submit" id="btnSell" class="btn-sell" name="submit" value="Sell" />
-                                                <input type="number" id="amount" class="stock-amount" step="1" >
-                                                // Check how to limit --max=" =@User.FirstOrDefault("username").GetStockAmount()"
+                                            @Html.AntiForgeryToken();
+
+                                            <input type="submit" id="btnBuy" class="btn-success" name="submit" value="Buy" asp-action="Buy" asp-controller="Orders" asp-route-id="@item.Symbol" />
                                             }
+
+
+
                                         </td>
                                     }
                                 }

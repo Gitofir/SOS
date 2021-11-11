@@ -38,6 +38,8 @@ namespace WebApp
 
             services.AddScoped<IStockService,StockService>();
 
+            services.AddScoped<IOrderService, OrderService>();
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => {
                     options.LoginPath = "/Login";
