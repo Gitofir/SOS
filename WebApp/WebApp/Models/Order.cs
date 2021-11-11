@@ -6,25 +6,23 @@ using System.Threading.Tasks;
 
 namespace WebApp.Models
 {
-    public class Orders
+    public class Order
     {
         [Key]
         [Required]
-        public int OrderNumber { get; set; }
+        public int OrderID { get; set; }
 
         public DateTime Date { get; set; }
 
         public string UserName { get; set; }
 
-        public string Stock { get; set; }
+        public string Symbol { get; set; }
 
         public int Amount { get; set; }
 
         public double PricePerUnit { get; set; }
 
         public double Total { get; set; }
-
-        public double Change { get; set; }
 
     }
 }

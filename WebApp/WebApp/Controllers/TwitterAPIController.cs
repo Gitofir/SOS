@@ -15,26 +15,22 @@ namespace WebApp.Controllers
             public static string _AccessToken = "1458372727140671495-s0nFlhJoqJ6MGYoQPxC2p7YZ1PF0fG";
             public static string _AccessTokenSecret = "YguTTU40A6KXoWfH0AHDY7k4gXItPM8po5ANPeymCIy2i";
             
-            protected string GetTwitterSearchResult()
+            protected TwitterSearchResult GetTwitterSearchResult()
             {
 
             var tweets_search = new SearchOptions { Q = "#stocks", Resulttype = TwitterSearchResultType.Popular };
             TwitterService twService = new TwitterService(_ConsumerKey, _ConsumerSecret, _AccessToken, _AccessTokenSecret);
             TwitterSearchResult searchResult = twService.Search(tweets_search);
-            //foreach (var tweet in searchResult.Statuses)
-            //{
 
-            //}
-            return searchResult.RawSource;
-
+            return searchResult;
             }
 
 
         public IActionResult Index()
         {
             var statuses = GetTwitterSearchResult();
-
-            return View();
+            List<TwitterStatus> tweetList = statuses.Statuses.ToList();
+            return View(tweetList);
         }
 
     }

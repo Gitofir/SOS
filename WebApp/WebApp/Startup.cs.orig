@@ -90,8 +90,7 @@ namespace WebApp
         }
     }
 }
-||||||| 55ccd38
-=======
+
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -180,4 +179,3 @@ namespace WebApp
         }
     }
 }
->>>>>>> 3a7376ebed44f88d2c5e2b2065e3db626afe674a

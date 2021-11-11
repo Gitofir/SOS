@@ -13,6 +13,7 @@ using WebApp.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using WebApp.Models;
+using WebApp.Services;
 
 namespace WebApp
 {
@@ -32,6 +33,10 @@ namespace WebApp
 
             services.AddDbContext<WebAppContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("WebAppContext")));
+
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IStockService,StockService>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => {
@@ -60,7 +65,7 @@ namespace WebApp
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Shared/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
