@@ -6,9 +6,10 @@
 <h1>User Managment</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn-outline-dark" asp-action="Search">Search</a>   |  
+    <a class="btn-outline-dark" asp-action="Create">Create New User</a>
 </p>
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>
@@ -49,9 +50,9 @@
         @Html.DisplayFor(modelItem => item.Admin)
     </td>
     <td>
-        <a asp-action="Edit" asp-route-id="@item.Username">Edit</a> |
-        <a asp-action="Details" asp-route-id="@item.Username">Details</a> |
-        <a asp-action="Delete" asp-route-id="@item.Username">Delete</a>
+        <a asp-action="Edit" asp-route-id="@item.Username" class="normal-link">Edit</a> |
+        <a asp-action="Details" asp-route-id="@item.Username" class="normal-link">Details</a> |
+        <a asp-action="Delete" asp-route-id="@item.Username" class="normal-link">Delete</a>
     </td>
 </tr>
 }
@@ -60,5 +61,5 @@
 
 <!--Aside-->
 <aside>
-    <a class="nav-link  font-weight-normal" asp-area="" asp-controller="Users" asp-action="Search">Search</a>
+   
 </aside>
