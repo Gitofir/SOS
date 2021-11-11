@@ -98,22 +98,14 @@ namespace WebApp.Controllers
                 var username = claims[0].Value;
                 var user = _context.User.Where(u => u.Username.Equals(username)).FirstOrDefault();
 
-                // User already entered a credit card
-                if (user.CreditCard != null)
-                {
-                    return View("CCExists");
-                }
-
                 // User doesn't have a CC
                 _context.Add(creditcard);
-                await _context.SaveChangesAsync();
-
                 
                 user.CreditCard = creditcard;
 
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("/");
+                return RedirectToAction("Index", "Home");
             }
             TempData["Message"] = "Input Error";
             return View("MyProfile");
