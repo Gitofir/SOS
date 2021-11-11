@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,36 @@ namespace WebApp.Controllers
         public CreditCardsController(WebAppContext context)
         {
             _context = context;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            return View(await _context.CreditCard.ToListAsync());
+        }
+
+        [HttpPost]
+        public IActionResult Search(string number)
+        {
+
+            // Get users and search them
+            var all_cc = from u in _context.CreditCard select u;
+            var found_cc = new List<CreditCard>();
+
+            // Username or Email
+            if (!String.IsNullOrEmpty(number))
+            {
+                // Remove trailing \t
+                number = number.Replace("\t", String.Empty);
+                var matched_cc = all_cc.Where(u => (u.CardNum.Contains(number)));
+                var matched_cc_list = new List<CreditCard>(matched_cc);
+
+                found_cc = found_cc.Concat(matched_cc_list).ToList();
+            }
+
+            // Return found users
+            return View(found_cc);
         }
 
         // GET: CreditCards

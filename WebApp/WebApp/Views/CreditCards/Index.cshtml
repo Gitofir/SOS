@@ -22,20 +22,26 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CVV)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CardHolder)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CardNum">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CardNum">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CardNum">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CVV)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CardHolder)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CardNum">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CardNum">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CardNum">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<!--Aside-->
+<aside>
+    <a class="nav-link  font-weight-normal" asp-area="" asp-controller="CreditCards" asp-action="Search">Search</a>
+</aside>
