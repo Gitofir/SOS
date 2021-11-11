@@ -1,43 +1,38 @@
-﻿
-    @{
-        ViewData["Title"] = "Index";
-    }
+﻿@model IEnumerable<TweetSharp.TwitterStatus>
+@{
+    ViewData["Title"] = "Our Experts' Recommendation";
+}
+<h1>Our Experts' Recommendation</h1>
 
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>Index</title>
-    </head>
-    <body>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        
-                    </th>
-                    <th>
-                        
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-              
-                {
-                    <tr>
-                        <td>
-                     
-                        </td>
-                        <td>
-                            somthing
-                        </td>
-
-                    </tr>
-                }
-            </tbody>
-       </table>
-
-
-    </body>
-        @{
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Author.ScreenName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.ScreenName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+        </tr>
         }
+    </tbody>
+</table>
