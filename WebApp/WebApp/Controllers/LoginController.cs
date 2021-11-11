@@ -73,6 +73,13 @@ namespace WebApp.Controllers
             return View();
         }
 
+        // GET: Login/InputCC
+        [Authorize]
+        public IActionResult InputCC()
+        {
+            return View("InputCC");
+        }
+
         // POST: Login/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

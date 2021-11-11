@@ -1,4 +1,19 @@
-﻿@model WebApp.Models.CreditCard
+<<<<<<< HEAD
+﻿@model WebApp.Models.User
+@{
+    ViewData["Title"] = "My Profile";
+}
+<br />
+<h1>User Profile</h1>
+<ul>
+    @foreach(var c in User.Claims)
+    {
+        <li>@c.Type: @c.Value</li>
+    }
+</ul>
+||||||| 55ccd38
+=======
+﻿@model WebApp.Models.User
 @{
     ViewData["Title"] = "My Profile";
 }
@@ -11,7 +26,7 @@
                     myFunction(this);
                 }
             };
-            xmlhttp.open("GET", "/hot_stocks.xml", true);
+            xmlhttp.open("GET", "/cd_catalog.xml", true);
             xmlhttp.send();
         }
         function myFunction(xml) {
@@ -34,12 +49,16 @@
 </body>
 <br />
 <h1>User Profile</h1>
-<br />
-<a asp-action="InputCC">Enter Credit Card</a>
-<br />
+<ul>
+    @foreach (var c in User.Claims)
+    {
+        <li>@c.Type: @c.Value</li>
+    }
+</ul>
 
 <!-- Ajax -->
 <br />
 <button type="button" onclick="loadXMLDoc()">Hot stocks &#128293</button>
 <br />
 <table id="demo"></table>
+>>>>>>> 3a7376ebed44f88d2c5e2b2065e3db626afe674a
