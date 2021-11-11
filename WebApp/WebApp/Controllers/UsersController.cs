@@ -70,6 +70,32 @@ namespace WebApp.Controllers
             return View(found_users);
         }
 
+        // GET
+        [HttpGet("ShowStocks")]
+        public async Task<IActionResult> ShowStocks(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.User.FindAsync(id);
+
+            // OFIR DEBUG - ADD RANDOM STOCK TO USER SO WE HAVE WHAT TO DISPLAY
+            if (user.OwnedStocks == null)
+            {
+                user.OwnedStocks = new List<Stock>();
+            }
+
+            var owned_stocks = user.OwnedStocks.ToList();
+            
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(owned_stocks);
+        }
+
         // GET: Users/Details/5
         [Authorize]
         public async Task<IActionResult> Details(string id)
