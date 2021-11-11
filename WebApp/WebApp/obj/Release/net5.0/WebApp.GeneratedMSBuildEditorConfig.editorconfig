@@ -7,10 +7,4 @@ build_property.PublishSingleFile =
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = WebApp
-<<<<<<< HEAD
 build_property.ProjectDir = C:\Users\USER\Desktop\לימודים\שנה ב\סמסטר 3\פיתוח אפליקציות\SOS\WebApp\WebApp\
-||||||| 2ccdbb0
-build_property.ProjectDir = C:\Users\ofirs\Source\Repos\Gitofir\SOS\WebApp\WebApp\
-=======
-build_property.ProjectDir = C:\Users\ofirs\source\repos\Gitofir\SOS\WebApp\WebApp\
->>>>>>> 9772b4594f92648bc638986480ac9e422ebdbec8
