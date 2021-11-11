@@ -8,6 +8,9 @@
     <h4>User</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
         <dt class="col-sm-10">
             @Html.DisplayFor(model => model.Username)
         </dt>
@@ -39,5 +42,6 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Username">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to List</a> |
+    <a asp-action="ShowStocks" asp-route-id="@Model.Username">Show owned stocks</a> |
 </div>

@@ -86,7 +86,7 @@ namespace WebApp.Controllers
             {
                 var symbols = (from s in _context.Stock select s.Symbol).ToList();
 
-                for (int i = 6; i < 9; i++)
+                for (int i = 0; i < symbols.Count; i++)
                 {
                     string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbols[i] + "&apikey=8SIHG57EBHLCEKEN";
                     string QUERY_URL2 = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + symbols[i] + "&apikey=8SIHG57EBHLCEKEN";
