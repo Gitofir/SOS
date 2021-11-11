@@ -79,7 +79,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.User.Include(x => x.OwnedStocks).Where(u => u.Username == id).FirstOrDefaultAsync();
 
             // OFIR DEBUG - ADD RANDOM STOCK TO USER SO WE HAVE WHAT TO DISPLAY
             if (user.OwnedStocks == null)

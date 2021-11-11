@@ -1,4 +1,4 @@
-﻿@model WebApp.Models.CreditCard
+﻿@model WebApp.Models.User
 @{
     ViewData["Title"] = "My Profile";
 }
@@ -28,7 +28,7 @@
                     x[i].getElementsByTagName("MARKET")[0].childNodes[0].nodeValue +
                     "</td></tr>";
             }
-            document.getElementById("demo").innerHTML = table;
+            document.getElementById("hotstocks").innerHTML = table;
         }
     </script>
 </body>
@@ -38,8 +38,51 @@
 <a asp-action="InputCC">Enter Credit Card</a>
 <br />
 
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+        <dt class="col-sm-10">
+            @Html.DisplayFor(model => model.Username)
+        </dt>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Birthdate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Birthdate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Admin)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Admin)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OwnedStocks) @*NOT SURE HOW TO SHOW THIS LIST CORRECTLY*@
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OwnedStocks)
+        </dd>
+    </dl>
+</div>
+
 <!-- Ajax -->
 <br />
 <button type="button" onclick="loadXMLDoc()">Hot stocks &#128293</button>
 <br />
-<table id="demo"></table>
+<table id="hotstocks"></table>
+
