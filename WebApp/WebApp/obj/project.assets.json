@@ -8014,23 +8014,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ofirs\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Ofir\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ofirs\\Source\\Repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+      "projectUniqueName": "C:\\Users\\Ofir\\source\\repos\\SOS\\WebApp\\WebApp\\WebApp.csproj",
       "projectName": "WebApp",
-      "projectPath": "C:\\Users\\ofirs\\Source\\Repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
-      "packagesPath": "C:\\Users\\ofirs\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ofirs\\Source\\Repos\\Gitofir\\SOS\\WebApp\\WebApp\\obj\\",
+      "projectPath": "C:\\Users\\Ofir\\source\\repos\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+      "packagesPath": "C:\\Users\\Ofir\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Ofir\\source\\repos\\SOS\\WebApp\\WebApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\ofirs\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Ofir\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
