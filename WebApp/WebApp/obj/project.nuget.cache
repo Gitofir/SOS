@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7Hz9kaOOOgL9OKUs56WjIKZNFq7Qwa6RgvPGz+rlkjBQVLjuIxHOoFqUy9dVoKE8c1qle0mk+reA28m6+PETVA==",
+  "dgSpecHash": "vKzLLXilGnmIU4O7mfKMVyVirmMIROr8Wa2CSf93d6wW5gNipQLPy57ZNGTPM7RzQylLhg7rMQFlJVTlS8S14g==",
   "success": true,
   "projectFilePath": "C:\\Users\\Ofir\\source\\repos\\SOS\\WebApp\\WebApp\\WebApp.csproj",
   "expectedPackageFiles": [
@@ -154,6 +154,12 @@
     "C:\\Users\\Ofir\\.nuget\\packages\\tweetsharp\\2.3.1\\tweetsharp.2.3.1.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Ofir\\source\\repos\\SOS\\WebApp\\WebApp\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    },
     {
       "code": "NU1701",
       "level": "Warning",

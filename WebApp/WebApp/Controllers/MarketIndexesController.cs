@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,35 @@ namespace WebApp.Controllers
         public MarketIndexesController(WebAppContext context)
         {
             _context = context;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            return View(await _context.Index.ToListAsync());
+        }
+
+        [HttpPost]
+        public IActionResult Search(string name)
+        {
+
+            // Get indices and search them
+            var all_indices = from u in _context.Index select u;
+            var found_indices = new List<MarketIndex>();
+
+            if (!String.IsNullOrEmpty(name))
+            {
+                // Remove trailing \t
+                name = name.Replace("\t", String.Empty);
+                var matched_indices = all_indices.Where(u => (u.Name.Contains(name)));
+                var matched_indices_list = new List<MarketIndex>(matched_indices);
+
+                found_indices = found_indices.Concat(matched_indices_list).ToList();
+            }
+
+            // Return found indices
+            return View(found_indices);
         }
 
         // GET: MarketIndexes
