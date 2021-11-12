@@ -6,18 +6,18 @@
 
 <h1>Edit</h1>
 
-<h4>User</h4>
+<h4> @Html.DisplayFor(model => model.Username)</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="form-horizontal">
+
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Username" />
+            @*<input type="hidden" asp-for="Username" />
             <div class="form-group">
                 <label asp-for="Username" class="control-label"></label>
                 <input asp-for="Username" class="form-control" />
                 <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
                 <input asp-for="Password" class="form-control" />
@@ -29,30 +29,25 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Creditcard" class="control-label"></label>
-                <input asp-for="Creditcard" class="form-control" />
-                <span asp-validation-for="Creditcard" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Birthdate" class="control-label"></label>
                 <input asp-for="Birthdate" class="form-control" />
                 <span asp-validation-for="Birthdate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Admin" class="control-label"></label>
-                <input asp-for="Admin" class="form-control" />
+                <input asp-for="Admin" class="form-check-inline" />
                 <span asp-validation-for="Admin" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-outline-dark" />
             </div>
         </form>
-    </div>
+
 </div>
 
 <div>
-    <a asp-action="Index">Back to users list</a>
+    <a asp-action="Index" class="normal-link">Back to users list</a>
 </div>
 
 @section Scripts {

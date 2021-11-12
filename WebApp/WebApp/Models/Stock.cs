@@ -10,10 +10,17 @@ namespace WebApp.Models
     {
         [Key]
         [Required]
-        public string name { get; set; }
+        public String Symbol { get; set; }
+        public string Name { get; set; }
 
-        public double price { get; set; }
+        public double Price { get; set; }
 
-        public double change { get; set; }
+        public double Change { get; set; }
+
+        public string Category { get; set; }
+        public ICollection<MarketIndex> Indices { get; set; }
+
+
+
     }
 }

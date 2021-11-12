@@ -5,8 +5,8 @@ namespace WebApp.Services
 {
     public interface IStockService
     {
-        Task<Stock> GetStock(string name);
-        Task UpdateStockDetails(string sName, double sPrice, double sChange);
+        Task<Stock> GetStock(string symbol);
+        Task UpdateStockDetails(string sSymbol, string sName, double sPrice, double sChange);
         Task AddStock(Stock newStock);
     }
 }

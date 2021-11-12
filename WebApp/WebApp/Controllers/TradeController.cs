@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +17,7 @@ namespace WebApp.Controllers
         private readonly IStockService _stockService;
         private readonly IUserService _userService;
 
+
         public TradeController(WebAppContext context, IStockService stockService, IUserService userService)
         {
             _context = context;
@@ -28,29 +28,28 @@ namespace WebApp.Controllers
         // GET: Trade
         public async Task<IActionResult> Index()
         {
-            Stock newStock = await _stockService.GetStock("IBM");
-            
             return View(await _context.Stock.ToListAsync());
         }
 
-        public async Task<IActionResult> Buy(string stockName, int numOfStocks)
+        public async Task<IActionResult> Buy(string stockSymbol, int numOfStocks, double price)
         {
             var username = User.FindFirst("username").Value;
             User user = await _userService.GetUser(username);
-            await _userService.UpdateUserStocks(username, stockName, numOfStocks);
+            await _userService.UpdateUserStocks(username, stockSymbol, numOfStocks, price);
             return View("Index");
         }
 
+
         // GET: Trade/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string symbol)
         {
-            if (id == null)
+            if (symbol == null)
             {
                 return NotFound();
             }
 
             var stock = await _context.Stock
-                .FirstOrDefaultAsync(m => m.name == id);
+                .FirstOrDefaultAsync(m => m.Symbol == symbol);
             if (stock == null)
             {
                 return NotFound();
@@ -70,7 +69,7 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("name,price,change")] Stock stock)
+        public async Task<IActionResult> Create([Bind("Symbol,Name,Price,Change,Category")] Stock stock)
         {
             if (ModelState.IsValid)
             {
@@ -82,14 +81,14 @@ namespace WebApp.Controllers
         }
 
         // GET: Trade/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string symbol)
         {
-            if (id == null)
+            if (symbol == null)
             {
                 return NotFound();
             }
 
-            var stock = await _context.Stock.FindAsync(id);
+            var stock = await _context.Stock.FindAsync(symbol);
             if (stock == null)
             {
                 return NotFound();
@@ -102,9 +101,9 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("name,price,change")] Stock stock)
+        public async Task<IActionResult> Edit(string symbol, [Bind("Symbol,Name,Price,Change,Category")] Stock stock)
         {
-            if (id != stock.name)
+            if (symbol != stock.Symbol)
             {
                 return NotFound();
             }
@@ -118,7 +117,7 @@ namespace WebApp.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StockExists(stock.name))
+                    if (!StockExists(stock.Symbol))
                     {
                         return NotFound();
                     }
@@ -133,15 +132,15 @@ namespace WebApp.Controllers
         }
 
         // GET: Trade/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string symbol)
         {
-            if (id == null)
+            if (symbol == null)
             {
                 return NotFound();
             }
 
             var stock = await _context.Stock
-                .FirstOrDefaultAsync(m => m.name == id);
+                .FirstOrDefaultAsync(m => m.Symbol == symbol);
             if (stock == null)
             {
                 return NotFound();
@@ -153,17 +152,17 @@ namespace WebApp.Controllers
         // POST: Trade/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(string symbol)
         {
-            var stock = await _context.Stock.FindAsync(id);
+            var stock = await _context.Stock.FindAsync(symbol);
             _context.Stock.Remove(stock);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StockExists(string id)
+        private bool StockExists(string symbol)
         {
-            return _context.Stock.Any(e => e.name == id);
+            return _context.Stock.Any(e => e.Symbol == symbol);
         }
     }
 }

@@ -25,17 +25,18 @@ namespace WebApp.Services
 
         //public async Task<IActionResult> Details(string id)
 
-        public async Task<Stock> GetStock(string sName)
+        public async Task<Stock> GetStock(string symbol)
         {
-            Stock stock = await _context.Stock.FirstOrDefaultAsync(s => s.name == sName);
+            Stock stock = await _context.Stock.FirstOrDefaultAsync(s => s.Symbol == symbol);
             return stock;
         }
 
-        public async Task UpdateStockDetails(string sName, double sPrice, double sChange)
+        public async Task UpdateStockDetails(string sSymbol, string sName, double sPrice, double sChange)
         {
-            Stock stock = await _context.Stock.FirstOrDefaultAsync(s => s.name == sName);
-            stock.price = sPrice;
-            stock.change = sChange;
+            Stock stock = await _context.Stock.FirstOrDefaultAsync(s => s.Symbol == sSymbol);
+            stock.Name = sName;
+            stock.Price = sPrice;
+            stock.Change = sChange;
             await _context.SaveChangesAsync();
         }
     }

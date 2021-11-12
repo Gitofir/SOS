@@ -14,6 +14,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="~/images/stock_icon.png">
+
+    
+
 </head>
 <body>
     <header>
@@ -21,29 +26,30 @@
         <nav class="navbar navbar-expand-md navbar-light fixed-top nav-bg-light ">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">  </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <img src="~/images/stonks2edited.png" width="40" height="40" />
+
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" id="navbarCollapse">
+                    <img src="~/images/stock_icon.png" width="42" height="35" />
+
+
                     <ul class="navbar-nav flex-grow-1 my-nav-prop">
                         <li class="nav-item">
                             <a class="nav-link font-weight-normal" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link  font-weight-normal" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
                         @if (User.Identity.IsAuthenticated == false)
                         {
-                        <li class="nav-item">
-                            <a class="nav-link  font-weight-bolder" asp-area="" asp-controller="Users" asp-action="Register">Register Now!</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link  font-weight-bolder" asp-area="" asp-controller="Users" asp-action="Register">Register Now!</a>
+                            </li>
                         }
                         @if (User.Identity.IsAuthenticated == false)
                         {
-                        <li class="nav-item">
-                            <a class="nav-link  font-weight-normal" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link  font-weight-normal" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                            </li>
                         }
                         @if (User.Identity.IsAuthenticated)
                         {
@@ -72,14 +78,20 @@
                                     <li class="nav-item">
                                         <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Users" asp-action="Index">User Managment</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Stocks" asp-action="Index">Stocks Managment</a>
+                                    </li>
                                 }
                             }
+
                         }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark font-weight-normal " asp-area="" asp-controller="TwitterAPI" asp-action="Index">Twitter</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
-
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -99,6 +111,7 @@
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 
 </body>
 </html>

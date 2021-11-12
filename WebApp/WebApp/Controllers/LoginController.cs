@@ -68,11 +68,31 @@ namespace WebApp.Controllers
 
         // GET: Login/MyProfile
         [Authorize]
-        public IActionResult MyProfile()
+        public async Task<IActionResult> MyProfileAsync()
         {
-            return View();
+            var claims = User.Claims.ToList();
+            var username = claims[0].Value;
+            var user = _context.User.Where(u => u.Username.Equals(username)).FirstOrDefault();
+
+            // OFIR AND SAPIR DEBUG - GIVE USER FREE STOCK FOR CHECKS
+            var random_stock = _context.Stock.FirstOrDefault();
+            // need to initialize the list
+            if (user.OwnedStocks == null)
+            {
+                user.OwnedStocks = new List<Stock>();
+            }
+            user.OwnedStocks.Add(random_stock);
+            await _context.SaveChangesAsync();
+
+            return View(user);
         }
 
+        // GET: Login/InputCC
+        [Authorize]
+        public IActionResult InputCC()
+        {
+            return View("InputCC");
+        }
 
         // POST: Login/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -88,6 +108,33 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCreditCard([Bind("CardNum,CVV,CardHolder")] CreditCard creditcard)
+        {
+            if (ModelState.IsValid)
+            {
+                var claims = User.Claims.ToList();
+                var username = claims[0].Value;
+                var user = _context.User.Include(x => x.CreditCard).Where(u => u.Username.Equals(username)).FirstOrDefault();
+
+                // User doesn't have a CC
+                if (user.CreditCard != null)
+                {
+                    return View("CCExists");
+                }
+
+                _context.Add(creditcard);
+                
+                user.CreditCard = creditcard;
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index", "Home");
+            }
+            TempData["Message"] = "Input Error";
+            return View("MyProfile");
         }
 
         // GET: Login/Edit/5
