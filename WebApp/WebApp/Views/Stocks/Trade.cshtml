@@ -1,7 +1,7 @@
 @model IEnumerable<WebApp.Models.Stock>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Trade";
 }
 
 <h1>Trade</h1>
@@ -90,11 +90,11 @@
                                     {
                                         <td>
                                             <a asp-action="Buy" asp-controller="Orders" asp-route-symbol="@item.Symbol">Buy</a>
-                                            @using (Html.BeginForm("Buy", "Orders", FormMethod.Get))
+                                            @using (Html.BeginForm("Buy", "Orders", FormMethod.Post))
                                             {
                                             @Html.AntiForgeryToken();
 
-                                            <input type="submit" id="btnBuy" class="btn-success" name="submit" value="Buy" asp-action="Buy" asp-controller="Orders" asp-route-symbol="@item.Symbol"/>
+                                            <input type="submit" id="btnBuy" class="btn-success" name="submit" value="Buy" asp-action="Buy" asp-controller="Orders" asp-route-id="@item.Symbol" />
                                             }
 
 
