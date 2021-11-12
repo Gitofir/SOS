@@ -41,5 +41,31 @@ namespace WebApp.Services
             _context.SaveChanges();
             */
         }
+
+        public int GetStocksAmount(string username, string symbol)
+        {
+            User user = _context.User.FirstOrDefault(u => u.Username == username);
+            Stock stock = _context.Stock.FirstOrDefault(s => s.Symbol == symbol);
+            int amount = 0;
+            foreach (var s in user.OwnedStocks)
+            {
+                if (s.Symbol == symbol)
+                {
+                    amount++;
+                }
+            }
+            return amount;
+        }
+
+        public async Task AddStockToList(Stock stock, string username)
+        {
+            User user = _context.User.Include(u => u.OwnedStocks).FirstOrDefault(u => u.Username == username);
+            if (user.OwnedStocks == null)
+            {
+                user.OwnedStocks = new List<Stock>();
+            }
+            user.OwnedStocks.Add(stock);
+            await _context.SaveChangesAsync();
+        }
     }
 }
