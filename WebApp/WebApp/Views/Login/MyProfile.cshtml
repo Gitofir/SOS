@@ -34,20 +34,15 @@
     </script>
 </body>
 <br />
-<h1>User Profile</h1>
+<h1>Hello @Html.DisplayFor(model => model.Username)!</h1>
 <br />
-<a asp-action="InputCC">Enter Credit Card</a>
+<a asp-action="InputCC" class="btn-outline-dark">Enter Credit Card</a> |
+<a asp-action="Statistics" class="btn-outline-dark">Statistics</a>
 <br />
 
 <div>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
-        <dt class="col-sm-10">
-            @Html.DisplayFor(model => model.Username)
-        </dt>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Password)
         </dt>
@@ -86,7 +81,7 @@
 </div>
 
 <!-- Ajax -->
-<br />
-<button type="button" onclick="loadXMLDoc()">Hot stocks &#128293</button>
+
+<button type="button" onclick="loadXMLDoc()" class="btn btn-outline-info">Hot stocks &#128293</input>
 <br />
 <table id="hotstocks"></table>

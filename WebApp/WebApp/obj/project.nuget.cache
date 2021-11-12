@@ -158,7 +158,7 @@
       "code": "Undefined",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\Ofir\\source\\repos\\SOS\\WebApp\\WebApp\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+      "message": "Problem reading the cache file C:\\Users\\Ofir\\source\\repos\\SOS\\WebApp\\WebApp\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'success', line 5, position 0."
     },
     {
       "code": "NU1701",

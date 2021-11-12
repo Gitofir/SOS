@@ -4,7 +4,7 @@
 }
 
 <br />
-<h1>Enter Credit Card</h1>
+<h1>Provide a Credit Card</h1> <hr />
 
 <form class="form-horizontal" method="POST" asp-action="AddCreditCard">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -16,7 +16,7 @@
             <div class="controls">
                 <span asp-validation-for="CardNum" class="text-danger"></span>
                 <input asp-for="CardNum" type="password" class="form-control" />
-                <p class="help-block">Card number has to exist of digits only</p>
+                <p class="help-block small-lable">Card number has to exist of digits only</p>
             </div>
         </div>
 
@@ -26,7 +26,7 @@
             <div class="controls">
                 <span asp-validation-for="CVV" class="text-danger"></span>
                 <input asp-for="CVV" type="password" placeholder="" class="input-xlarge form-control" />
-                <p class="help-block">CVV has to be 3 digits</p>
+                <p class="help-block small-lable">CVV has to be 3 digits</p>
             </div>
         </div>
         <br />
@@ -37,14 +37,14 @@
             <div class="controls">
                 <span asp-validation-for="CardHolder" class="text-danger"></span>
                 <input asp-for="CardHolder" placeholder="" class="input-xlarge form-control" />
-                <p class="help-block">Please provide the card holder name</p>
+                <p class="help-block small-lable">Please provide the card holder name</p>
             </div>
         </div>
 
         <div class="control-group">
             <!-- Button -->
             <div class="controls">
-                <input type="submit" value="Register" class="btn btn-primary" />
+                <input type="submit" value="Send" class="btn btn-outline-dark" />
             </div>
         </div>
 

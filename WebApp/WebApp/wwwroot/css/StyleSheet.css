@@ -116,6 +116,14 @@ h3 {
     
 }
 
+.hello-user {
+    position: absolute;
+    right: 20px;
+    top: 65px;
+    color: #ffff;
+    font-size:20px;
+}
+
 /*--------------------------------------------------------*/
 /* OTHER */
 /*--------------------------------------------------------*/
@@ -183,4 +191,20 @@ aside {
     .container {
         max-width: 1140px;
     }
+}
+
+/*statistics*/
+
+.arc text {
+    font: 10px sans-serif;
+    text-anchor: middle;
+}
+
+.arc path {
+    stroke: #fff;
+}
+
+.title {
+    fill: teal;
+    font-weight: bold;
 }
