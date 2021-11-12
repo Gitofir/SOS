@@ -108,22 +108,3 @@
     </tbody>
 </table>
 
-<!--Statistics Graphs starts-->
-@*restaurant data for js statistics*@
-@foreach (var s in Model)
-{
-    <div hidden class="stocks" name="@s.Name" category="@s.Category" ratingScore="@s.Price"></div>
-}
-<div class="row mt-4 justify-content-center">
-    <!--Restaurants by number of reviews-->
-    <div class="col-6">
-        <h3>stocks by category</h3>
-        <div id=></div>
-    </div>
-    <!--Restaurants by rating score-->
-    <div class="col-6">
-        <h3>Restaurants By Rating</h3>
-        <div id="barChartRestaurantsByRatingScore"></div>
-    </div>
-</div>
-<!--Statistics Graphs ends-->

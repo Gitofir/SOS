@@ -11,12 +11,15 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace WebApp.Controllers
 {
     public class LoginController : Controller
     {
         private readonly WebAppContext _context;
+
 
         public LoginController(WebAppContext context)
         {
@@ -97,6 +100,14 @@ namespace WebApp.Controllers
         public IActionResult InputCC()
         {
             return View("InputCC");
+        }
+
+        public IActionResult Statistics()
+        {
+            var claims = User.Claims.ToList();
+            var username = claims[0].Value;
+            var user = _context.User.Where(u => u.Username.Equals(username)).FirstOrDefault();
+            return View("Statistics",user);
         }
 
         // POST: Login/Create
@@ -226,5 +237,8 @@ namespace WebApp.Controllers
         {
             return _context.User.Any(e => e.Username == id);
         }
+
+
+
     }
 }

@@ -1,0 +1,180 @@
+﻿@model WebApp.Models.User
+@{
+
+    ViewData["Title"] = "Statistics";
+    var ownedStocks = Model.OwnedStocks;
+    bool hasStocks = false;
+
+
+    Dictionary<string, int> AmountFromCategory = new Dictionary<string, int>(); //all users have null in owned stocks
+    if (Model.OwnedStocks != null)
+    {
+        hasStocks = true;
+        foreach (Stock stock in Model.OwnedStocks)
+        {
+            if (!AmountFromCategory.TryAdd(stock.Category, 1))
+                AmountFromCategory[stock.Category]++;
+        }
+    }
+    else
+    {
+
+        //AmountFromCategory.Add("No stocks", 1); 
+        AmountFromCategory.Add("finance", 2); //just to continue with list WILL BE DELETED
+        AmountFromCategory["finance"]++;
+        AmountFromCategory.Add("cars", 1);
+        AmountFromCategory.Add("tech", 3);
+        AmountFromCategory["finance"]++;
+
+    }
+}
+
+<script src="~/lib/d3/d3.min.js"></script>
+<h1>Statistics</h1> <hr />
+
+<body>
+    <div>
+        @if (hasStocks)
+        {
+            <section class="row py-sm-4">
+                <section class="col-3">
+                    @foreach (var pair in AmountFromCategory) //display the temporry list - after that ill change it to mikra
+                    {
+                        <dt class="col-sm-2">
+                            @pair.Key
+                        </dt>
+                        <dd class="col-sm-10">
+                            @pair.Value
+                        </dd>
+                    }
+                </section>
+
+                <section class="col-3 " id="stocksbycategory">
+                </section>
+
+
+            </section>
+
+            <section class="row py-sm-4">
+                <section class="col-3 ">
+                    @foreach (var pair in AmountFromCategory) //display the temporry list - after that ill change it to mikra
+                    {
+                        <dt class="col-sm-2">
+                            @pair.Key
+                        </dt>
+                        <dd class="col-sm-10">
+                            @pair.Value
+                        </dd>
+                    }
+                </section>
+
+                <section class="col-3" id="stocksbyindex">
+                </section>
+                <lable class="alert-dark" itemid="nostocks"></lable>
+
+            </section>
+        }
+        else
+        {
+            <h2 class="text-center">You dont own any stocks yet</h2> //add here link to buy and sell page
+        }
+    </div>
+</body>
+
+<script>
+    // set the dimensions and margins of the graph
+    const width = 250,
+        height = 250,
+        margin = 8;
+
+    // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+    const radius = Math.min(width, height) / 2 - margin;
+
+
+    //Owned Stocks By Category
+    //---------------------------------------------------------------------------------------
+
+        
+    // append the svg object to the div
+    const svgcat = d3.select("#stocksbycategory")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+    // Create dummy data
+    //const datacat = { a: 9, b: 20, c: 30, d: 8, e: 12 }
+
+    const datacat = { finance: @AmountFromCategory["finance"], cars: @AmountFromCategory["cars"], tech: @AmountFromCategory["tech"]}
+
+
+    // set the color scale
+    const colorcat = d3.scaleOrdinal()
+        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"])
+
+    // Compute the position of each group on the pie:
+    const piecat = d3.pie()
+        .value(function (d) { return d[1] })
+    /**/
+    //const data_readycat = piecat(Object.entries(datacat))
+    const data_readycat = piecat(Object.entries(datacat))
+
+    /**/
+
+    // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+    svgcat
+        .selectAll('whatever')
+        .data(data_readycat)
+        .join('path')
+        .attr('d', d3.arc()
+            .innerRadius(0)
+            .outerRadius(radius)
+        )
+        .attr('fill', function (d) { return (colorcat(d.data[1])) })
+        .attr("stroke", "black")
+        .style("stroke-width", "1px")
+        .style("opacity", 0.7)
+
+
+    //Owned Stocks By index
+    //---------------------------------------------------------------------------------------
+
+
+    // append the svg object to the div
+    const svgindex = d3.select("#stocksbyindex")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+    // Create dummy data
+    const dataindex = { a: 0, b: 1, c: 0 }
+
+    // set the color scale
+    const colorindex = d3.scaleOrdinal()
+        .range(["#05f6f5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"])
+
+    // Compute the position of each group on the pie:
+    const pieindex = d3.pie()
+        .value(function (d) { return d[1] })
+    const data_readyindex = pieindex(Object.entries(dataindex))
+
+    // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+    svgindex
+        .selectAll('whatever')
+        .data(data_readyindex)
+        .join('path')
+        .attr('d', d3.arc()
+            .innerRadius(0)
+            .outerRadius(radius)
+        )
+        .attr('fill', function (d) { return (colorindex(d.data[1])) })
+        .attr("stroke", "black")
+        .style("stroke-width", "2px")
+        .style("opacity", 0.7)
+
+</script>
+
+

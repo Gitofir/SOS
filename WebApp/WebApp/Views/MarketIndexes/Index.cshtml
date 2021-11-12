@@ -7,9 +7,10 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New</a> |
+    <a class="btn-outline-dark" asp-area="" asp-controller="MarketIndexes" asp-action="Search">Search</a>
 </p>
-<table class="table">
+<table class="table table-hover table-responsive">
     <thead>
         <tr>
             <th>
@@ -26,9 +27,9 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Name">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Name">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Name">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Name" class="normal-link">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Name" class="normal-link">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Name" class="normal-link">Delete</a>
                 </td>
             </tr>
         }
@@ -37,5 +38,5 @@
 
 <!--Aside-->
 <aside>
-    <a class="nav-link  font-weight-normal" asp-area="" asp-controller="MarketIndexes" asp-action="Search">Search</a>
+    
 </aside>

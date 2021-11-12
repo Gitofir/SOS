@@ -34,7 +34,11 @@
                     <img src="~/images/stock_icon.png" width="42" height="35" />
 
 
+
                     <ul class="navbar-nav flex-grow-1 my-nav-prop">
+
+
+
                         <li class="nav-item">
                             <a class="nav-link font-weight-normal" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -88,7 +92,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark font-weight-normal " asp-area="" asp-controller="TwitterAPI" asp-action="Index">Twitter</a>
                         </li>
+
+                        <li class="nav-item">
+
+                        </li>
+
                     </ul>
+                    
+                    @if (User.Identity.IsAuthenticated == false)
+                    {
+                        <p class="normal-link text-lg-right"> Hello guest!</p>
+                    }
+                    else
+                    {
+                        <p class="navbar-text">Hello insert username</p>
+                    }
                 </div>
             </div>
         </nav>

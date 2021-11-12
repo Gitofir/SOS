@@ -7,9 +7,9 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn-outline-dark">Create New Order</a>
 </p>
-<table class="table">
+<table class="table table-hover table-responsive">
     <thead>
         <tr>
             <th>
@@ -55,9 +55,9 @@
                 @Html.DisplayFor(modelItem => item.Total)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.OrderID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.OrderID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.OrderID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.OrderID" class="normal-link">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.OrderID" class="normal-link">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.OrderID" class="normal-link">Delete</a>
             </td>
         </tr>
 }
