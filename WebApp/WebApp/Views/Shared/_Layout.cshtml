@@ -54,6 +54,9 @@
                                 <a class="nav-link font-weight-normal" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
                             </li>
                         }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Stocks" asp-action="Index">Trade</a>
+                        </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
@@ -82,7 +85,7 @@
                                         <a class="nav-link font-weight-normal" asp-area="" asp-controller="Users" asp-action="Index">User Managment</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link font-weight-normal" asp-area="" asp-controller="Stocks" asp-action="Index">Stocks Managment</a>
+                                        <a class="nav-link text-dark font-weight-normal" asp-area="" asp-controller="Stocks" asp-action="Index">Stocks Managment</a>
                                     </li>
                                 }
                             }

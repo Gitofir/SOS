@@ -9,7 +9,6 @@ namespace WebApp.Models
     public class Order
     {
         [Key]
-        [Required]
         public int OrderID { get; set; }
 
         public DateTime Date { get; set; }

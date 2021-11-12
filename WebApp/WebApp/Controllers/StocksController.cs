@@ -19,8 +19,9 @@ namespace WebApp.Controllers
         private readonly WebAppContext _context;
         private readonly IStockService _stockService;
         private readonly IUserService _userService;
+        private readonly IOrderService _orderService;
 
-        public StocksController(WebAppContext context, IStockService stockService, IUserService userService)
+        public StocksController(WebAppContext context, IStockService stockService, IUserService userService, IOrderService orderService)
         {
             _context = context;
             _stockService = stockService;
@@ -29,13 +30,12 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks
-        public async Task<IActionResult> Index(string submit, Order order)
+        public async Task<IActionResult> Index()
         {
             if (!_context.Stock.Any())
             {
                 IntialStockTable();
             }
-            CallApi();
             {/*var symbol1s = new List<string>()
                     {
                         "IBM",
@@ -51,17 +51,9 @@ namespace WebApp.Controllers
                     };*/
                 }       
             
-            switch (submit)
-            {
-                case "Buy":
-                    return (Buy(order));
-                case "Sell":
-                    return (Sell(order));
-            }
             
             return View(await _context.Stock.ToListAsync());
         }
-
 
         public async void IntialStockTable()
         {
@@ -87,6 +79,7 @@ namespace WebApp.Controllers
                 var symbols = (from s in _context.Stock select s.Symbol).ToList();
 
                 for (int i = 0; i < symbols.Count; i++)
+
                 {
                     string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbols[i] + "&apikey=8SIHG57EBHLCEKEN";
                     string QUERY_URL2 = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + symbols[i] + "&apikey=8SIHG57EBHLCEKEN";
@@ -122,16 +115,24 @@ namespace WebApp.Controllers
             }
         }
 
-        public async void CallApi()
+        /*public ActionResult Trade(string submit, string symbol)
         {
-            
+            switch (submit)
+            {
+                case "Buy":
+                    return (Buy(symbol));
+                case "Sell":
+                    return (Sell(symbol));
+            }
+        }*/
+        public int GetStocksAmount(string symbol, string username)
+        {
+            return _userService.GetStocksAmount(username, symbol);
         }
-
         [HttpPost]
-        public ActionResult Buy(Order order)
+        public ActionResult Buy(string symbol)
         {
-            
-            return RedirectToAction("Index", "Stocks");
+            return RedirectToAction("Buy", "Orders", symbol);
         }
 
         [HttpPost]
@@ -142,15 +143,15 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks/Details/5
-        public async Task<IActionResult> Details(string symbol)
+        public async Task<IActionResult> Details(string id)
         {
-            if (symbol == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var stock = await _context.Stock
-                .FirstOrDefaultAsync(m => m.Symbol == symbol);
+                .FirstOrDefaultAsync(m => m.Symbol == id);
             if (stock == null)
             {
                 return NotFound();
@@ -182,14 +183,14 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks/Edit/5
-        public async Task<IActionResult> Edit(string symbol)
+        public async Task<IActionResult> Edit(string id)
         {
-            if (symbol == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var stock = await _context.Stock.FindAsync(symbol);
+            var stock = await _context.Stock.FindAsync(id);
             if (stock == null)
             {
                 return NotFound();
@@ -202,9 +203,9 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string symbol, [Bind("Symbol,Name,Price,Change,Category")] Stock stock)
+        public async Task<IActionResult> Edit(string id, [Bind("Symbol,Name,Price,Change,Category")] Stock stock)
         {
-            if (symbol != stock.Symbol)
+            if (id != stock.Symbol)
             {
                 return NotFound();
             }
@@ -233,15 +234,15 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks/Delete/5
-        public async Task<IActionResult> Delete(string symbol)
+        public async Task<IActionResult> Delete(string id)
         {
-            if (symbol == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var stock = await _context.Stock
-                .FirstOrDefaultAsync(m => m.Symbol == symbol);
+                .FirstOrDefaultAsync(m => m.Symbol == id);
             if (stock == null)
             {
                 return NotFound();
@@ -253,17 +254,17 @@ namespace WebApp.Controllers
         // POST: Stocks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string symbol)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var stock = await _context.Stock.FindAsync(symbol);
+            var stock = await _context.Stock.FindAsync(id);
             _context.Stock.Remove(stock);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StockExists(string symbol)
+        private bool StockExists(string id)
         {
-            return _context.Stock.Any(e => e.Symbol == symbol);
+            return _context.Stock.Any(e => e.Symbol == id);
         }
     }
 }
