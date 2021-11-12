@@ -106,7 +106,7 @@ namespace WebApp.Controllers
         {
             var claims = User.Claims.ToList();
             var username = claims[0].Value;
-            var user = _context.User.Where(u => u.Username.Equals(username)).FirstOrDefault();
+            var user = _context.User.Include(u => u.OwnedStocks).Where(u => u.Username.Equals(username)).FirstOrDefault();
             return View("Statistics",user);
         }
 
