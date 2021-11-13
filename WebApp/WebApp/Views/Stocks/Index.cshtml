@@ -37,27 +37,34 @@
     </script>
 </body>
 
-@using (Html.BeginForm("Index", "Stocks", FormMethod.Get))
+@using (Html.BeginForm("SearchStocks", "Stocks", FormMethod.Get))
 {
-<table>
-    <tr>
-        <th colspan="2" align="center">Search Stocks</th>
-    </tr>
-    <tr>
-        <td>Low Price: </td><td>High Price: </td><td>Does Price increased\decreased? </td><td>Category</td><td>Index</td>
-    </tr>
-    <tr>
-        <td>@Html.TextBox("lowPrice")</td>
-        <td>@Html.TextBox("highPrice")</td>
-        <td>@Html.DropDownList("change", new List<SelectListItem>{
-                                                                    new SelectListItem { Text = "Increased", Value = "inc" },
-                                                                    new SelectListItem { Text = "Decreased", Value = "dec" }}, "Please select")</td>
-        <td>@Html.DropDownList("indexName", new SelectList(ViewBag.allCategories), "Please select")</td>
-        <td> @Html.DropDownList("indexName", new SelectList(ViewBag.allIndices), "Please select")</td>
-        <td>  <input type="submit" value="Search stocks" /></td>
-    </tr>
-</table>
-   
+    <table>
+        <tr>
+            <th colspan="2" align="center">Search Stocks</th>
+        </tr>
+        <tr>
+            <td>Low Price: </td>
+            <td>High Price: </td>
+            <td>Does Price increased\decreased? </td>
+            <td>Category</td>
+            <td>Index</td>
+        </tr>
+        <tr>
+            <td>@Html.TextBox("lowPrice")</td>
+            <td>@Html.TextBox("highPrice")</td>
+            <td>
+                @Html.DropDownList("change", new List<SelectListItem>
+                    {
+                    new SelectListItem { Text = "Increased", Value = "inc" },
+                    new SelectListItem { Text = "Decreased", Value = "dec" }}, "Please select")
+            </td>
+            <td>@Html.DropDownList("indexName", new SelectList(ViewBag.allCategories), "Please select")</td>
+            <td> @Html.DropDownList("indexName", new SelectList(ViewBag.allIndices), "Please select")</td>
+            <td>  <input type="submit" value="Search stocks" /></td>
+        </tr>
+    </table>
+
 }
 
 
@@ -77,14 +84,15 @@
         if (isAdmin)
         {
             <p>
-                <a class="btn btn-outline-dark" asp-action="Create">Create New</a> |
-                <a class="btn btn-outline-dark" asp-area="" asp-controller="Stocks" asp-action="Search">Search</a>
+                <a class="btn-outline-dark" asp-action="Create">Create New</a> |
+                <a class="btn-outline-dark" asp-area="" asp-controller="Stocks" asp-action="Search">Search</a>
             </p>
 
 
         }
     }
 }
+
 <table class="table">
     <thead>
         <tr>
@@ -145,12 +153,12 @@
                         else
                         {
                             <td>
-                                <a asp-action="Buy" asp-controller="Orders" asp-route-symbol="@item.Symbol" class="btn btn-success">Buy</a>
+                                <a asp-action="Buy" asp-controller="Orders" asp-route-symbol="@item.Symbol">Buy</a>
                                 @using (Html.BeginForm("Buy", "Orders", FormMethod.Get))
                                 {
                                     @Html.AntiForgeryToken();
 
-
+                                    <input type="submit" id="btnBuy" class="btn-success" name="submit" value="Buy" asp-action="Buy" asp-controller="Orders" asp-route-symbol="@item.Symbol" />
                                 }
 
 
@@ -166,9 +174,10 @@
     </tbody>
 </table>
 
+
 <!-- Ajax -->
 
 <button type="button" onclick="loadXMLDoc()" class="btn btn-outline-info">
-    Hot stocks &#128293</input>
+    Hot stocks &#128293
     <br />
     <table id="hotstocks"></table>

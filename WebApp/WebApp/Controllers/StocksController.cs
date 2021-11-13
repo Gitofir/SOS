@@ -27,6 +27,7 @@ namespace WebApp.Controllers
             _stockService = stockService;
             _userService = userService;
 
+
         }
 
         // GET: Stocks
@@ -65,68 +66,116 @@ namespace WebApp.Controllers
                 {
                     await _stockService.AddStock(new Stock { Symbol = ls[0], Name = "", Price = 1, Change = 1, Category = ls[1] });
                 };
-            }
-            if (!_context.Index.Any())
-            {
-                var indicesInitializing = new List<string>
-                { "S&P 500", "Dow Jones", "NASDAQ" };
 
-                foreach (var i in indicesInitializing)
+
+                if (!_context.Index.Any())
                 {
-                    _context.Index.Add(new MarketIndex { Name = i});
-                };
-            }
+                    var indicesInitializing = new List<string>{ "S&P 500", "Dow Jones", "NASDAQ" };
 
-
-                using (WebClient client = new WebClient())
-            {
-                var symbols = (from s in _context.Stock select s.Symbol).ToList();
-
-                foreach (var symbol in symbols)
-
-                {
-                    string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=8SIHG57EBHLCEKEN";
-                    string QUERY_URL2 = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + symbol + "&apikey=8SIHG57EBHLCEKEN";
-
-                    Uri queryUri = new Uri(QUERY_URL);
-                    Uri queryUri2 = new Uri(QUERY_URL2);
-
-                    dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
-                    dynamic json_data2 = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri2));
-
-                    dynamic jsi = json_data["Global Quote"];
-                    dynamic jsi2 = json_data2["bestMatches"];
-
-
-                    string data = jsi.GetRawText();
-                    Dictionary<string, string> dic = JsonSerializer.Deserialize<Dictionary<string, string>>(data);
-                    string data2 = jsi2.GetRawText();
-                    var results = JsonSerializer.Deserialize<List<dynamic>>(data2);
-                    Dictionary<string, string> result = JsonSerializer.Deserialize<Dictionary<string, string>>(results[0].GetRawText());
-                    string s_symbol = dic["01. symbol"];
-                    string s_name = result["2. name"];
-                    double s_price = Convert.ToDouble(dic["05. price"]);
-                    double s_change = Convert.ToDouble(dic["09. change"]);
-
-                    var stock = await _stockService.GetStock(s_symbol);
-                    if (stock != null)
+                    foreach (var i in indicesInitializing)
                     {
-                        await _stockService.UpdateStockDetails(s_symbol, s_name, s_price, s_change);
+                        _context.Index.Add(new MarketIndex { Name = i });
+
+
+                        await _context.SaveChangesAsync();
+
+                    };
+                    { 
+
+                    //for (var i = 0; i < 2; i++)
+                    //{
+                    //    MarketIndex index = _context.Index.Include(ind => ind.Stocks).FirstOrDefault(ind => ind.Name == indicesInitializing[i]);
+                    //    if (index.Stocks == null)
+                    //    {
+                    //        index.Stocks = new List<Stock>();
+                    //    }
+                    //    var stock1 = await _stockService.GetStock("IBM");
+                    //    var stock2 = await _stockService.GetStock("Teva");
+                    //    var stock3 = await _stockService.GetStock("PFE");
+                    //    index.Stocks.Add(stock1);
+                    //    index.Stocks.Add(stock2);
+                    //    index.Stocks.Add(stock3);
+                    //};
+                    
+                        //MarketIndex index2 = _context.Index.Include(ind => ind.Stocks).FirstOrDefault(ind => ind.Name == indicesInitializing[2]);
+                        //if (index2.Stocks == null)
+                        //{
+                        //    index2.Stocks = new List<Stock>();
+                        //}
+                        //var stock4 = await _stockService.GetStock("GOOGL");
+                        //var stock5 = await _stockService.GetStock("ELALF");
+                        //var stock6 = await _stockService.GetStock("BMWYY");
+                        //index2.Stocks.Add(stock4);
+                        //index2.Stocks.Add(stock5);
+                        //index2.Stocks.Add(stock6);
+                        //await _context.SaveChangesAsync();
                     }
                 }
             }
 
-            var allIndices = 
-                from i in _context.Index
-                select i.Name;
-            allIndices = allIndices.Distinct();
-            ViewBag.allIndices = allIndices.ToList();
+                using (WebClient client = new WebClient())
+                {
+                    var symbols = (from s in _context.Stock select s.Symbol).ToList();
 
-            var allCategories = new List<string> { "Technology", "Parmaceutical", "Airline", "Vehicle manufacturer" };
-            ViewBag.allCategories = allCategories.ToList();
+                    foreach (var symbol in symbols)
+
+                    {
+                        string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=8SIHG57EBHLCEKEN";
+                        string QUERY_URL2 = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + symbol + "&apikey=8SIHG57EBHLCEKEN";
+
+                        Uri queryUri = new Uri(QUERY_URL);
+                        Uri queryUri2 = new Uri(QUERY_URL2);
+
+                        dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
+                        dynamic json_data2 = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri2));
+
+                        dynamic jsi = json_data["Global Quote"];
+                        dynamic jsi2 = json_data2["bestMatches"];
 
 
-            return View(await _context.Stock.ToListAsync());
+                        string data = jsi.GetRawText();
+                        Dictionary<string, string> dic = JsonSerializer.Deserialize<Dictionary<string, string>>(data);
+                        string data2 = jsi2.GetRawText();
+                        var results = JsonSerializer.Deserialize<List<dynamic>>(data2);
+                        Dictionary<string, string> result = JsonSerializer.Deserialize<Dictionary<string, string>>(results[0].GetRawText());
+                        string s_symbol = dic["01. symbol"];
+                        string s_name = result["2. name"];
+                        double s_price = Convert.ToDouble(dic["05. price"]);
+                        double s_change = Convert.ToDouble(dic["09. change"]);
+
+                        var stock = await _stockService.GetStock(s_symbol);
+                        if (stock != null)
+                        {
+                            await _stockService.UpdateStockDetails(s_symbol, s_name, s_price, s_change);
+                        }
+
+
+                    }
+
+
+                }
+            //{
+            //    var s1 = _context.Stock.Include(s => s.Indices).FirstOrDefault(s => s.Symbol == "IBM");
+            //    s1.Indices.Add(new MarketIndex { Name = "S&P 500" });
+            //    s1.Indices.Add(new MarketIndex { Name = "Dow Jones" });
+
+            //    var s2 = _context.Stock.Include(s => s.Indices).FirstOrDefault(s => s.Symbol == "GOOGL");
+            //    s2.Indices.Add(new MarketIndex { Name = "NASDAQ" });
+            //}
+
+                await _context.SaveChangesAsync();
+
+                var allIndices =
+                    from i in _context.Index
+                    select i.Name;
+                allIndices = allIndices.Distinct();
+                ViewBag.allIndices = allIndices.ToList();
+
+                var allCategories = new List<string> { "Technology", "Parmaceutical", "Airline", "Vehicle manufacturer" };
+                ViewBag.allCategories = allCategories.ToList();
+                //await _context.Stock.ToListAsync()
+                return View(await _context.Stock.ToListAsync());
+
             
         }
 
@@ -309,22 +358,19 @@ namespace WebApp.Controllers
 
         public ActionResult SearchStocks(double? lowPrice, double? highPrice, string change, string category, string indexName)
         {
+            var allIndices =
+                from i in _context.Index
+                select i.Name;
+            allIndices = allIndices.Distinct();
+            ViewBag.allIndices = allIndices.ToList();
 
-
-            //from f in db.Flights
-            //    where f.FlightFromCountry==flightFromCountry
-            //    select f.FlightToCountry;
-            //select f.FlightToCountry;
-
-
-
+            var allCategories = new List<string> { "Technology", "Parmaceutical", "Airline", "Vehicle manufacturer" };
+            ViewBag.allCategories = allCategories.ToList();
             List<Stock> filteredStocks = new List<Stock>();
             filteredStocks = ASearch(lowPrice, highPrice, change, category, indexName);
-            ViewData["filteredStocks"] = filteredStocks.ToList();
-            //List<Flight> flightsfrom = new List<Flight>();
-            //flightsfrom = ASearch(flightToCountry, flightFromCountry, flightDateTimeTakeOff, numOfPassengers);
-            //ViewData["name1"] = flightsfrom.ToList();
-            return View();
+            ViewData["vStocks"] = filteredStocks.ToList();
+
+            return View(filteredStocks.ToList());
         }
 
         public List<Stock> ASearch(double? lowPrice, double? highPrice, string? change, string category, string indexName)

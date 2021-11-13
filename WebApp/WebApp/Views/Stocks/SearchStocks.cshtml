@@ -81,21 +81,12 @@
     }
     }
 
-<<<<<<< HEAD
-        if (isAdmin)
-        {
-            <p>
-                <a class="btn btn-outline-dark" asp-action="Create">Create New</a> |
-                <a class="btn btn-outline-dark" asp-area="" asp-controller="Stocks" asp-action="Search">Search</a>
-            </p>
-=======
     if (isAdmin)
     {
         <p>
             <a class="btn-outline-dark" asp-action="Create">Create New</a> |
             <a class="btn-outline-dark" asp-area="" asp-controller="Stocks" asp-action="Search">Search</a>
         </p>
->>>>>>> 053a893a62788684763b16d6baabd9385eb4f0af
 
 
     }
@@ -165,46 +156,9 @@
                         <a asp-action="Buy" asp-controller="Orders" asp-route-symbol="@item.Symbol">Buy</a>
                         @using (Html.BeginForm("Buy", "Orders", FormMethod.Get))
                     {
-<<<<<<< HEAD
-                        var isAdmin = false;
-                        var claims = User.Claims.ToList();
-                        foreach (var c in claims)
-                        {
-                            if (c.Value == "Admin")
-                            {
-                                isAdmin = true;
-                            }
-                        }
-
-                        if (isAdmin)
-                        {
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@item.Symbol">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@item.Symbol">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@item.Symbol">Delete</a>
-                            </td>
-                        }
-
-                        else
-                        {
-                            <td>
-                                <a asp-action="Buy" asp-controller="Orders" asp-route-symbol="@item.Symbol" class="btn btn-success">Buy</a>
-                                @using (Html.BeginForm("Buy", "Orders", FormMethod.Get))
-                                {
-                                    @Html.AntiForgeryToken();
-
-
-                                }
-
-
-
-                            </td>
-                        }
-=======
                         @Html.AntiForgeryToken();
 
                         <input type="submit" id="btnBuy" class="btn-success" name="submit" value="Buy" asp-action="Buy" asp-controller="Orders" asp-route-symbol="@item.Symbol" />
->>>>>>> 053a893a62788684763b16d6baabd9385eb4f0af
                     }
 
 

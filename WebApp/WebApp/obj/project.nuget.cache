@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vKzLLXilGnmIU4O7mfKMVyVirmMIROr8Wa2CSf93d6wW5gNipQLPy57ZNGTPM7RzQylLhg7rMQFlJVTlS8S14g==",
+  "dgSpecHash": "fWmLDutwXfaOTdnggqEo0RU8GjUp14JpEfEGlpPzieFlclb92CSvrOzzzR5vuv4intyIvuhRwtptN6iMIGdvcw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+  "projectFilePath": "C:\\Users\\ofirs\\Source\\Repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ofirs\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\ofirs\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

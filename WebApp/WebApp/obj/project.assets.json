@@ -7979,11 +7979,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+      "projectUniqueName": "C:\\Users\\ofirs\\Source\\Repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
       "projectName": "WebApp",
-      "projectPath": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+      "projectPath": "C:\\Users\\ofirs\\Source\\Repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
       "packagesPath": "C:\\Users\\ofirs\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\obj\\",
+      "outputPath": "C:\\Users\\ofirs\\Source\\Repos\\Gitofir\\SOS\\WebApp\\WebApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
