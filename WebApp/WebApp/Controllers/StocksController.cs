@@ -355,7 +355,8 @@ namespace WebApp.Controllers
             return _context.Stock.Any(e => e.Symbol == id);
         }
 
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult SearchStocks(double? lowPrice, double? highPrice, string change, string category, string indexName)
         {
             var allIndices =
