@@ -173,11 +173,10 @@
             .innerRadius(0)
             .outerRadius(radius)
     )
-        .attr('fill', function (d) { return (colorcat(d.data[1])) })
+        .attr('fill', function (d,i) { return (colorcat(d.data[i])) })
         .attr("stroke", "black")
         .style("stroke-width", "1px")
-        .style("opacity", 1)
-
+   
 
     //Owned Stocks By index
     //---------------------------------------------------------------------------------------
@@ -190,14 +189,13 @@
         .append("g")
         .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
-    // Create dummy data
     const datastocks = {IBM: @AmountFromStock["IBM"], MSFT: @AmountFromStock["MSFT"], Teva: @AmountFromStock["Teva"],
         UAL: @AmountFromStock["UAL"], ELALF: @AmountFromStock["ELALF"], M1RN34SAO: @AmountFromStock["M1RN34.SAO"], PFE: @AmountFromStock["PFE"],
             TSLA: @AmountFromStock["TSLA"], GOOGL: @AmountFromStock["GOOGL"], BMWYY:  @AmountFromStock["BMWYY"] }
 
 
     // set the color scale
-    const colorstocks = d3.scaleOrdinal().range(["#F9F871", "#FFBB34", "#FF693F", "#FF0072", "#EB00B9", "#8B5DF8", "#0008FF", "#00B9FF", "#00FF94", "#1C8B00"])
+    const colorstocks = d3.scaleOrdinal().range([ "#FFBB34", "#FF693F", "#FF0072", "#EB00B9", "#8B5DF8", "#0008FF", "#00B9FF", "#00FF94", "#1C8B00"])
 
     // Compute the position of each group on the pie:
     const piestocks = d3.pie()
@@ -212,12 +210,10 @@
         .attr('d', d3.arc()
             .innerRadius(0)
             .outerRadius(radius)
-        )
-        .attr('fill', function (d) { return (colorstocks(d.data[1])) })
+    )
+        .attr('fill', function (d, i) { return (colorstocks(d.data[i])) })
         .attr("stroke", "black")
         .style("stroke-width", "1px")
-        .style("opacity", 0.7)
-
 
 </script>
 

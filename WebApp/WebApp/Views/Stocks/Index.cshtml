@@ -77,8 +77,8 @@
         if (isAdmin)
         {
             <p>
-                <a class="btn-outline-dark" asp-action="Create">Create New</a> |
-                <a class="btn-outline-dark" asp-area="" asp-controller="Stocks" asp-action="Search">Search</a>
+                <a class="btn btn-outline-dark" asp-action="Create">Create New</a> |
+                <a class="btn btn-outline-dark" asp-area="" asp-controller="Stocks" asp-action="Search">Search</a>
             </p>
 
 
@@ -145,12 +145,12 @@
                         else
                         {
                             <td>
-                                <a asp-action="Buy" asp-controller="Orders" asp-route-symbol="@item.Symbol">Buy</a>
+                                <a asp-action="Buy" asp-controller="Orders" asp-route-symbol="@item.Symbol" class="btn btn-success">Buy</a>
                                 @using (Html.BeginForm("Buy", "Orders", FormMethod.Get))
                                 {
                                     @Html.AntiForgeryToken();
 
-                                    <input type="submit" id="btnBuy" class="btn-success" name="submit" value="Buy" asp-action="Buy" asp-controller="Orders" asp-route-symbol="@item.Symbol" />
+
                                 }
 
 
