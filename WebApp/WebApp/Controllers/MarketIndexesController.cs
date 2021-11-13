@@ -20,7 +20,7 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-        [Authorize]
+        [Authorize(Policy = "Administrator")]
         [HttpGet]
         public async Task<IActionResult> Search()
         {
@@ -57,12 +57,14 @@ namespace WebApp.Controllers
         }
 
         // GET: MarketIndexes
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Index.ToListAsync());
         }
 
         // GET: MarketIndexes/Details/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -81,6 +83,7 @@ namespace WebApp.Controllers
         }
 
         // GET: MarketIndexes/Create
+        [Authorize(Policy = "Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -103,6 +106,7 @@ namespace WebApp.Controllers
         }
 
         // GET: MarketIndexes/Edit/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -154,6 +158,7 @@ namespace WebApp.Controllers
         }
 
         // GET: MarketIndexes/Delete/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)

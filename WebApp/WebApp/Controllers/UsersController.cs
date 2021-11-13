@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,15 +24,14 @@ namespace WebApp.Controllers
         }
 
         // GET: Users
-        // Ofir TODO authorize admins only
-        [Authorize]
+        [Authorize(Policy = "Administrator")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _context.User.ToListAsync());
         }
 
-        [Authorize]
+        [Authorize(Policy = "Administrator")]
         [HttpGet]
         public async Task<IActionResult> Search()
         {
@@ -78,6 +79,7 @@ namespace WebApp.Controllers
         }
 
         // GET
+        [Authorize]
         [HttpGet("ShowStocks")]
         public async Task<IActionResult> ShowStocks(string id)
         {
@@ -130,7 +132,7 @@ namespace WebApp.Controllers
 
         // GET: Users/Create
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -141,7 +143,7 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Create([Bind("Username,Password,Email,Creditcard,Birthdate,Admin")] User user)
         {
             if (ModelState.IsValid)
@@ -169,7 +171,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Users/Edit/5
-        [Authorize]
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -222,7 +224,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Users/Delete/5
-        [Authorize]
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -243,7 +245,7 @@ namespace WebApp.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var user = await _context.User.FindAsync(id);
@@ -252,7 +254,6 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize]
         private bool UserExists(string id)
         {
             return _context.User.Any(e => e.Username == id);

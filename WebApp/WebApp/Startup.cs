@@ -47,6 +47,12 @@ namespace WebApp
                     options.Events = new CookieAuthenticationEvents();
                 });
 
+            // Authorization so we can check if user is admin or not using [Authorize(Policy = "Administrator")]
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Administrator", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Admin"));
+            });
+
             // For session managment
             services.AddDistributedMemoryCache();
             services.AddSession(options =>

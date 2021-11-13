@@ -204,6 +204,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -222,6 +223,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -244,6 +246,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks/Edit/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -295,6 +298,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks/Delete/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)

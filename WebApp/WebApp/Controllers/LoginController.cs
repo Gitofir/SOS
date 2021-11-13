@@ -102,6 +102,7 @@ namespace WebApp.Controllers
             return View("InputCC");
         }
 
+        [Authorize]
         public IActionResult Statistics()
         {
             var claims = User.Claims.ToList();
@@ -154,6 +155,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Login/Edit/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -205,6 +207,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Login/Delete/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)

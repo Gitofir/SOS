@@ -57,6 +57,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Orders
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Order.ToListAsync());
@@ -81,6 +82,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Orders/Create
+        [Authorize(Policy = "Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -135,6 +137,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Orders/Edit/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -186,6 +189,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Orders/Delete/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
