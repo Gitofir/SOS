@@ -66,7 +66,7 @@ namespace WebApp.Controllers
                     await _stockService.AddStock(new Stock { Symbol = ls[0], Name = "", Price = 1, Change = 1, Category = ls[1] });
                 };
             }
-            if (!_context.Stock.Any())
+            if (!_context.Index.Any())
             {
                 var indicesInitializing = new List<string>
                 { "S&P 500", "Dow Jones", "NASDAQ" };
@@ -108,7 +108,6 @@ namespace WebApp.Controllers
                     double s_price = Convert.ToDouble(dic["05. price"]);
                     double s_change = Convert.ToDouble(dic["09. change"]);
 
-                    //var s = new Stock { Symbol = s_symbol, Name = s_name, Price = s_price, Change = s_change, Category = s_category };
                     var stock = await _stockService.GetStock(s_symbol);
                     if (stock != null)
                     {
