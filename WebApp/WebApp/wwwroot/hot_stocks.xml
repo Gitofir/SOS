@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CATALOG>
   <STOCK>
-    <NAME>NVIDIA</NAME>
-    <TITLE>NVDA</TITLE>
+    <NAME>Bayerische Motoren Werke AG</NAME>
+    <TITLE>BMWYY</TITLE>
+    <MARKET>XETRA</MARKET>
+  </STOCK>
+  <STOCK>
+    <NAME>El Al Israel Airlines Ltd</NAME>
+    <TITLE>ELALF</TITLE>
     <MARKET>NASDAQ</MARKET>
   </STOCK>
   <STOCK>
-    <NAME>Oramed</NAME>
-    <TITLE>ORMP</TITLE>
-    <MARKET>NASDAQ</MARKET>
+    <NAME>Pfizer Inc</NAME>
+    <TITLE>PFE</TITLE>
+    <MARKET>NYSE </MARKET>
   </STOCK>
   <STOCK>
-    <NAME>Sentinel One</NAME>
-    <TITLE>S</TITLE>
-    <MARKET>NYSE</MARKET>
-  </STOCK>
-  <STOCK>
-    <NAME>Crowdstrike</NAME>
-    <TITLE>CRWD</TITLE>
-    <MARKET>NASDAQ</MARKET>
-  </STOCK>
-  <STOCK>
-    <NAME>Bank Leumi</NAME>
-    <TITLE>LUMI</TITLE>
+    <NAME>Teva- Pharmaceutical Industries Ltd</NAME>
+    <TITLE>Teva</TITLE>
     <MARKET>TLV</MARKET>
+  </STOCK>
+  <STOCK>
+    <NAME>United Airlines Holdings Inc</NAME>
+    <TITLE>UAL</TITLE>
+    <MARKET>NASDAQ</MARKET>
   </STOCK>
 </CATALOG>
