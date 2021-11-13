@@ -20,9 +20,15 @@ namespace WebApp.Controllers
 
             var tweets_search = new SearchOptions { Q = "#stocks", Resulttype = TwitterSearchResultType.Popular };
             TwitterService twService = new TwitterService(_ConsumerKey, _ConsumerSecret, _AccessToken, _AccessTokenSecret);
-
-            TwitterSearchResult searchResult = twService.Search(tweets_search);
-            return searchResult;
+            try
+            { 
+                TwitterSearchResult searchResult = twService.Search(tweets_search);
+                return searchResult;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public IActionResult Index()
