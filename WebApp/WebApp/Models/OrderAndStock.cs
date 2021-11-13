@@ -8,6 +8,7 @@ namespace WebApp.Models
     public class OrderAndStock
     {
         public int OrderAmount { get; set; }
+        public string StockName { get; set; }
         public string StockSymbol { get; set; }
     }
 }

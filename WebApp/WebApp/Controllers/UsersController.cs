@@ -25,9 +25,20 @@ namespace WebApp.Controllers
 
         [Authorize(Policy = "Administrator")]
         [HttpGet]
-        public async Task<IActionResult> MostExpensiveStocks()
+        public async Task<IActionResult> StocksGroupBy()
         {
-            return View(await _context.Stock.ToListAsync());
+            var stocks = _context.Stock.ToListAsync();
+
+            var query = from s in await stocks
+                        group s by s.Category into g
+                        select new CategoryCount
+                        {
+                            CategoryName = g.Key,
+                            Count = g.Count()
+
+                        };
+
+            return View(query);
         }
 
         // GET: Users
@@ -106,6 +117,7 @@ namespace WebApp.Controllers
                 select new OrderAndStock
                 {
                     OrderAmount = order.Amount,
+                    StockName = stock.Name,
                     StockSymbol = stock.Symbol
                 };
 

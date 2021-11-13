@@ -32,8 +32,6 @@ namespace WebApp.Controllers
             List<Order> orders = _context.Order.ToList();
             List<User> users = _context.User.ToList();
 
-            // Create collection of user-order pairs. Each element in the collection
-            // contains both the user's name and their pet's name.
             IEnumerable<UserAndOrder> query =
                 from user in users
                 join order in orders on user.Username equals order.UserName

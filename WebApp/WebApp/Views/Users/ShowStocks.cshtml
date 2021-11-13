@@ -7,6 +7,9 @@
                 <p>Order Amount</p>
             </th>
             <th>
+                <p>Stock Name</p>
+            </th>
+            <th>
                 <p>Stock Symbol</p>
             </th>
 
@@ -16,15 +19,18 @@
     <tbody>
         @foreach (var item in Model.StockOrders)
         {
-            <tr>
-                <td>
-                    @item.OrderAmount
-                </td>
-                <td>
-                    @item.StockSymbol
-                </td>
+        <tr>
+            <td>
+                @item.OrderAmount
+            </td>
+            <td>
+                @item.StockName
+            </td>
+            <td>
+                @item.StockSymbol
+            </td>
 
-            </tr>
+        </tr>
         }
     </tbody>
 </table>
