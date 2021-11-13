@@ -33,6 +33,13 @@ namespace WebApp.Controllers
 
             // Get indices and search them
             var all_indices = from u in _context.Index select u;
+
+            // Return all if fields empty
+            if (String.IsNullOrEmpty(name))
+            {
+                return View(all_indices);
+            }
+
             var found_indices = new List<MarketIndex>();
 
             if (!String.IsNullOrEmpty(name))

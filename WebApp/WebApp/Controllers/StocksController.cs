@@ -5,6 +5,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -155,6 +156,52 @@ namespace WebApp.Controllers
             return _userService.GetStocksAmount(username, symbol);
         }
 
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            return View(await _context.Stock.ToListAsync());
+        }
+
+        [HttpPost]
+        public IActionResult Search(string symbol, string stockname)
+        {
+
+            // Get users and search them
+            var all_stocks = from u in _context.Stock select u;
+
+            // Return all if fields empty
+            if (String.IsNullOrEmpty(symbol) && (String.IsNullOrEmpty(stockname)))
+            {
+                return View(all_stocks);
+            }
+
+            var found_stocks = new List<Stock>();
+
+            // Symbol or Stock name
+            if (!String.IsNullOrEmpty(symbol))
+            {
+                // Remove trailing \t
+                symbol = symbol.Replace("\t", String.Empty);
+                var matched_symbols = all_stocks.Where(u => (u.Symbol.Contains(symbol)));
+                var matched_symbols_list = new List<Stock>(matched_symbols);
+
+                found_stocks = found_stocks.Concat(matched_symbols_list).ToList();
+            }
+
+            if (!String.IsNullOrEmpty(stockname))
+            {
+                // Remove trailing \t
+                stockname = stockname.Replace("\t", String.Empty);
+                var matched_stocknames = all_stocks.Where(u => (u.Name.Contains(stockname)));
+                var matched_stocknames_list = new List<Stock>(matched_stocknames);
+
+                found_stocks = found_stocks.Concat(matched_stocknames_list).ToList();
+            }
+
+            // Return found users
+            return View(found_stocks);
+        }
 
         // GET: Stocks/Details/5
         public async Task<IActionResult> Details(string id)

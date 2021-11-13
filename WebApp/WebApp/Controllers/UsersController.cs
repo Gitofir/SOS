@@ -43,6 +43,13 @@ namespace WebApp.Controllers
             
             // Get users and search them
             var all_users = from u in _context.User select u;
+
+            // Return all if fields empty
+            if (String.IsNullOrEmpty(username) && (String.IsNullOrEmpty(email)))
+            {
+                return View(all_users);
+            }
+
             var found_users = new List<User>();
 
             // Username or Email

@@ -36,6 +36,7 @@
 <br />
 <h1>Hello @Html.DisplayFor(model => model.Username)!</h1>
 <br />
+<a asp-controller="Users" asp-action="ShowStocks" asp-route-id="@Model.Username" class="btn-outline-dark">Show owned stocks</a> |
 <a asp-action="InputCC" class="btn-outline-dark">Enter Credit Card</a> |
 <a asp-action="Statistics" class="btn-outline-dark">Statistics</a>
 <br />
@@ -82,6 +83,7 @@
 
 <!-- Ajax -->
 
-<button type="button" onclick="loadXMLDoc()" class="btn btn-outline-info">Hot stocks &#128293</input>
-<br />
-<table id="hotstocks"></table>
+<button type="button" onclick="loadXMLDoc()" class="btn btn-outline-info">
+    Hot stocks &#128293</input>
+    <br />
+    <table id="hotstocks"></table>

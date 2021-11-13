@@ -33,6 +33,13 @@ namespace WebApp.Controllers
 
             // Get CCs and search them
             var all_cc = from u in _context.CreditCard select u;
+
+            // Return all if fields empty
+            if (String.IsNullOrEmpty(number))
+            {
+                return View(all_cc);
+            }
+
             var found_cc = new List<CreditCard>();
 
             if (!String.IsNullOrEmpty(number))

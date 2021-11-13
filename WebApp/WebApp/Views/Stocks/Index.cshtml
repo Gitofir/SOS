@@ -21,9 +21,10 @@
 
         if (isAdmin)
         {
-            <p>
-                <a asp-action="Create">Create New</a>
-            </p>
+    <p>
+        <a class="btn-outline-dark" asp-action="Create">Create New</a> |  
+        <a class="btn-outline-dark" asp-area="" asp-controller="Stocks" asp-action="Search">Search</a>
+    </p>
 
 
         }
