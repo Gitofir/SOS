@@ -23,6 +23,13 @@ namespace WebApp.Controllers
             _context = context;
         }
 
+        [Authorize(Policy = "Administrator")]
+        [HttpGet]
+        public async Task<IActionResult> MostExpensiveStocks()
+        {
+            return View(await _context.Stock.ToListAsync());
+        }
+
         // GET: Users
         [Authorize(Policy = "Administrator")]
         [HttpGet]
