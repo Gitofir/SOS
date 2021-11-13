@@ -1,50 +1,30 @@
-﻿@model IEnumerable<WebApp.Models.Stock>
+﻿@model WebApp.Models.OrderAndStockViewModel
 
-@{ ViewData["Title"] = "Owned Stocks"; }
-
-<h1>Owned Stocks</h1>
-
-<table class="table table-active table-responsive">
+<table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <p>Order Amount</p>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Symbol)
+                <p>Stock Symbol</p>
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Change)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.StockOrders)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Symbol)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Change)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @item.OrderAmount
+                </td>
+                <td>
+                    @item.StockSymbol
+                </td>
+
+            </tr>
         }
     </tbody>
 </table>

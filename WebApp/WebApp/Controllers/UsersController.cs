@@ -81,28 +81,34 @@ namespace WebApp.Controllers
         // GET
         [Authorize]
         [HttpGet("ShowStocks")]
-        public async Task<IActionResult> ShowStocks(string id)
+        public IActionResult ShowStocks(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.User.Include(x => x.OwnedStocks).Where(u => u.Username == id).FirstOrDefaultAsync();
+            List<Order> orders = _context.Order.ToList();
+            List<Stock> stocks = _context.Stock.ToList();
 
-            // Initialize list
-            if (user.OwnedStocks == null)
-            {
-                user.OwnedStocks = new List<Stock>();
-            }
+            // Create collection of stock-order pairs. Each element in the collection
+            // contains both the stock name and the order stock amount.
+            IEnumerable<OrderAndStock> query =
+                from order in orders
+                join stock in stocks on order.Symbol equals stock.Symbol
+                select new OrderAndStock
+                {
+                    OrderAmount = order.Amount,
+                    StockSymbol = stock.Symbol
+                };
 
-            var owned_stocks = user.OwnedStocks.ToList();
-            
-            if (user == null)
+            OrderAndStockViewModel model = new OrderAndStockViewModel
             {
-                return NotFound();
-            }
-            return View(owned_stocks);
+                OrderAmount = 0,
+                StockOrders = query
+            };
+
+            return View(model);
         }
 
         // GET: Users/Details/5

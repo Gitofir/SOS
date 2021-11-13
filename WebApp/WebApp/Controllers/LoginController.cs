@@ -77,8 +77,6 @@ namespace WebApp.Controllers
             var username = claims[0].Value;
             var user = _context.User.Where(u => u.Username.Equals(username)).FirstOrDefault();
 
-            // OFIR AND SAPIR DEBUG - GIVE USER FREE STOCK FOR CHECKS
-            //var random_stock = _context.Stock.FirstOrDefault();
             // need to initialize the list
             if (user.OwnedStocks == null)
             {
