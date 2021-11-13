@@ -113,11 +113,6 @@ namespace WebApp.Controllers
             return View(await _context.Stock.ToListAsync());
             
         }
-            
-        public int GetStocksAmount(string symbol, string username)
-        {
-            return _userService.GetStocksAmount(username, symbol);
-        }
 
         [Authorize]
         [HttpGet]
@@ -294,5 +289,72 @@ namespace WebApp.Controllers
         {
             return _context.Stock.Any(e => e.Symbol == id);
         }
+
+
+        public ActionResult SearchStocks(double? lowPrice, double? highPrice, double? change, string category, string indexName)
+        {
+            var allIndices =
+                from i in _context.Index
+                select i;
+            allIndices = allIndices.Distinct();
+            ViewBag.allIndices = allIndices.ToList();
+
+            var allCategories = new List<string> { "Technology", "Parmaceutical", "Airline", "Vehicle manufacturer" };
+            //    from f in db.Flights
+            //        //where f.FlightFromCountry==flightFromCountry
+            //        //select f.FlightToCountry;
+            //    select f.FlightToCountry;
+
+
+            //toCountryValues = toCountryValues.Distinct();
+            //ViewBag.alldestinations = toCountryValues.ToList();
+            //List<Flight> flightsTo = new List<Flight>();
+            //flightsTo = ASearch(flightFromCountry, flightToCountry, flightDateTimeTakeOff, numOfPassengers);
+            //ViewData["name"] = flightsTo.ToList();
+            //List<Flight> flightsfrom = new List<Flight>();
+            //flightsfrom = ASearch(flightToCountry, flightFromCountry, flightDateTimeTakeOff, numOfPassengers);
+            //ViewData["name1"] = flightsfrom.ToList();
+            return View();
+        }
+
+        public List<Stock> ASearch(double? lowPrice, double? highPrice, string? change, string category, string indexName)
+        {
+            var stocks = 
+                from s in _context.Stock
+                select s;
+
+            if (lowPrice != null)
+            {
+                stocks = stocks.Where(s => s.Price >= lowPrice);
+            }
+            if (highPrice != null)
+            {
+                stocks = stocks.Where(s => s.Price <= highPrice);
+            }
+            if (!String.IsNullOrEmpty(change))
+            {
+                if (change == "dec")
+                {
+                    stocks = stocks.Where(s => s.Change <= 0);
+                }
+                if (change == "inc")
+                {
+                    stocks = stocks.Where(s => s.Change > 0);
+                }
+            }
+            if (!String.IsNullOrEmpty(category))
+            {
+                stocks = stocks.Where(s => s.Category == category);
+            }
+            if (!String.IsNullOrEmpty(indexName))
+            {
+                var index = _context.Index.FirstOrDefault(i => i.Name == indexName);
+                stocks = stocks.Include("Indices").Where(s => s.Indices.Contains(index));
+            }
+
+            return stocks.ToList();
+
+        }
+
     }
 }

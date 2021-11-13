@@ -37,6 +37,30 @@
     </script>
 </body>
 
+@using (Html.BeginForm())
+{
+<table>
+    <tr>
+        <th colspan="2" align="center">Search Stocks</th>
+    </tr>
+    <tr>
+        <td>Low Price: </td><td>High Price: </td><td>Does Price increased\decreased? </td><td>Category</td><td> @Html.DropDownList("indexName", new SelectList(ViewBag.allIndecies), "select")</td>
+    </tr>
+    <tr>
+        <td>@Html.TextBox("lowPrice")</td>
+        <td>@Html.TextBox("highPrice")</td>
+        <td>@Html.DropDownList("change", new List<SelectListItem>{
+                                                                    new SelectListItem { Text = "Increased", Value = "inc" },
+                                                                    new SelectListItem { Text = "Decreased", Value = "dec" }}, "Please select")</td>
+        <td>@Html.DropDownList("indexName", new SelectList(ViewBag.allCategories), "Index")</td>
+        <td> @Html.DropDownList("indexName", new SelectList(ViewBag.allIndecies), "Index")</td>
+        <td>  <input type="submit" value="Search stocks" /></td>
+    </tr>
+</table>
+   
+}
+
+
 @{
     if (User.Identity.IsAuthenticated)
     {
