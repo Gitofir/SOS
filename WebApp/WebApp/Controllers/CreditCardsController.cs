@@ -20,7 +20,7 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-        [Authorize]
+        [Authorize(Policy = "Administrator")]
         [HttpGet]
         public async Task<IActionResult> Search()
         {
@@ -33,6 +33,13 @@ namespace WebApp.Controllers
 
             // Get CCs and search them
             var all_cc = from u in _context.CreditCard select u;
+
+            // Return all if fields empty
+            if (String.IsNullOrEmpty(number))
+            {
+                return View(all_cc);
+            }
+
             var found_cc = new List<CreditCard>();
 
             if (!String.IsNullOrEmpty(number))
@@ -50,12 +57,14 @@ namespace WebApp.Controllers
         }
 
         // GET: CreditCards
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.CreditCard.ToListAsync());
         }
 
         // GET: CreditCards/Details/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -74,6 +83,7 @@ namespace WebApp.Controllers
         }
 
         // GET: CreditCards/Create
+        [Authorize(Policy = "Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -96,6 +106,7 @@ namespace WebApp.Controllers
         }
 
         // GET: CreditCards/Edit/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -147,6 +158,7 @@ namespace WebApp.Controllers
         }
 
         // GET: CreditCards/Delete/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)

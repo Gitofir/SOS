@@ -78,13 +78,13 @@ namespace WebApp.Controllers
             var user = _context.User.Where(u => u.Username.Equals(username)).FirstOrDefault();
 
             // OFIR AND SAPIR DEBUG - GIVE USER FREE STOCK FOR CHECKS
-            var random_stock = _context.Stock.FirstOrDefault();
+            //var random_stock = _context.Stock.FirstOrDefault();
             // need to initialize the list
             if (user.OwnedStocks == null)
             {
                 user.OwnedStocks = new List<Stock>();
             }
-            user.OwnedStocks.Add(random_stock);
+            //user.OwnedStocks.Add(random_stock);
             await _context.SaveChangesAsync();
 
             return View(user);
@@ -102,6 +102,7 @@ namespace WebApp.Controllers
             return View("InputCC");
         }
 
+        [Authorize]
         public IActionResult Statistics()
         {
             var claims = User.Claims.ToList();
@@ -154,6 +155,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Login/Edit/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -205,6 +207,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Login/Delete/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)

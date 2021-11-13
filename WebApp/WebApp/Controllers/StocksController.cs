@@ -5,6 +5,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,8 +20,9 @@ namespace WebApp.Controllers
         private readonly WebAppContext _context;
         private readonly IStockService _stockService;
         private readonly IUserService _userService;
+        private readonly IOrderService _orderService;
 
-        public StocksController(WebAppContext context, IStockService stockService, IUserService userService)
+        public StocksController(WebAppContext context, IStockService stockService, IUserService userService, IOrderService orderService)
         {
             _context = context;
             _stockService = stockService;
@@ -29,13 +31,8 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks
-        public async Task<IActionResult> Index(string submit, Order order)
+        public async Task<IActionResult> Index()
         {
-            if (!_context.Stock.Any())
-            {
-                IntialStockTable();
-            }
-            CallApi();
             {/*var symbol1s = new List<string>()
                     {
                         "IBM",
@@ -49,47 +46,38 @@ namespace WebApp.Controllers
                         "GOOGL",
                         "BMWYY"
                     };*/
-                }       
-            
-            switch (submit)
-            {
-                case "Buy":
-                    return (Buy(order));
-                case "Sell":
-                    return (Sell(order));
             }
-            
-            return View(await _context.Stock.ToListAsync());
-        }
-
-
-        public async void IntialStockTable()
-        {
-            var Initializing = new List<List<string>>();
-            Initializing.Add(new List<string> { "IBM", "Technology" });
-            Initializing.Add(new List<string> { "Teva", "Parmaceutical" });
-            Initializing.Add(new List<string> { "UAL", "Airline" });
-            Initializing.Add(new List<string> { "ELALF", "Airline" });
-            Initializing.Add(new List<string> { "PFE", "Parmaceutical" });
-            Initializing.Add(new List<string> { "MSFT", "Technology" });
-            Initializing.Add(new List<string> { "M1RN34.SAO", "Parmaceutical" });
-            Initializing.Add(new List<string> { "GOOGL", "Technology" });
-            Initializing.Add(new List<string> { "TSLA", "Vehicle manufacturer" });
-            Initializing.Add(new List<string> { "BMWYY", "Vehicle manufacturer" });
-
-            foreach (var ls in Initializing)
+            if (!_context.Stock.Any())
             {
-                await _stockService.AddStock(new Stock { Symbol = ls[0], Name = "", Price = 1, Change = 1, Category = ls[1] });
-            };
+
+                var Initializing = new List<List<string>>();
+                Initializing.Add(new List<string> { "IBM", "Technology" });
+                Initializing.Add(new List<string> { "Teva", "Parmaceutical" });
+                Initializing.Add(new List<string> { "UAL", "Airline" });
+                Initializing.Add(new List<string> { "ELALF", "Airline" });
+                Initializing.Add(new List<string> { "PFE", "Parmaceutical" });
+                Initializing.Add(new List<string> { "MSFT", "Technology" });
+                Initializing.Add(new List<string> { "M1RN34.SAO", "Parmaceutical" });
+                Initializing.Add(new List<string> { "GOOGL", "Technology" });
+                Initializing.Add(new List<string> { "TSLA", "Vehicle manufacturer" });
+                Initializing.Add(new List<string> { "BMWYY", "Vehicle manufacturer" });
+
+                foreach (var ls in Initializing)
+                {
+                    await _stockService.AddStock(new Stock { Symbol = ls[0], Name = "", Price = 1, Change = 1, Category = ls[1] });
+                };
+            }
+
 
             using (WebClient client = new WebClient())
             {
                 var symbols = (from s in _context.Stock select s.Symbol).ToList();
 
-                for (int i = 0; i < symbols.Count; i++)
+                foreach (var symbol in symbols)
+
                 {
-                    string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbols[i] + "&apikey=8SIHG57EBHLCEKEN";
-                    string QUERY_URL2 = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + symbols[i] + "&apikey=8SIHG57EBHLCEKEN";
+                    string QUERY_URL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=8SIHG57EBHLCEKEN";
+                    string QUERY_URL2 = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + symbol + "&apikey=8SIHG57EBHLCEKEN";
 
                     Uri queryUri = new Uri(QUERY_URL);
                     Uri queryUri2 = new Uri(QUERY_URL2);
@@ -120,37 +108,75 @@ namespace WebApp.Controllers
                     Thread.Sleep(500);
                 }
             }
+        
+
+            return View(await _context.Stock.ToListAsync());
+            
+        }
+            
+        public int GetStocksAmount(string symbol, string username)
+        {
+            return _userService.GetStocksAmount(username, symbol);
         }
 
-        public async void CallApi()
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Search()
         {
-            
+            return View(await _context.Stock.ToListAsync());
         }
 
         [HttpPost]
-        public ActionResult Buy(Order order)
-        {
-            
-            return RedirectToAction("Index", "Stocks");
-        }
-
-        [HttpPost]
-        public ActionResult Sell(Order order)
+        public IActionResult Search(string symbol, string stockname)
         {
 
-            return RedirectToAction("Index", "Stocks");
+            // Get users and search them
+            var all_stocks = from u in _context.Stock select u;
+
+            // Return all if fields empty
+            if (String.IsNullOrEmpty(symbol) && (String.IsNullOrEmpty(stockname)))
+            {
+                return View(all_stocks);
+            }
+
+            var found_stocks = new List<Stock>();
+
+            // Symbol or Stock name
+            if (!String.IsNullOrEmpty(symbol))
+            {
+                // Remove trailing \t
+                symbol = symbol.Replace("\t", String.Empty);
+                var matched_symbols = all_stocks.Where(u => (u.Symbol.Contains(symbol)));
+                var matched_symbols_list = new List<Stock>(matched_symbols);
+
+                found_stocks = found_stocks.Concat(matched_symbols_list).ToList();
+            }
+
+            if (!String.IsNullOrEmpty(stockname))
+            {
+                // Remove trailing \t
+                stockname = stockname.Replace("\t", String.Empty);
+                var matched_stocknames = all_stocks.Where(u => (u.Name.Contains(stockname)));
+                var matched_stocknames_list = new List<Stock>(matched_stocknames);
+
+                found_stocks = found_stocks.Concat(matched_stocknames_list).ToList();
+            }
+
+            // Return found users
+            return View(found_stocks);
         }
 
         // GET: Stocks/Details/5
-        public async Task<IActionResult> Details(string symbol)
+        [Authorize]
+        public async Task<IActionResult> Details(string id)
         {
-            if (symbol == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var stock = await _context.Stock
-                .FirstOrDefaultAsync(m => m.Symbol == symbol);
+                .FirstOrDefaultAsync(m => m.Symbol == id);
             if (stock == null)
             {
                 return NotFound();
@@ -160,6 +186,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -182,14 +209,15 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks/Edit/5
-        public async Task<IActionResult> Edit(string symbol)
+        [Authorize(Policy = "Administrator")]
+        public async Task<IActionResult> Edit(string id)
         {
-            if (symbol == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var stock = await _context.Stock.FindAsync(symbol);
+            var stock = await _context.Stock.FindAsync(id);
             if (stock == null)
             {
                 return NotFound();
@@ -202,9 +230,9 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string symbol, [Bind("Symbol,Name,Price,Change,Category")] Stock stock)
+        public async Task<IActionResult> Edit(string id, [Bind("Symbol,Name,Price,Change,Category")] Stock stock)
         {
-            if (symbol != stock.Symbol)
+            if (id != stock.Symbol)
             {
                 return NotFound();
             }
@@ -233,15 +261,16 @@ namespace WebApp.Controllers
         }
 
         // GET: Stocks/Delete/5
-        public async Task<IActionResult> Delete(string symbol)
+        [Authorize(Policy = "Administrator")]
+        public async Task<IActionResult> Delete(string id)
         {
-            if (symbol == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var stock = await _context.Stock
-                .FirstOrDefaultAsync(m => m.Symbol == symbol);
+                .FirstOrDefaultAsync(m => m.Symbol == id);
             if (stock == null)
             {
                 return NotFound();
@@ -253,17 +282,17 @@ namespace WebApp.Controllers
         // POST: Stocks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string symbol)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var stock = await _context.Stock.FindAsync(symbol);
+            var stock = await _context.Stock.FindAsync(id);
             _context.Stock.Remove(stock);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StockExists(string symbol)
+        private bool StockExists(string id)
         {
-            return _context.Stock.Any(e => e.Symbol == symbol);
+            return _context.Stock.Any(e => e.Symbol == id);
         }
     }
 }

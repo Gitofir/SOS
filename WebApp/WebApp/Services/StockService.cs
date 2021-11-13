@@ -39,5 +39,12 @@ namespace WebApp.Services
             stock.Change = sChange;
             await _context.SaveChangesAsync();
         }
+
+        public async Task<double> GetPrice(string symbol)
+        {
+            Stock stock = await _context.Stock.FirstOrDefaultAsync(s => s.Symbol == symbol);
+            return stock.Price;
+        }
+
     }
 }

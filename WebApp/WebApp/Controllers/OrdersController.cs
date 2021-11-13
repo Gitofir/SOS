@@ -2,24 +2,57 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using WebApp.Models;
+using WebApp.Services;
 
 namespace WebApp.Controllers
 {
     public class OrdersController : Controller
     {
         private readonly WebAppContext _context;
+        private readonly IStockService _stockService;
+        private readonly IUserService _userService;
 
-        public OrdersController(WebAppContext context)
+        public OrdersController(WebAppContext context, IStockService stockService, IUserService userService)
         {
             _context = context;
+            _stockService = stockService;
+            _userService = userService;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult SearchJoin()
+        {
+            List<Order> orders = _context.Order.ToList();
+            List<User> users = _context.User.ToList();
+
+            // Create collection of user-order pairs. Each element in the collection
+            // contains both the user's name and their pet's name.
+            IEnumerable<UserAndOrder> query =
+                from user in users
+                join order in orders on user.Username equals order.UserName
+                select new UserAndOrder
+                {
+                    UserUsername = user.Username,
+                    OrderOrderID = order.OrderID
+                };
+
+            UserAndOrderViewModel model = new UserAndOrderViewModel
+            {
+                UserOrderId = "Pairs",
+                UserOrders = query
+            };
+            return View(model);
         }
 
         // GET: Orders
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Order.ToListAsync());
@@ -44,6 +77,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Orders/Create
+        [Authorize(Policy = "Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -60,12 +94,44 @@ namespace WebApp.Controllers
             {
                 _context.Add(order);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { id = order.OrderID });
+            }
+            return View(order);
+        }
+
+        // GET: Orders/Buy/5
+        public async Task<IActionResult> Buy(string symbol)
+        {
+            ViewBag.orderDate = DateTime.Now;
+            ViewBag.orderUsername = User.FindFirst("username").Value;
+            ViewBag.orderStockSymbol = symbol;
+            var stock = await _stockService.GetStock(symbol);
+            ViewBag.orderPricePerUnit = stock.Price;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Buy(string symbol, [Bind("OrderID,Date,UserName,Symbol,Amount,PricePerUnit,Total")] Order order)
+        {
+            if (ModelState.IsValid)
+            {
+                order.Total = order.PricePerUnit * order.Amount;
+                _context.Add(order);
+                var stock = await _stockService.GetStock(symbol);
+                for (var i=0; i < order.Amount; i++)
+                {
+                    await _userService.AddStockToList(stock, order.UserName);
+                    
+                }
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Details), new { id = order.OrderID });
             }
             return View(order);
         }
 
         // GET: Orders/Edit/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -117,6 +183,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Orders/Delete/5
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

@@ -38,12 +38,20 @@ namespace WebApp
 
             services.AddScoped<IStockService,StockService>();
 
+            services.AddScoped<IOrderService, OrderService>();
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => {
                     options.LoginPath = "/Login";
                     options.AccessDeniedPath = "/Denied";
                     options.Events = new CookieAuthenticationEvents();
                 });
+
+            // Authorization so we can check if user is admin or not using [Authorize(Policy = "Administrator")]
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Administrator", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Admin"));
+            });
 
             // For session managment
             services.AddDistributedMemoryCache();
