@@ -97,7 +97,7 @@ namespace WebApp.Controllers
             {
                 _context.Add(order);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { id = order.OrderID });
             }
             return View(order);
         }
@@ -110,7 +110,6 @@ namespace WebApp.Controllers
             ViewBag.orderStockSymbol = symbol;
             var stock = await _stockService.GetStock(symbol);
             ViewBag.orderPricePerUnit = stock.Price;
-
             return View();
         }
 
@@ -123,9 +122,14 @@ namespace WebApp.Controllers
                 order.Total = order.PricePerUnit * order.Amount;
                 _context.Add(order);
                 var stock = await _stockService.GetStock(symbol);
-                await _userService.AddStockToList(stock, order.UserName);
+                for (var i=0; i < order.Amount; i++)
+                {
+                    await _userService.AddStockToList(stock, order.UserName);
+                    
+                }
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                int id = order.OrderID;
+                return RedirectToAction(nameof(Details), new { id = order.OrderID });
             }
             return View(order);
         }

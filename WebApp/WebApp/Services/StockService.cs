@@ -46,6 +46,5 @@ namespace WebApp.Services
             return stock.Price;
         }
 
-
     }
 }

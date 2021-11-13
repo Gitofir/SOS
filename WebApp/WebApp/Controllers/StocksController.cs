@@ -55,6 +55,31 @@ namespace WebApp.Controllers
             return View(await _context.Stock.ToListAsync());
         }
 
+        public async Task<IActionResult> Trade()
+        {
+            if (!_context.Stock.Any())
+            {
+                IntialStockTable();
+            }
+            {/*var symbol1s = new List<string>()
+                    {
+                        "IBM",
+                        "MSFT",
+                        "Teva",
+                        "UAL",
+                        "ELALF",
+                        "M1RN34.SAO",
+                        "PFE",
+                        "TSLA",
+                        "GOOGL",
+                        "BMWYY"
+                    };*/
+            }
+            return View(await _context.Stock.ToListAsync());
+        }
+
+
+
         public async void IntialStockTable()
         {
             var Initializing = new List<List<string>>();
@@ -129,18 +154,7 @@ namespace WebApp.Controllers
         {
             return _userService.GetStocksAmount(username, symbol);
         }
-        [HttpPost]
-        public ActionResult Buy(string symbol)
-        {
-            return RedirectToAction("Buy", "Orders", symbol);
-        }
 
-        [HttpPost]
-        public ActionResult Sell(Order order)
-        {
-
-            return RedirectToAction("Index", "Stocks");
-        }
 
         // GET: Stocks/Details/5
         public async Task<IActionResult> Details(string id)

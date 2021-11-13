@@ -49,6 +49,27 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.OrderID" class="normal-link">Edit</a> |
-    <a asp-action="Index" class="normal-link">Back to List</a>
+
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            var isAdmin = false;
+            var claims = User.Claims.ToList();
+            foreach (var c in claims)
+            {
+                if (c.Value == "Admin")
+                {
+                    isAdmin = true;
+                }
+            }
+
+            if (isAdmin)
+            {
+
+        <p><a asp-action="Edit" asp-route-id="@Model.OrderID" class="normal-link">Edit</a> |
+        <a asp-action="Index" class="normal-link">Back to List</a></p>
+            }
+        }
+    }
 </div>
+
