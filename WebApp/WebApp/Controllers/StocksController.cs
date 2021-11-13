@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -67,9 +66,19 @@ namespace WebApp.Controllers
                     await _stockService.AddStock(new Stock { Symbol = ls[0], Name = "", Price = 1, Change = 1, Category = ls[1] });
                 };
             }
+            if (!_context.Index.Any())
+            {
+                var indicesInitializing = new List<string>
+                { "S&P 500", "Dow Jones", "NASDAQ" };
+
+                foreach (var i in indicesInitializing)
+                {
+                    _context.Index.Add(new MarketIndex { Name = i});
+                };
+            }
 
 
-            using (WebClient client = new WebClient())
+                using (WebClient client = new WebClient())
             {
                 var symbols = (from s in _context.Stock select s.Symbol).ToList();
 
@@ -99,16 +108,23 @@ namespace WebApp.Controllers
                     double s_price = Convert.ToDouble(dic["05. price"]);
                     double s_change = Convert.ToDouble(dic["09. change"]);
 
-                    //var s = new Stock { Symbol = s_symbol, Name = s_name, Price = s_price, Change = s_change, Category = s_category };
                     var stock = await _stockService.GetStock(s_symbol);
                     if (stock != null)
                     {
                         await _stockService.UpdateStockDetails(s_symbol, s_name, s_price, s_change);
                     }
-                    Thread.Sleep(500);
                 }
             }
-        
+
+            var allIndices = 
+                from i in _context.Index
+                select i.Name;
+            allIndices = allIndices.Distinct();
+            ViewBag.allIndices = allIndices.ToList();
+
+            var allCategories = new List<string> { "Technology", "Parmaceutical", "Airline", "Vehicle manufacturer" };
+            ViewBag.allCategories = allCategories.ToList();
+
 
             return View(await _context.Stock.ToListAsync());
             
@@ -291,26 +307,20 @@ namespace WebApp.Controllers
         }
 
 
-        public ActionResult SearchStocks(double? lowPrice, double? highPrice, double? change, string category, string indexName)
+        public ActionResult SearchStocks(double? lowPrice, double? highPrice, string change, string category, string indexName)
         {
-            var allIndices =
-                from i in _context.Index
-                select i;
-            allIndices = allIndices.Distinct();
-            ViewBag.allIndices = allIndices.ToList();
 
-            var allCategories = new List<string> { "Technology", "Parmaceutical", "Airline", "Vehicle manufacturer" };
-            //    from f in db.Flights
-            //        //where f.FlightFromCountry==flightFromCountry
-            //        //select f.FlightToCountry;
+
+            //from f in db.Flights
+            //    where f.FlightFromCountry==flightFromCountry
             //    select f.FlightToCountry;
+            //select f.FlightToCountry;
 
 
-            //toCountryValues = toCountryValues.Distinct();
-            //ViewBag.alldestinations = toCountryValues.ToList();
-            //List<Flight> flightsTo = new List<Flight>();
-            //flightsTo = ASearch(flightFromCountry, flightToCountry, flightDateTimeTakeOff, numOfPassengers);
-            //ViewData["name"] = flightsTo.ToList();
+
+            List<Stock> filteredStocks = new List<Stock>();
+            filteredStocks = ASearch(lowPrice, highPrice, change, category, indexName);
+            ViewData["filteredStocks"] = filteredStocks.ToList();
             //List<Flight> flightsfrom = new List<Flight>();
             //flightsfrom = ASearch(flightToCountry, flightFromCountry, flightDateTimeTakeOff, numOfPassengers);
             //ViewData["name1"] = flightsfrom.ToList();
