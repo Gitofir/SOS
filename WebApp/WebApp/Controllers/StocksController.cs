@@ -118,7 +118,7 @@ namespace WebApp.Controllers
 
             var allIndices = 
                 from i in _context.Index
-                select i;
+                select i.Name;
             allIndices = allIndices.Distinct();
             ViewBag.allIndices = allIndices.ToList();
 
