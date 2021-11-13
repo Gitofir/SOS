@@ -125,7 +125,6 @@ namespace WebApp.Controllers
                     
                 }
                 await _context.SaveChangesAsync();
-                int id = order.OrderID;
                 return RedirectToAction(nameof(Details), new { id = order.OrderID });
             }
             return View(order);
