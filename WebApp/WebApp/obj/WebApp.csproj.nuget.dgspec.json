@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\Desktop\\לימודים\\שנה ב\\סמסטר 3\\פיתוח אפליקציות\\SOS\\WebApp\\WebApp\\WebApp.csproj": {}
+    "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\Desktop\\לימודים\\שנה ב\\סמסטר 3\\פיתוח אפליקציות\\SOS\\WebApp\\WebApp\\WebApp.csproj": {
+    "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\לימודים\\שנה ב\\סמסטר 3\\פיתוח אפליקציות\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+        "projectUniqueName": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
         "projectName": "WebApp",
-        "projectPath": "C:\\Users\\USER\\Desktop\\לימודים\\שנה ב\\סמסטר 3\\פיתוח אפליקציות\\SOS\\WebApp\\WebApp\\WebApp.csproj",
-        "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\לימודים\\שנה ב\\סמסטר 3\\פיתוח אפליקציות\\SOS\\WebApp\\WebApp\\obj\\",
+        "projectPath": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\WebApp.csproj",
+        "packagesPath": "C:\\Users\\ofirs\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ofirs\\source\\repos\\Gitofir\\SOS\\WebApp\\WebApp\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ofirs\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
