@@ -27,33 +27,28 @@ namespace WebApp.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> SearchJoin()
-        {
-            return View(await _context.Order.ToListAsync());
-        }
-
-        // OFIR TODO Join search
-        // GET: Orders
-        [HttpPost]
-        public async Task<IActionResult> SearchJoin(string username)
+        public IActionResult SearchJoin()
         {
             List<Order> orders = _context.Order.ToList();
-            List<Stock> stocks = _context.Stock.ToList();
             List<User> users = _context.User.ToList();
 
-            //var employeeRecord = from o in orders
-            //                     join s in stocks on e.Department_Id equals d.DepartmentId into table1
-            //                     from d in table1.ToList()
-            //                     join i in incentives on e.Incentive_Id equals i.IncentiveId into table2
-            //                     from i in table2.ToList()
-            //                     select new ViewModel
-            //                     {
-            //                         employee = e,
-            //                         department = d,
-            //                         incentive = i
-            //                     };
-            //return Task.FromResult(View(employeeRecord));
-            return View(await _context.Order.ToListAsync());
+            // Create collection of user-order pairs. Each element in the collection
+            // contains both the user's name and their pet's name.
+            IEnumerable<UserAndOrder> query =
+                from user in users
+                join order in orders on user.Username equals order.UserName
+                select new UserAndOrder
+                {
+                    UserUsername = user.Username,
+                    OrderOrderID = order.OrderID
+                };
+
+            UserAndOrderViewModel model = new UserAndOrderViewModel
+            {
+                UserOrderId = "Pairs",
+                UserOrders = query
+            };
+            return View(model);
         }
 
         // GET: Orders
