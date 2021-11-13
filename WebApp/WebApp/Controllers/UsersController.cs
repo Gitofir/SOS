@@ -81,7 +81,7 @@ namespace WebApp.Controllers
 
             var user = await _context.User.Include(x => x.OwnedStocks).Where(u => u.Username == id).FirstOrDefaultAsync();
 
-            // OFIR DEBUG - ADD RANDOM STOCK TO USER SO WE HAVE WHAT TO DISPLAY
+            // Initialize list
             if (user.OwnedStocks == null)
             {
                 user.OwnedStocks = new List<Stock>();

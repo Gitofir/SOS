@@ -1,0 +1,19 @@
+﻿@model IEnumerable<WebApp.Models.Order>
+
+@{ ViewData["Title"] = "Search Order"; }
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<br />
+<h2>Search Order</h2>
+
+@using (Html.BeginForm("SearchJoin", "Orders", FormMethod.Post))
+{
+    @Html.AntiForgeryToken();
+
+<p>
+    Username: <input type="text" name="username" class="input-xlarge form-control" />
+</p>
+<p>
+    <input type="submit" value="Search order" class="btn btn-outline-dark"/>
+</p>
+}

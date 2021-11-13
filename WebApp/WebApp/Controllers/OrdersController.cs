@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,37 @@ namespace WebApp.Controllers
             _context = context;
             _stockService = stockService;
             _userService = userService;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> SearchJoin()
+        {
+            return View(await _context.Order.ToListAsync());
+        }
+
+        // OFIR TODO Join search
+        // GET: Orders
+        [HttpPost]
+        public async Task<IActionResult> SearchJoin(string username)
+        {
+            List<Order> orders = _context.Order.ToList();
+            List<Stock> stocks = _context.Stock.ToList();
+            List<User> users = _context.User.ToList();
+
+            //var employeeRecord = from o in orders
+            //                     join s in stocks on e.Department_Id equals d.DepartmentId into table1
+            //                     from d in table1.ToList()
+            //                     join i in incentives on e.Incentive_Id equals i.IncentiveId into table2
+            //                     from i in table2.ToList()
+            //                     select new ViewModel
+            //                     {
+            //                         employee = e,
+            //                         department = d,
+            //                         incentive = i
+            //                     };
+            //return Task.FromResult(View(employeeRecord));
+            return View(await _context.Order.ToListAsync());
         }
 
         // GET: Orders
